@@ -1,0 +1,32 @@
+﻿@{
+    /**/
+
+    ViewBag.Title = "Verify";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+</head>
+<body>
+    <div>
+        <h2>
+            @ViewBag.IsEmailVerified
+        </h2>
+        <h2>
+            We send a verification email to: 
+            @ViewBag.CurrentEmail
+        </h2>
+        <h3>
+            After clicking the verfication link you can now reload this page and continue.
+        </h3>
+    </div>
+    <div>
+        @Html.ActionLink("Sign out instead", "LogOff")
+    </div>
+</body>
+</html>
