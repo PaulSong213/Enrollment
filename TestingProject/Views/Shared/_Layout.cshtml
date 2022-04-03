@@ -3,50 +3,42 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Enrollment System</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-2 position-fixed top-0 w-100">
+        <div class="container-fluid px-5">
+            <div class="">
+                <a class="navbar-brand" href="/">
+                    <img src="~/images/logo.png" alt="" width="30" height="24">
+                </a>
             </div>
-            @if (ViewBag.UserType == "student")
-            {
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Portal", "Portal", "Student")</li>
-                        <li>@Html.ActionLink("LogOff", "LogOff", "Account")</li>
-                    </ul>
-                </div>
-            }
-            else
-            {
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Login", "Login", "Account")</li>
-                        <li>@Html.ActionLink("SignUp", "SignUp", "Account")</li>
-                        <li>@Html.ActionLink("ResetPassword", "ResetPassword", "Account")</li>
-                    </ul>
-                </div>
-            }
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse container navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Account/Signup">Sign up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Account/Login">Sign in</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Account/ResetPassword">Reset password</a>
+                    </li>
+                </ul>
+
+            </div>
         </div>
-    </div>
+    </nav>
     <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+        <div class="my-3">
+            @RenderBody()
+        </div>
     </div>
 
     @Scripts.Render("~/bundles/jquery")

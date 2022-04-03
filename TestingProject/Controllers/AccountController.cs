@@ -10,6 +10,8 @@ using System.Web;
 using System.Web.Mvc;
 using EnrollmentSystem.Models;
 using System.Web.Security;
+using System.ComponentModel;
+using System.IO;
 
 namespace EnrollmentSystem.Controllers
 {
@@ -93,7 +95,7 @@ namespace EnrollmentSystem.Controllers
                 // Verification.
                 if (this.Request.IsAuthenticated)
                 {
-                    //return this.RedirectToAction("VerifyEmail", "Account");
+                    return this.RedirectToAction("Verify", "Account");
                 }
             }
             catch (Exception)
@@ -105,27 +107,48 @@ namespace EnrollmentSystem.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult> SignUp(SignUpModel model)
+        public async Task<ActionResult> SignUp(SignUpModel model, HttpPostedFileBase UploadedProfileFileName)
         {
             try
             {
-                var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
-
-                var a = await auth.CreateUserWithEmailAndPasswordAsync(model.Email, model.Password, model.Name, true);
-                var ab = await auth.SignInWithEmailAndPasswordAsync(model.Email, model.Password);
-                string token = ab.FirebaseToken;
-                var user = ab.User;
-                this.Session["tokenEmail"] = model.Email;
-                this.Session["tokenPassword"] = model.Password;
-                if (token != "")
+                
+                if (UploadedProfileFileName != null && UploadedProfileFileName.ContentLength > 0)
                 {
-                    this.SignInUser(user.Email, token, false);
-                    return this.RedirectToAction("Verify", "Account");
+                    var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
+
+                    var a = await auth.CreateUserWithEmailAndPasswordAsync(model.Email, model.Password, model.FirstName , true);
+                    var ab = await auth.SignInWithEmailAndPasswordAsync(model.Email, model.Password);
+                    string token = ab.FirebaseToken;
+                    var user = ab.User;
+                    this.Session["tokenEmail"] = model.Email;
+                    this.Session["tokenPassword"] = model.Password;
+                    
+
+                    //Upload file
+
+                    string imagesPath = HttpContext.Server.MapPath("~/images"); // Or file save folder, etc.
+                    string extension = Path.GetExtension(UploadedProfileFileName.FileName);
+                    string newFileName = user.LocalId.ToString() + extension;
+                    string saveToPath = Path.Combine(imagesPath, newFileName);
+                    UploadedProfileFileName.SaveAs(saveToPath);
+
+                    //redirect to verify page
+                    if (token != "")
+                    {
+                        this.SignInUser(user.Email, token, false);
+                        return this.RedirectToAction("Verify", "Account");
+                    }
                 }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "File not selected.");
+                }
+
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                ModelState.AddModelError(string.Empty, "Email is invalid or already used. Fix the error below.");
+                string firebaseError = "Email is invalid or already used";
+                ModelState.AddModelError(string.Empty, firebaseError);
             }
 
             return View();
