@@ -12,6 +12,7 @@ using EnrollmentSystem.Models;
 using System.Web.Security;
 using System.ComponentModel;
 using System.IO;
+using System.Data.SqlClient;
 
 namespace EnrollmentSystem.Controllers
 {
@@ -19,6 +20,14 @@ namespace EnrollmentSystem.Controllers
     {
         private static string ApiKey = "AIzaSyB3kuislzQfHVOr-3Zw5ecu_l4QBT3KP2Q";
         private static string Bucket = "enrollment-system-fc139.appspot.com";
+
+        SqlConnection con = new SqlConnection();
+        SqlCommand com = new SqlCommand();
+        SqlDataReader dr;
+        void connectionString()
+        {
+            con.ConnectionString = "Data Source=DESKTOP-9R1M64D\\SQLEXPRESS;Initial Catalog=enrollment_system;Integrated Security=True";
+        }
 
         [AllowAnonymous]
         [HttpGet]
@@ -111,7 +120,9 @@ namespace EnrollmentSystem.Controllers
         {
             try
             {
-                
+                this.connectionString();
+
+
                 if (UploadedProfileFileName != null && UploadedProfileFileName.ContentLength > 0)
                 {
                     var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
@@ -132,6 +143,12 @@ namespace EnrollmentSystem.Controllers
                     string saveToPath = Path.Combine(imagesPath, newFileName);
                     UploadedProfileFileName.SaveAs(saveToPath);
 
+                    con.Open();
+                    com.Connection = con;
+                    com.CommandText = $"INSERT INTO [dbo].[students] ([firstName] ,[middleName] ,[lastName] ,[gender] ,[age] ,[address] ,[contactNumber] ,[accountId] ,[email] ,[courseId] ,[statusId] ,[profileFileName]) VALUES ('{model.FirstName}' ,'{model.MiddleName}' , '{model.LastName}' , '{model.Gender}' , 20 , '{model.Address}' , '{model.Address}' ,'{user.LocalId}' , '{user.Email}' , 1 ,1 ,'{newFileName}')";
+                    dr = com.ExecuteReader();
+                    con.Close();
+
                     //redirect to verify page
                     if (token != "")
                     {
@@ -148,7 +165,7 @@ namespace EnrollmentSystem.Controllers
             catch (Exception e)
             {
                 string firebaseError = "Email is invalid or already used";
-                ModelState.AddModelError(string.Empty, firebaseError);
+                ModelState.AddModelError(string.Empty, e.Message);
             }
 
             return View();
