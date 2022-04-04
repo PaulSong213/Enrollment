@@ -17,9 +17,16 @@ body {
 	font-family: 'PT Serif', serif;
 	height:100vh;
 }
-.content{
+
+/*Nav bar*/
+.navbar{
+	z-index:3;
+}
+
+
+.content {
 	margin-top: 3vh;
-	text-align:center;
+	text-align: center;
 }
 .btn{
 	color:white;
@@ -37,11 +44,7 @@ body {
 	display: block;
 }
 .container{
-	
-
 	margin: 0 auto;
-	
-	z-index: -1;
 }
 .dark-bg{
 	background-color: #000;
