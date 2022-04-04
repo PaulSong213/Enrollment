@@ -17,14 +17,14 @@
     <img src="~/Content/img/Cavite_State_University.png">
 </div>
 <h6>Cavite State University - Bacoor Campus <br /> Enrollment System</h6>
-<h2>SignUp</h2>
+<h1>Sign Up</h1>
 
 @using (Html.BeginForm("SignUp", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Create new account</h4>
+        <h4>Create a new account</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">

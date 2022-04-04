@@ -2,21 +2,26 @@
 	padding: 0;
 	margin: 0;
 }
-h2 {
+h2,h1{
 	color: white;
 	text-align: center;
 	font-family: 'Poppins', sans-serif;
 }
-h4,h5,h6 {
+h4,h5,h6{
 	color: white;
 	text-align: center;
-	
 	font-family: 'PT Serif', serif;
+}
+small {
+	color: white;
+	font-family: 'PT Serif', serif;
+}
+html{
+
 }
 body {
 	color: white;
 	background-image: url(img/bg.jpeg);
-	background-repeat: no-repeat;
 	background-size: cover;
 	font-family: 'Poppins', sans-serif;
 	
@@ -61,12 +66,11 @@ body {
 	
 }
 /*form button*/
-.btn-submit {
+.btn {
 	margin-top: 3vh;
 	
-	
 }
-.btn-submit:hover{
+.btn:hover{
 	color:lawngreen;
 	border-color:lawngreen;
 	box-shadow: 0 0 20px lawngreen;
@@ -104,6 +108,9 @@ body {
 .body-content {
 	background-color: rgba(0, 0, 0, 0.4);
 	border-radius:10px;
+	background-repeat:no-repeat;
+	min-height:600px;
+	padding-bottom:5vh;
 }
 
 @media(min-device-width: 410px){
