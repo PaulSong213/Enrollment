@@ -1,8 +1,13 @@
 ﻿@model EnrollmentSystem.Models.SignUpModel
- <link href="~/Content/style.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=PT+Serif&display=swap" rel="stylesheet">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif&family=Poppins:wght@300&display=swap" rel="stylesheet">
+
 @{
     ViewBag.Title = "Sign Up";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -14,7 +19,7 @@
 <h6>Cavite State University - Bacoor Campus <br /> Enrollment System</h6>
 <h2>SignUp</h2>
 
-@using (Html.BeginForm("SignUp" ,"Account",FormMethod.Post , new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("SignUp", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -65,7 +70,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <select name="Gender" class="form-select form-control" >
+                <select name="Gender" class="form-select form-control">
                     <option value="1">Male</option>
                     <option value="2">Female</option>
                     <option value="0">Prefer not to say</option>
