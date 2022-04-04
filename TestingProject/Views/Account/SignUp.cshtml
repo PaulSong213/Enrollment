@@ -1,16 +1,23 @@
 ﻿@model EnrollmentSystem.Models.SignUpModel
-
+ <link href="~/Content/style.css" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif&display=swap" rel="stylesheet">
 @{
     ViewBag.Title = "Sign Up";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Sign up</h2>
+<div class="logo">
+    <img src="~/Content/img/Cavite_State_University.png">
+</div>
+<h6>Cavite State University - Bacoor Campus <br /> Enrollment System</h6>
+<h2>SignUp</h2>
 
 @using (Html.BeginForm("SignUp" ,"Account",FormMethod.Post , new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Create new account</h4>
         <hr />

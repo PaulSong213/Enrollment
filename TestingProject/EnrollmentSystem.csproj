@@ -253,6 +253,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\img\bg.jpeg" />
+    <Content Include="Content\img\Cavite_State_University.png" />
+    <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="firebase-messaging-sw.js" />
     <Content Include="Global.asax" />
