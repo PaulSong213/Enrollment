@@ -118,56 +118,68 @@ namespace EnrollmentSystem.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> SignUp(SignUpModel model, HttpPostedFileBase UploadedProfileFileName)
         {
-            try
-            {
-                this.connectionString();
 
-
-                if (UploadedProfileFileName != null && UploadedProfileFileName.ContentLength > 0)
+                try
                 {
-                    var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
+                    this.connectionString();
 
-                    var a = await auth.CreateUserWithEmailAndPasswordAsync(model.Email, model.Password, model.FirstName , true);
-                    var ab = await auth.SignInWithEmailAndPasswordAsync(model.Email, model.Password);
-                    string token = ab.FirebaseToken;
-                    var user = ab.User;
-                    this.Session["tokenEmail"] = model.Email;
-                    this.Session["tokenPassword"] = model.Password;
-                    
 
-                    //Upload file
-
-                    string imagesPath = HttpContext.Server.MapPath("~/images"); // Or file save folder, etc.
-                    string extension = Path.GetExtension(UploadedProfileFileName.FileName);
-                    string newFileName = user.LocalId.ToString() + extension;
-                    string saveToPath = Path.Combine(imagesPath, newFileName);
-                    UploadedProfileFileName.SaveAs(saveToPath);
-
-                    con.Open();
-                    com.Connection = con;
-                    com.CommandText = $"INSERT INTO [dbo].[students] ([firstName] ,[middleName] ,[lastName] ,[gender] ,[age] ,[address] ,[contactNumber] ,[accountId] ,[email] ,[courseId] ,[statusId] ,[profileFileName]) VALUES ('{model.FirstName}' ,'{model.MiddleName}' , '{model.LastName}' , '{model.Gender}' , 20 , '{model.Address}' , '{model.Address}' ,'{user.LocalId}' , '{user.Email}' , 1 ,1 ,'{newFileName}')";
+                    if (UploadedProfileFileName != null && UploadedProfileFileName.ContentLength > 0)
+                    {
+                        //save data to database
+                        con.Open();
+                        com.Connection = con;
+                        com.CommandText = $"INSERT INTO [dbo].[students] ([firstName] ,[middleName] ,[lastName] ,[gender] ,[age] ,[address] ,[contactNumber] ,[accountId] ,[email],[profileFileName] ) VALUES ('{model.FirstName}' ,'{model.MiddleName}' , '{model.LastName}' , '{model.Gender}' , {model.Age} , '{model.Address}' , '{model.Address}' ,'' , '{model.Email}','blank.jpg' )";
                     dr = com.ExecuteReader();
+                    con.Close();
+
+                    //create firebase account
+                    var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
+                            var a = await auth.CreateUserWithEmailAndPasswordAsync(model.Email, model.Password, model.FirstName, true);
+                            var ab = await auth.SignInWithEmailAndPasswordAsync(model.Email, model.Password);
+                            string token = ab.FirebaseToken;
+                            var user = ab.User;
+                            this.Session["tokenEmail"] = model.Email;
+                            this.Session["tokenPassword"] = model.Password;
+
+                            //Upload file
+                            string imagesPath = HttpContext.Server.MapPath("~/images");
+                            string extension = Path.GetExtension(UploadedProfileFileName.FileName);
+                            string newFileName = user.LocalId + extension;
+                            string saveToPath = Path.Combine(imagesPath, newFileName);
+                            UploadedProfileFileName.SaveAs(saveToPath);
+
+                    //save profile file and firebase account id
+                            con.Open();
+
+                            com.Connection = con;
+                            com.CommandText = $"UPDATE [dbo].[students] SET [profileFileName] = '{newFileName}', [accountId] = '{user.LocalId}'  WHERE [email] = '{user.Email}'";
+                            com.ExecuteNonQuery();
                     con.Close();
 
                     //redirect to verify page
                     if (token != "")
-                    {
-                        this.SignInUser(user.Email, token, false);
-                        return this.RedirectToAction("Verify", "Account");
+                            {
+                                this.SignInUser(user.Email, token, false);
+                                return this.RedirectToAction("Verify", "Account");
+                            }
+                        else
+                        {
+
+                        }
+
                     }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "File not selected.");
+                    }
+
                 }
-                else
+                catch (Exception e)
                 {
-                    ModelState.AddModelError(string.Empty, "File not selected.");
+                    string firebaseError = "Email is invalid or already used";
+                    ModelState.AddModelError(string.Empty, e.Message);
                 }
-
-            }
-            catch (Exception e)
-            {
-                string firebaseError = "Email is invalid or already used";
-                ModelState.AddModelError(string.Empty, e.Message);
-            }
-
             return View();
         }
 

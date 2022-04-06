@@ -46,6 +46,10 @@ namespace EnrollmentSystem.Models
         [Display(Name = "Account ID")]
         public string AccountId { get; set; }
 
+        [Required]
+        [Display(Name = "Age")]
+        public int Age { get; set; }
+
         [Display(Name = "Course ID")]
         public int CourseId { get; set; }
 
