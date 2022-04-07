@@ -15,7 +15,7 @@
 <div class="logo">
     <img src="~/Content/img/Cavite_State_University.png">
 </div>
-<h6>Cavite State University - Bacoor Campus <br /> Enrollment System</h6>
+<p align="center">Cavite State University - Bacoor Campus <br /> Enrollment System</p>
 <h1>Log-in</h1>
 
 @using (Html.BeginForm())
@@ -50,14 +50,22 @@
                     @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                 </div>
             </div>
+                <div align="center">
+                    <div class="sign-up mt-3">
+                        <a class="nav-link" href=" /Account/ResetPassword"> Forgot Password? </a>
+                    </div>
+                    <div class="form-group">
+                        <div class=" col-md-10">
+                            <input type="submit" value="Log-In" class="btn btn-default btn-lg btn-submit btn-success" />
+                        </div>
+                    </div>
+                    <div class="sign-up mt-3">
+                        <p>No Account? Sign up </p><a class="nav-link" href="/Account/Signup"> here</a>
+                    </div>
 
-            <div class="form-group">
-                <div class=" col-md-10">
-                    <input type="submit" value="Log-In" class="btn btn-default btn-lg btn-submit" />
-                </div>
+                 </div>
             </div>
         </div>
-    </div>
 
 
     <hr>
