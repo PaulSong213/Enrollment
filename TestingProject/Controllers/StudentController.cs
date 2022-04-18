@@ -12,6 +12,7 @@ namespace EnrollmentSystem.Controllers
         public ActionResult Portal()
         {
             ViewBag.UserType = "student";
+
             return View();
         }
     }
