@@ -141,7 +141,7 @@ namespace EnrollmentSystem.Controllers
                             var user = ab.User;
                             this.Session["tokenEmail"] = model.Email;
                             this.Session["tokenPassword"] = model.Password;
-
+                            this.Session["userAccountID"] = user.LocalId;
                             //Upload file
                             string imagesPath = HttpContext.Server.MapPath("~/images");
                             string extension = Path.GetExtension(UploadedProfileFileName.FileName);
@@ -222,7 +222,7 @@ namespace EnrollmentSystem.Controllers
                     var user = ab.User;
                     this.Session["tokenEmail"] = model.Email;
                     this.Session["tokenPassword"] = model.Password;
-
+                    this.Session["userAccountID"] = user.LocalId;
                     if (token != "")
                     {
                         this.SignInUser(user.Email, token, false);
@@ -294,6 +294,7 @@ namespace EnrollmentSystem.Controllers
             var authenticationManager = ctx.Authentication;
             this.Session["tokenEmail"] = "";
             this.Session["tokenPassword"] = "";
+            this.Session["userAccountID"] = "";
             authenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Login", "Account");
         }
