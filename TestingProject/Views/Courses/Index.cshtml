@@ -1,0 +1,70 @@
+﻿@model EnrollmentSystem.Models.CoursesModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Registrar_Layout.cshtml";
+    var courses = ViewBag.Courses;
+    var test = "test";
+}
+
+@if (TempData["MessageResult"] != null)
+{
+    <div class="alert alert-primary">
+        @TempData["MessageResult"]
+    </div>
+}
+<div class="d-flex justify-content-end py-3">
+    <a href="/Courses/Add" class="btn btn-primary ml-auto">Add Course</a>
+</div>
+<section class="row py-2">
+    <table id="example" class="table table-striped" style="width:100%">
+    </table>
+</section>
+@section scripts{
+ <script>
+    $(document).ready(function() {
+    
+        
+        var coursesData = '@courses';
+        var courses = JSON.parse(coursesData.replace(/&quot;/g,'"'));
+        for(var i = 0; i < courses.length; i++){
+            let course = courses[i];
+            courses[i] = Object.keys(course).map((key) => course[key]);
+            
+        }
+        var courseTable = $('#example').DataTable( {
+            responsive: true,
+            data: courses,
+            columns: [
+                { title: "ID" },
+                { title: "Name" },
+                { title: "Description" },
+                { title: "", "defaultContent": "<button class='editItem btn btn-success'>Edit</button>" },
+                { title: "", "defaultContent": "<button class='deleteitem btn btn-danger'>Delete</button>" }
+            ],
+            "fnRowCallback": function(nRow, aData, iDisplayIndex) {
+              nRow.setAttribute('id',aData[0]);
+              },
+              // dom: 'id',
+            dom: 'Bfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'pdfHtml5'
+            ]
+        });
+         
+        $(".editItem").on('click', function(event){
+            let itemId = $(this).closest('tr').attr('id');
+            location.href = "/Courses/Edit/" + itemId;
+        });
+        $(".deleteitem").on('click', function(event){
+            let itemId = $(this).closest('tr').attr('id');
+            location.href = "/Courses/Delete/" + itemId;
+        });
+    } );
+    
+    
+ </script>
+}
+

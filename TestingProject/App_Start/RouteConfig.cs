@@ -18,6 +18,11 @@ namespace EnrollmentSystem
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+                name: "Courses",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Courses", action = "Index", id = UrlParameter.Optional }
+            );
         }
     }
 }

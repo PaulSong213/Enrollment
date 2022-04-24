@@ -26,7 +26,12 @@ namespace EnrollmentSystem.Controllers
         SqlDataReader dr;
         void connectionString()
         {
-            con.ConnectionString = "Data Source=DESKTOP-9R1M64D\\SQLEXPRESS;Initial Catalog=enrollment_system;Integrated Security=True";
+            con.ConnectionString = this.getConnectionString();
+        }
+
+        public string getConnectionString()
+        {
+            return "data source=paul;initial catalog=enrollment_system;user id=sa;password=Relente1"; 
         }
 
         [AllowAnonymous]
@@ -130,8 +135,8 @@ namespace EnrollmentSystem.Controllers
                         con.Open();
                         com.Connection = con;
                         com.CommandText = $"INSERT INTO [dbo].[students] ([firstName] ,[middleName] ,[lastName] ,[gender] ,[age] ,[address] ,[contactNumber] ,[accountId] ,[email],[profileFileName] ) VALUES ('{model.FirstName}' ,'{model.MiddleName}' , '{model.LastName}' , '{model.Gender}' , {model.Age} , '{model.Address}' , '{model.Address}' ,'' , '{model.Email}','blank.jpg' )";
-                    dr = com.ExecuteReader();
-                    con.Close();
+                        dr = com.ExecuteReader();
+                        con.Close();
 
                     //create firebase account
                     var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
