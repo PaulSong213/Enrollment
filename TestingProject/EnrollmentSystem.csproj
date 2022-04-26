@@ -333,6 +333,7 @@
     <Content Include="Scripts\jquery.dataTables.js" />
     <Content Include="Views\Courses\Edit.cshtml" />
     <Content Include="Views\Courses\Add.cshtml" />
+    <Content Include="Views\Shared\Registrar_Sidebar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
