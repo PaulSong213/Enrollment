@@ -1,0 +1,47 @@
+﻿@model EnrollmentSystem.Models.RegistrarsModel
+
+@{
+    ViewBag.Title = "Analytics";
+    Layout = "~/Views/Shared/Registrar_Layout.cshtml";
+}
+
+<section class="row pb-5 w-100 overflow-auto">
+    <div class="d-flex justify-content-between py-3">
+        <h3>@ViewBag.Title</h3>
+    </div>
+   <div class="w-100 overflow-auto py-3 row">
+        <div class="col-md-6 col-sm-12 p-3">
+            <h5 class="text-center text-secondary">Enrollment Slot</h5>
+            <canvas id="enrollmentSlot" width="400" height="400"></canvas>
+        </div> 
+   </div>
+</section>
+@section scripts{
+ <script>
+    showEnrollmentChart();
+    
+    function showEnrollmentChart(){
+        //this chat is copied from https://www.chartjs.org/docs/latest/#creating-a-chart
+        const ctx = document.getElementById('enrollmentSlot').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Occupied Enrollment Slot', 'Available Enrollment Slot'],
+                datasets: [{
+                    label: 'Enrollment Slots',
+                    data: [120,560],
+                    backgroundColor: [
+                        'rgba(95, 117, 104, 0.5)',
+                        'rgba(24, 186, 91, 0.5 )',
+                    ],
+                    borderColor: [
+                        'rgba(95, 117, 104, 1)',
+                        'rgba(18, 130, 64 , 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+        });
+    }
+ </script>
+}

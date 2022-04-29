@@ -238,6 +238,9 @@
     <Compile Include="StartUp.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Models\CoursesModel.cs" />
+    <Compile Include="Models\StudentsModel.cs" />
+    <Compile Include="Controllers\RegistrarsController.cs" />
+    <Compile Include="Models\RegistrarsModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -334,11 +337,15 @@
     <Content Include="Views\Courses\Edit.cshtml" />
     <Content Include="Views\Courses\Add.cshtml" />
     <Content Include="Views\Shared\Registrar_Sidebar.cshtml" />
+    <Content Include="Views\Student\Index.cshtml" />
+    <Content Include="Views\Student\Edit.cshtml" />
+    <Content Include="Views\Registrars\Analytics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="images\" />
     <Folder Include="Views\Courses\" />
+    <Folder Include="Views\Students\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

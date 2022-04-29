@@ -115,7 +115,6 @@ namespace EnrollmentSystem.Controllers
                 else
                 {
                     TempData["ErrorResult"] = "There was a problem adding course. Please try again.";
-                    return View();
                 }
                 con.Close();
 
@@ -123,7 +122,6 @@ namespace EnrollmentSystem.Controllers
             catch (Exception e)
             {
                 TempData["ErrorResult"] = e.Message;
-                return View();
             }
             return RedirectToAction("Index", "Courses");
         }

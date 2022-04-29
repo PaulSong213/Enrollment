@@ -1,12 +1,10 @@
-﻿@model EnrollmentSystem.Models.CoursesModel
+﻿@model EnrollmentSystem.Models.StudentsModel
 
 @{
-    ViewBag.Title = "Courses";
+    ViewBag.Title = "Students";
     Layout = "~/Views/Shared/Registrar_Layout.cshtml";
-    var courses = ViewBag.Courses;
-    var test = "test";
+    var students = ViewBag.Students;
 }
-
 
 @if (TempData["MessageResult"] != null)
 {
@@ -22,10 +20,10 @@
     </div>
 }
 
+
 <section class="row pb-5 w-100 overflow-auto">
     <div class="d-flex justify-content-between py-3">
         <h3>@ViewBag.Title</h3>
-        <a href="/Courses/Add" class="btn btn-primary ml-auto">Add Course</a>
     </div>
    <div class="w-100 overflow-auto py-3">
          <table id="dataTable" class="table table-striped" style="width:100%">
@@ -37,7 +35,7 @@
     $(document).ready(function() {
     
         
-        var coursesData = '@courses';
+        var coursesData = '@students';
         var courses = JSON.parse(coursesData.replace(/&quot;/g,'"'));
         for(var i = 0; i < courses.length; i++){
             let course = courses[i];
@@ -49,8 +47,18 @@
             data: courses,
             columns: [
                 { title: "ID" },
-                { title: "Name" },
-                { title: "Description" },
+                { title: "Email" },
+                { title: "First name" },
+                { title: "Middle name" },
+                { title: "Last name" },
+                { title: "Gender" },
+                { title: "Age" },
+                { title: "Address" },
+                { title: "Contact number" },
+                { title: "Firebase ID" },
+                { title: "Course" },
+                { title: "Status" },
+                { title: "Profile Image" },
                 { title: "", "defaultContent": "<button class='editItem btn btn-success'>Edit</button>" },
                 { title: "", "defaultContent": "<button class='deleteitem btn btn-danger'>Delete</button>" }
             ],
@@ -67,15 +75,17 @@
          
         $(".editItem").on('click', function(event){
             let itemId = $(this).closest('tr').attr('id');
-            location.href = "/Courses/Edit/" + itemId;
+            location.href = "/Student/Edit/" + itemId;
         });
         $(".deleteitem").on('click', function(event){
             let itemId = $(this).closest('tr').attr('id');
-            location.href = "/Courses/Delete/" + itemId;
+            location.href = "/Student/Delete/" + itemId;
         });
     } );
     
     
  </script>
 }
+
+
 

@@ -35,15 +35,7 @@
           overflow-y: hidden;
         }
 
-        .b-example-divider {
-          flex-shrink: 0;
-          width: 1.5rem;
-          height: 100vh;
-          background-color: rgba(0, 0, 0, .1);
-          border: solid rgba(0, 0, 0, .15);
-          border-width: 1px 0;
-          box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-        }
+       
 
         .bi {
           vertical-align: -.125em;
@@ -110,6 +102,10 @@
             width: 3rem;    
             margin-left: 1rem;
         }
+            
+        .devide-left {
+            border-right: 10px solid #d9d9d9;    
+        }
 
     </style>
     
@@ -120,19 +116,32 @@
     
 
 <main>
-  <div class="d-none d-md-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+            
+  <div class="d-none d-md-flex flex-column flex-shrink-0 p-3 bg-light devide-left" style="width: 280px;height: 100vh">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
       <img class="logo" src="/images/logo.png" />
       <span class="fs-6 mx-3">Registrar Dashboard</span>
     </a>
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item">
-        <a href="#" class="nav-link bg-success text-light d-flex fs-6" aria-current="page">
-          <ion-icon class="fs-4 text-light" name="bulb"></ion-icon>
-          <span class="my-auto d-block mx-1">Courses</span>
+     <li class="nav-item">
+        <a href="/Registrars/Analytics" class="nav-link my-2 d-flex fs-6 @( Context.Request.Path == "/Registrars/Analytics" ? "bg-success text-light" : "text-dark shadow-sm")" aria-current="page">
+          <ion-icon class="fs-4" name="analytics"></ion-icon>
+          <span class="my-auto d-block mx-2">Analytics</span>
         </a>
       </li>
+      <li class="nav-item">
+        <a href="/Courses" class="nav-link my-2 d-flex fs-6 @( Context.Request.Path == "/Courses" ? "bg-success text-light" : "text-dark shadow-sm")" aria-current="page">
+          <ion-icon class="fs-4" name="bulb"></ion-icon>
+          <span class="my-auto d-block mx-2">Courses</span>
+        </a>
+      </li>
+     <li class="nav-item">
+        <a href="/Student" class="nav-link my-2  d-flex fs-6 @( Context.Request.Path == "/Student" ? "bg-success text-light" : "text-dark shadow-sm")" aria-current="page">
+          <ion-icon class="fs-4" name="people"></ion-icon>
+          <span class="my-auto d-block mx-2">Students</span>
+        </a>
+     </li>
     </ul>
     <hr>
     <div class="dropdown">
@@ -158,10 +167,21 @@
     </a>
     <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
       <li class="nav-item">
-        <a href="#" class="nav-link bg-success py-3 border-bottom" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
-          <ion-icon class="fs-4 text-light" name="bulb"></ion-icon>
+        <a href="/Registrars/Analytics" class="nav-link py-3 border-bottom @( Context.Request.Path == "/Registrars/Analytics" ? "bg-success text-light" : "text-dark shadow-sm")"" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
+          <ion-icon class="fs-4" name="analytics"></ion-icon>
         </a>
       </li>
+      <li class="nav-item">
+        <a href="/Courses" class="nav-link py-3 border-bottom @( Context.Request.Path == "/Courses" ? "bg-success text-light" : "text-dark shadow-sm")"" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
+          <ion-icon class="fs-4" name="bulb"></ion-icon>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/Student" class="nav-link py-3 border-bottom @( Context.Request.Path == "/Student" ? "bg-success text-light" : "text-dark shadow-sm")"" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
+          <ion-icon class="fs-4" name="people"></ion-icon>
+        </a>
+      </li>
+      
     </ul>
     <div class="dropdown border-top">
       <a href="#" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
@@ -177,7 +197,6 @@
     </div>
   </div>
 
-  <div class="b-example-divider"></div>
  
 </main>
   </body>
