@@ -42,7 +42,7 @@ namespace EnrollmentSystem.Controllers
             con.ConnectionString = new AccountController().getConnectionString();
             con.Open();
             com.Connection = con;
-            com.CommandText = $"SELECT * FROM [enrollment_system].[dbo].[students]";
+            com.CommandText = $"SELECT * FROM [enrollment_system].[dbo].[students] WHERE isActive = 1";
             dr = com.ExecuteReader();
             if (dr.HasRows)
             {
@@ -61,13 +61,57 @@ namespace EnrollmentSystem.Controllers
                         Address = dr["Address"].ToString(),
                         Email = dr["Email"].ToString(),
                         AccountId = dr["AccountId"].ToString(),
+                        StatusId = (int)dr["StatusId"],
+                        CourseId = (int)dr["Courseid"],
                         ProfileFileName = dr["ProfileFileName"].ToString(),
+                        ContactNumber = dr["ContactNumber"].ToString(),
                     };
                     students.Add(student);
                 }
             }
+
+            //Get courses
+            List<CoursesModel> courses = new List<CoursesModel>();
+            dr.Close();
+            com.CommandText = $"SELECT * FROM [enrollment_system].[dbo].[courses]";
+            dr = com.ExecuteReader();
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    CoursesModel course = new CoursesModel
+                    {
+                        Id = (int)dr["Id"],
+                        Name = dr["Name"].ToString()
+                    };
+                    courses.Add(course);
+                }
+            }
+
+            //Get status
+            List<StatusModel> status = new List<StatusModel>();
+            dr.Close();
+            com.CommandText = $"SELECT * FROM [enrollment_system].[dbo].[status]";
+            dr = com.ExecuteReader();
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    StatusModel newStatus = new StatusModel
+                    {
+                        Id = (int)dr["Id"],
+                        Name = dr["Name"].ToString()
+                    };
+                    status.Add(newStatus);
+                }
+            }
+
+
             con.Close();
             ViewBag.Students = JsonConvert.SerializeObject(students);
+            ViewBag.Courses = JsonConvert.SerializeObject(courses);
+            ViewBag.Status = JsonConvert.SerializeObject(status);
+
             return View();
         }
 
@@ -92,8 +136,49 @@ namespace EnrollmentSystem.Controllers
                     model.Email = dr["Email"].ToString();
                     model.AccountId = dr["AccountId"].ToString();
                     model.ProfileFileName = dr["ProfileFileName"].ToString();
+                    model.ContactNumber = dr["ContactNumber"].ToString();
                 }
             }
+            dr.Close();
+            //Get courses
+            List<CoursesModel> courses = new List<CoursesModel>();
+            com.CommandText = $"SELECT * FROM [enrollment_system].[dbo].[courses]";
+            dr = com.ExecuteReader();
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    CoursesModel course = new CoursesModel
+                    {
+                        Id = (int)dr["Id"],
+                        Name = dr["Name"].ToString(),
+                        Description = dr["Description"].ToString()
+                    };
+                    courses.Add(course);
+                }
+            }
+            ViewBag.Courses = courses;
+            dr.Close();
+
+            //Get courses
+            List<StatusModel> status = new List<StatusModel>();
+            com.CommandText = $"SELECT * FROM [enrollment_system].[dbo].[status]";
+            dr = com.ExecuteReader();
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    StatusModel newStatus = new StatusModel
+                    {
+                        Id = (int)dr["Id"],
+                        Name = dr["Name"].ToString(),
+                    };
+                    status.Add(newStatus);
+                }
+            }
+            ViewBag.Status = status;
+            dr.Close();
+
 
             con.Close();
             return View(model);
@@ -107,42 +192,51 @@ namespace EnrollmentSystem.Controllers
                 con.ConnectionString = new AccountController().getConnectionString();
                 con.Open();
                 com.Connection = con;
-                com.CommandText = $"UPDATE [enrollment_system].[dbo].[students] SET FirstName = '{model.FirstName.ToString()}', MiddleName = '{model.MiddleName.ToString()}', LastName = '{model.LastName.ToString()}', Gender = '{model.Gender.ToString()}', Address = '{model.Address.ToString()}', ContactNumber = '{model.ContactNumber.ToString()}', CourseId = '{model.CourseId.ToString()}', StatusId = '{model.StatusId.ToString()}',    WHERE id = '{model.id}'";
+                com.CommandText = $"UPDATE [enrollment_system].[dbo].[students] SET FirstName = '{model.FirstName}', MiddleName = '{model.MiddleName}' , LastName = '{model.LastName}', Address='{model.Address}', CourseId = {model.CourseId}, StatusId= {model.StatusId}, ContactNumber= '{model.ContactNumber}', Age={model.Age}, Gender= '{model.Gender}'  WHERE id = '{model.id}' ";
                 Boolean isUpdated = com.ExecuteNonQuery() > 0;
                 if (isUpdated)
                 {
                     ViewBag.SaveResult = true;
+                    TempData["MessageResult"] = "Student with id: " + model.id + " edited successfully";
+                }
+                con.Close();
+
+            }
+            catch (Exception)
+            {
+                TempData["ErrorResult"] = "There was a problem editing the student. Please try again";
+                //TempData["ErrorResult"] = model.CourseId;
+            }
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                con.ConnectionString = new AccountController().getConnectionString();
+                con.Open();
+                com.Connection = con;
+                com.CommandText = $"UPDATE [enrollment_system].[dbo].[students] SET isActive = 0  WHERE id = '{id}'";
+                Boolean isUpdated = com.ExecuteNonQuery() > 0;
+                if (isUpdated)
+                {
+                    TempData["MessageResult"] = "Student with id: "+ id +" marked as inactive successfully.";
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "There was a problem updating course. Please try again.");
+                    TempData["ErrorResult"] = "There was a problem making the student inactive. Please try again.";
                 }
                 con.Close();
 
             }
             catch (Exception e)
             {
-                ModelState.AddModelError(string.Empty, e.Message);
+                TempData["ErrorResult"] = e.Message;
             }
-            return View(model);
-        }
-
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Index");
         }
     }
 }

@@ -1,10 +1,10 @@
-﻿@model EnrollmentSystem.Models.CoursesModel
+﻿@model EnrollmentSystem.Models.EnrollmentsModel
 
 @{
-    ViewBag.Title = "Courses";
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/Registrar_Layout.cshtml";
-    var courses = ViewBag.Courses;
 }
+
 
 
 @if (TempData["MessageResult"] != null)
@@ -24,7 +24,6 @@
 <section class="row pb-5 w-100 overflow-auto">
     <div class="d-flex justify-content-between py-3">
         <h3>@ViewBag.Title</h3>
-        <a href="/Courses/Add" class="btn btn-primary ml-auto">Add Course</a>
     </div>
    <div class="w-100 overflow-auto py-3">
          <table id="dataTable" class="table table-striped" style="width:100%">
@@ -36,20 +35,28 @@
     $(document).ready(function() {
     
         
-        var coursesData = '@courses';
-        var courses = JSON.parse(coursesData.replace(/&quot;/g,'"'));
-        for(var i = 0; i < courses.length; i++){
-            let course = courses[i];
-            courses[i] = Object.keys(course).map((key) => course[key]);
+        var enrollmentsData = '@ViewBag.Enrollments';
+        var enrollments = JSON.parse(enrollmentsData.replace(/&quot;/g,'"'));
+        for(var i = 0; i < enrollments.length; i++){
+            let enrollment = enrollments[i];
+            enrollments[i] = Object.keys(enrollment).map((key) => enrollment[key]);
             
         }
         var courseTable = $('#dataTable').DataTable( {
             responsive: true,
-            data: courses,
+            data: enrollments,
             columns: [
                 { title: "ID" },
-                { title: "Name" },
-                { title: "Description" },
+                { title: "Student Name" },
+                { title: "Course" },
+                { title: "School Year" },
+                { title: "Status" },
+                { title: "Profile File Name" },
+                { title: "Report Card File Name" },
+                { title: "BirthCertificateFileName" },
+                { title: "GoodMoralFileName" },
+                { title: "CertificateOfTransferFileName" },
+                { title: "HonorableDismissalFileName" },
                 { title: "", "defaultContent": "<button class='editItem btn btn-success'>Edit</button>" },
                 { title: "", "defaultContent": "<button class='deleteitem btn btn-danger'>Delete</button>" }
             ],
@@ -77,4 +84,6 @@
     
  </script>
 }
+
+
 

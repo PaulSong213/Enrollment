@@ -28,7 +28,7 @@ namespace EnrollmentSystem.Controllers
         {
             List<CoursesModel> courses = new List<CoursesModel>();
 
-            con.ConnectionString =  new AccountController().getConnectionString();
+            con.ConnectionString = new AccountController().getConnectionString();
             con.Open();
             com.Connection = con;
             com.CommandText = $"SELECT * FROM [enrollment_system].[dbo].[courses]";
@@ -46,7 +46,7 @@ namespace EnrollmentSystem.Controllers
             }
             con.Close();
             ViewBag.Courses = JsonConvert.SerializeObject(courses);
-            return View ();
+            return View();
         }
 
         [HttpGet]
@@ -79,19 +79,19 @@ namespace EnrollmentSystem.Controllers
                 con.Open();
                 com.Connection = con;
                 com.CommandText = $"UPDATE [enrollment_system].[dbo].[courses] SET name = '{model.Name.ToString()}', description = '{model.Description.ToString()}'  WHERE id = '{model.Id}'";
-                Boolean isUpdated =  com.ExecuteNonQuery() > 0 ;
+                Boolean isUpdated = com.ExecuteNonQuery() > 0;
                 if (isUpdated)
                 {
                     ViewBag.SaveResult = true;
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "There was a problem updating course. Please try again." );
+                    ModelState.AddModelError(string.Empty, "There was a problem updating course. Please try again.");
                 }
                 con.Close();
 
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 ModelState.AddModelError(string.Empty, e.Message);
             }
@@ -110,11 +110,11 @@ namespace EnrollmentSystem.Controllers
                 Boolean isUpdated = com.ExecuteNonQuery() > 0;
                 if (isUpdated)
                 {
-                    TempData["MessageResult"] = "Course deleted successfully.";
+                    TempData["MessageResult"] = "Course with id:" +  id +   "deleted successfully.";
                 }
                 else
                 {
-                    TempData["ErrorResult"] = "There was a problem adding course. Please try again.";
+                    TempData["ErrorResult"] = "There was a problem deleting course. Please try again.";
                 }
                 con.Close();
 
@@ -161,6 +161,6 @@ namespace EnrollmentSystem.Controllers
             }
             return RedirectToAction("Index", "Courses");
         }
-
+    
     }
 }

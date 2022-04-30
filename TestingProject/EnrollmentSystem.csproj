@@ -241,6 +241,10 @@
     <Compile Include="Models\StudentsModel.cs" />
     <Compile Include="Controllers\RegistrarsController.cs" />
     <Compile Include="Models\RegistrarsModel.cs" />
+    <Compile Include="Models\StatusModel.cs" />
+    <Compile Include="Controllers\StatusController.cs" />
+    <Compile Include="Models\EnrollmentsModel.cs" />
+    <Compile Include="Controllers\EnrollmentsController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -340,12 +344,19 @@
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Student\Edit.cshtml" />
     <Content Include="Views\Registrars\Analytics.cshtml" />
+    <Content Include="Views\Status\Index.cshtml" />
+    <Content Include="Views\Status\Add.cshtml" />
+    <Content Include="Views\Status\Edit.cshtml" />
+    <Content Include="Views\Registrars\Index.cshtml" />
+    <Content Include="Views\Enrollments\Index.cshtml" />
+    <Content Include="Views\Enrollments\Regular.cshtml" />
+    <Content Include="Views\Enrollments\Transferee.cshtml" />
+    <Content Include="Views\Enrollments\Incoming.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="images\" />
     <Folder Include="Views\Courses\" />
-    <Folder Include="Views\Students\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

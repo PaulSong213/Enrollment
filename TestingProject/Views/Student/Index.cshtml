@@ -34,17 +34,36 @@
  <script>
     $(document).ready(function() {
     
-        
-        var coursesData = '@students';
+        var studentsData = '@students';
+        var coursesData = '@ViewBag.Courses';
+        var statusData = '@ViewBag.Status';
+    
+    
+        var students = JSON.parse(studentsData.replace(/&quot;/g,'"'));
         var courses = JSON.parse(coursesData.replace(/&quot;/g,'"'));
-        for(var i = 0; i < courses.length; i++){
-            let course = courses[i];
-            courses[i] = Object.keys(course).map((key) => course[key]);
-            
+        var status = JSON.parse(statusData.replace(/&quot;/g,'"'));
+        console.log(status);
+        for(var i = 0; i < students.length; i++){
+            let student = students[i];
+            students[i] = Object.keys(student).map((key) =>{
+                if(key === 'CourseId'){
+                    for(var j = 0; j < courses.length; j++){
+                        if(courses[j]['Id'] == student[key] )return courses[j]['Name'];
+                    }
+                }
+                
+                if(key === 'StatusId'){
+                    for(var j = 0; j < status.length; j++){
+                        if(status[j]['Id'] == student[key] )return status[j]['Name'];
+                    }
+                }
+                
+                return student[key];
+            });
         }
-        var courseTable = $('#dataTable').DataTable( {
+        var table = $('#dataTable').DataTable( {
             responsive: true,
-            data: courses,
+            data: students,
             columns: [
                 { title: "ID" },
                 { title: "Email" },
@@ -58,9 +77,9 @@
                 { title: "Firebase ID" },
                 { title: "Course" },
                 { title: "Status" },
-                { title: "Profile Image" },
+                { title: "Profile File Name" },
                 { title: "", "defaultContent": "<button class='editItem btn btn-success'>Edit</button>" },
-                { title: "", "defaultContent": "<button class='deleteitem btn btn-danger'>Delete</button>" }
+                { title: "", "defaultContent": "<button class='deleteitem btn btn-secondary text-white'>Mark as Inactive</button>" }
             ],
             "fnRowCallback": function(nRow, aData, iDisplayIndex) {
               nRow.setAttribute('id',aData[0]);

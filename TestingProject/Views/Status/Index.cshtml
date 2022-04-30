@@ -1,9 +1,9 @@
-﻿@model EnrollmentSystem.Models.CoursesModel
+﻿@model EnrollmentSystem.Models.StatusModel
 
 @{
-    ViewBag.Title = "Courses";
+    ViewBag.Title = "Status";
     Layout = "~/Views/Shared/Registrar_Layout.cshtml";
-    var courses = ViewBag.Courses;
+    var test = "test";
 }
 
 
@@ -24,7 +24,7 @@
 <section class="row pb-5 w-100 overflow-auto">
     <div class="d-flex justify-content-between py-3">
         <h3>@ViewBag.Title</h3>
-        <a href="/Courses/Add" class="btn btn-primary ml-auto">Add Course</a>
+        <a href="/Status/Add" class="btn btn-primary ml-auto">Add Status</a>
     </div>
    <div class="w-100 overflow-auto py-3">
          <table id="dataTable" class="table table-striped" style="width:100%">
@@ -34,22 +34,19 @@
 @section scripts{
  <script>
     $(document).ready(function() {
-    
-        
-        var coursesData = '@courses';
-        var courses = JSON.parse(coursesData.replace(/&quot;/g,'"'));
-        for(var i = 0; i < courses.length; i++){
-            let course = courses[i];
-            courses[i] = Object.keys(course).map((key) => course[key]);
-            
+        var statusData = '@ViewBag.Status';
+        var status = JSON.parse(statusData.replace(/&quot;/g,'"'));
+        for(var i = 0; i < status.length; i++){
+            let currentStatus = status[i];
+            status[i] = Object.keys(currentStatus).map((key) => currentStatus[key]);
         }
-        var courseTable = $('#dataTable').DataTable( {
+    
+        var statusTable = $('#dataTable').DataTable( {
             responsive: true,
-            data: courses,
+            data: status,
             columns: [
                 { title: "ID" },
                 { title: "Name" },
-                { title: "Description" },
                 { title: "", "defaultContent": "<button class='editItem btn btn-success'>Edit</button>" },
                 { title: "", "defaultContent": "<button class='deleteitem btn btn-danger'>Delete</button>" }
             ],
@@ -66,11 +63,11 @@
          
         $(".editItem").on('click', function(event){
             let itemId = $(this).closest('tr').attr('id');
-            location.href = "/Courses/Edit/" + itemId;
+            location.href = "/Status/Edit/" + itemId;
         });
         $(".deleteitem").on('click', function(event){
             let itemId = $(this).closest('tr').attr('id');
-            location.href = "/Courses/Delete/" + itemId;
+            location.href = "/Status/Delete/" + itemId;
         });
     } );
     

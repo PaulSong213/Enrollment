@@ -120,10 +120,16 @@
   <div class="d-none d-md-flex flex-column flex-shrink-0 p-3 bg-light devide-left" style="width: 280px;height: 100vh">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
       <img class="logo" src="/images/logo.png" />
-      <span class="fs-6 mx-3">Registrar Dashboard</span>
+      <span class="fs-6 mx-3">Registrar Panel</span>
     </a>
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
+    <li class="nav-item">
+        <a href="/Enrollments" class="nav-link my-2 d-flex fs-6 @( Context.Request.Path == "/Enrollments" ? "bg-success text-light" : "text-dark shadow-sm")" aria-current="page">
+          <ion-icon class="fs-4" name="documents"></ion-icon>
+          <span class="my-auto d-block mx-2">Enrollments</span>
+        </a>
+      </li>
      <li class="nav-item">
         <a href="/Registrars/Analytics" class="nav-link my-2 d-flex fs-6 @( Context.Request.Path == "/Registrars/Analytics" ? "bg-success text-light" : "text-dark shadow-sm")" aria-current="page">
           <ion-icon class="fs-4" name="analytics"></ion-icon>
@@ -136,12 +142,28 @@
           <span class="my-auto d-block mx-2">Courses</span>
         </a>
       </li>
+    
+     <li class="nav-item">
+        <a href="/Status" class="nav-link my-2  d-flex fs-6 @( Context.Request.Path == "/Status" ? "bg-success text-light" : "text-dark shadow-sm")" aria-current="page">
+          <ion-icon class="fs-4" name="ribbon"></ion-icon>
+          <span class="my-auto d-block mx-2">Status</span>
+        </a>
+     </li>
+                    
      <li class="nav-item">
         <a href="/Student" class="nav-link my-2  d-flex fs-6 @( Context.Request.Path == "/Student" ? "bg-success text-light" : "text-dark shadow-sm")" aria-current="page">
           <ion-icon class="fs-4" name="people"></ion-icon>
           <span class="my-auto d-block mx-2">Students</span>
         </a>
      </li>
+          
+     <li class="nav-item">
+        <a href="/Registrars" class="nav-link my-2  d-flex fs-6 @( Context.Request.Path == "/Registrars" ? "bg-success text-light" : "text-dark shadow-sm")" aria-current="page">
+          <ion-icon class="fs-4" name="person"></ion-icon>
+          <span class="my-auto d-block mx-2">Registrars</span>
+        </a>
+     </li>
+    
     </ul>
     <hr>
     <div class="dropdown">
@@ -167,6 +189,11 @@
     </a>
     <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
       <li class="nav-item">
+        <a href="/Enrollments" class="nav-link py-3 border-bottom @( Context.Request.Path == "/Enrollments" ? "bg-success text-light" : "text-dark shadow-sm")"" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
+          <ion-icon class="fs-4" name="documents"></ion-icon>
+        </a>
+      </li>
+      <li class="nav-item">
         <a href="/Registrars/Analytics" class="nav-link py-3 border-bottom @( Context.Request.Path == "/Registrars/Analytics" ? "bg-success text-light" : "text-dark shadow-sm")"" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
           <ion-icon class="fs-4" name="analytics"></ion-icon>
         </a>
@@ -176,12 +203,22 @@
           <ion-icon class="fs-4" name="bulb"></ion-icon>
         </a>
       </li>
+      
+      <li class="nav-item">
+        <a href="/Status" class="nav-link py-3 border-bottom @( Context.Request.Path == "/Status" ? "bg-success text-light" : "text-dark shadow-sm")"" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
+          <ion-icon class="fs-4" name="ribbon"></ion-icon>
+        </a>
+      </li>
       <li class="nav-item">
         <a href="/Student" class="nav-link py-3 border-bottom @( Context.Request.Path == "/Student" ? "bg-success text-light" : "text-dark shadow-sm")"" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
           <ion-icon class="fs-4" name="people"></ion-icon>
         </a>
       </li>
-      
+      <li class="nav-item">
+        <a href="/Registrars" class="nav-link py-3 border-bottom @( Context.Request.Path == "/Registrars" ? "bg-success text-light" : "text-dark shadow-sm")"" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
+          <ion-icon class="fs-4" name="person"></ion-icon>
+        </a>
+      </li>
     </ul>
     <div class="dropdown border-top">
       <a href="#" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">

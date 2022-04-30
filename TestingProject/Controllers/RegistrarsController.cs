@@ -1,72 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EnrollmentSystem.Models;
+using Newtonsoft.Json;
 
 namespace EnrollmentSystem.Controllers
 {
     public class RegistrarsController : Controller
     {
+        SqlConnection con = new SqlConnection();
+        SqlCommand com = new SqlCommand();
+        SqlDataReader dr;
 
         public ActionResult Analytics()
         {
             return View();
         }
 
+        [HttpGet]
         public ActionResult Index()
         {
-            return View ();
-        }
+            List<RegistrarsModel> registrars = new List<RegistrarsModel>();
 
-        public ActionResult Details(int id)
-        {
-            return View ();
-        }
-
-        public ActionResult Create()
-        {
-            return View ();
-        } 
-
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try {
-                return RedirectToAction ("Index");
-            } catch {
-                return View ();
+            con.ConnectionString = new AccountController().getConnectionString();
+            con.Open();
+            com.Connection = con;
+            com.CommandText = $"SELECT * FROM [enrollment_system].[dbo].[registrars] WHERE IsActive = 1";
+            dr = com.ExecuteReader();
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    RegistrarsModel registrar = new RegistrarsModel();
+                    registrar.Id = (int)dr["id"];
+                    registrar.FirstName = dr["FirstName"].ToString();
+                    registrar.LastName = dr["LastName"].ToString();
+                    registrar.MiddleName = dr["MiddleName"].ToString();
+                }
             }
-        }
-        
-        public ActionResult Edit(int id)
-        {
-            return View ();
+            con.Close();
+            ViewBag.Registrars = JsonConvert.SerializeObject(registrars);
+            return View();
         }
 
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try {
-                return RedirectToAction ("Index");
-            } catch {
-                return View ();
-            }
-        }
 
-        public ActionResult Delete(int id)
-        {
-            return View ();
-        }
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try {
-                return RedirectToAction ("Index");
-            } catch {
-                return View ();
-            }
-        }
     }
 }

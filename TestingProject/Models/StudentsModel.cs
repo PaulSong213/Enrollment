@@ -46,7 +46,7 @@ namespace EnrollmentSystem.Models
         public string AccountId { get; set; }
 
 
-        [Display(Name = "Course ID")]
+        [Display(Name = "Course")]
         public int CourseId { get; set; }
 
         [Display(Name = "Status ID")]

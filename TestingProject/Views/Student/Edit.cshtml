@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "Edit Student";
     Layout = "~/Views/Shared/Registrar_Layout.cshtml";
-    
 }
 
 @if (ViewBag.SaveResult == true)
@@ -11,9 +10,6 @@
     <div class="alert alert-success">
         <strong>Success! </strong>Student Updated
     </div>
-}
-@{
-ViewBag.SaveResult = false;
 }
 <div class="d-flex justify-content-between">
     <h3>@ViewBag.Title</h3>
@@ -24,7 +20,7 @@ ViewBag.SaveResult = false;
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-        
+
         <div class="form-horizontal">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group my-3">
@@ -40,12 +36,6 @@ ViewBag.SaveResult = false;
             </div>
         </div>
         
-         <div class="form-group my-3">
-            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
-            </div>
-        </div>
         
         <div class="form-group my-3">
             @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -53,18 +43,41 @@ ViewBag.SaveResult = false;
                 @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
-            Model.Course
         <div class="form-group my-3">
         @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-5" })
-        <div class="col-md-10">
-            <select name="Gender" class="form-select form-control" >
-                <option value="1" @(Model.Gender == "1" ? "selected='selected'" : "")>Male</option>
-                <option value="2" @(Model.Gender == "2" ? "selected='selected'" : "")>Female</option>
-                <option value="0" @(Model.Gender == "0" ? "selected='selected'" : "")>Prefer not to say</option>
-            </select>
+            <div class="col-md-10">
+                <select name="Gender" class="form-select form-control" >
+                    <option value="1" @(Model.Gender == "1" ? "selected='selected'" : "")>Male</option>
+                    <option value="2" @(Model.Gender == "2" ? "selected='selected'" : "")>Female</option>
+                    <option value="0" @(Model.Gender == "0" ? "selected='selected'" : "")>Prefer not to say</option>
+                </select>
+            </div>
         </div>
+    
+        <div class="form-group my-3">
+        @Html.LabelFor(model => model.CourseId, htmlAttributes: new { @class = "control-label col-md-5" })
+            <div class="col-md-10">
+                <select name="CourseId" class="form-select form-control" >
+                     @foreach (var course in ViewBag.Courses)
+                    {
+                        <option value="@course.Id" @(Model.CourseId == @course.Id ? "selected='selected'" : "")>@course.Name</option>
+                    }
+                </select>
+            </div>
         </div>
-
+    
+        <div class="form-group my-3">
+        @Html.LabelFor(model => model.StatusId, htmlAttributes: new { @class = "control-label col-md-5" })
+            <div class="col-md-10">
+                <select name="StatusId" class="form-select form-control" >
+                     @foreach (var status in ViewBag.Status)
+                    {
+                        <option value="@status.Id" @(Model.StatusId == @status.Id ? "selected='selected'" : "")>@status.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+    
         <div class="form-group my-3">
             @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-5" })
             <div class="col-md-10">
@@ -78,12 +91,19 @@ ViewBag.SaveResult = false;
                 @Html.EditorFor(model => model.ContactNumber, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
-    
+        
+        <div class="form-group my-3">
+            @Html.LabelFor(model => model.Age, htmlAttributes: new { @class = "control-label col-md-5" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Age, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
            
-     <div class="form-group my-3">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Update Course" class="btn btn-default btn-success"  />
+         <div class="form-group my-3">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Update Student" class="btn btn-default btn-success"  />
+            </div>
         </div>
     </div>
-    </div>
+
 }
