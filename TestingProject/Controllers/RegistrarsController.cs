@@ -46,6 +46,29 @@ namespace EnrollmentSystem.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult Security()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Security(RegistrarSecurityViewModel model)
+        {
+            if(model.Password == "12345")
+            {
+                return RedirectToAction("SignUp");
+            }
+            ModelState.AddModelError(string.Empty, "Incorrect password.");
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult SignUp()
+        {
+            return View();
+        }
+
 
     }
 }

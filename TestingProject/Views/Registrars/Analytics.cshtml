@@ -6,47 +6,35 @@
 }
 
 <section class="row pb-5 w-100 overflow-auto">
-
-    <!-- Chart for total enrolled & available slots-->
-
     <div class="d-flex justify-content-between py-3">
         <h3>@ViewBag.Title</h3>
     </div>
     <div class="w-100 overflow-auto py-3 row">
-        <div class="col-md-6 col-sm-12 p-3">
+         <!-- Chart for total enrolled & available slots-->
+        <div class="col-md-6 col-sm-12 p-5">
             <h5 class="text-center text-secondary">Enrollment Slot</h5>
             <canvas id="enrollmentSlot" width="400" height="400"></canvas>
         </div>
-    </div>
-
-    <!--Chart for enrolled per courses-->
-
-    <div class="d-flex justify-content-between py-3">
-        <h3>@ViewBag.Title</h3>
-    </div>
-    <div class="w-100 overflow-auto py-3 row">
-        <div class="col-md-6 col-sm-12 p-3">
-            <h5 class="text-center text-secondary">Enrollment Slot</h5>
+        
+        <!--Chart for enrolled per courses-->
+         <div class="col-md-6 col-sm-12 p-5">
+            <h5 class="text-center text-secondary">Course Count</h5>
             <canvas id="enrollment" width="400" height="400"></canvas>
         </div>
-    </div>
-
-    <!--chart for enrollees by month-->
-    <div class="d-flex justify-content-between py-3">
-        <h3>@ViewBag.Title</h3>
-    </div>
-    <div class="w-100 overflow-auto py-3 row">
-        <div class="col-md-6 col-sm-12 p-3">
-            <h5 class="text-center text-secondary">Enrollment Slot</h5>
+        
+        <!--chart for enrollments by month-->
+        <div class="col-12 mt-5" style="padding-left: 15vw; padding-right: 15vw">
+            <h5 class="text-center text-secondary">Enrollment Rate per Month</h5>
             <canvas id="enrollmentpermonth" width="400" height="400"></canvas>
         </div>
     </div>
 </section>
-@section scripts{
 
+@section scripts{
     <script>
         showEnrollmentChart();
-
+        showCourseCountChart();    
+        showEnrollmentperMonthChart();
         function showEnrollmentChart() {
             //this chat is copied from https://www.chartjs.org/docs/latest/#creating-a-chart
             const ctx = document.getElementById('enrollmentSlot').getContext('2d');
@@ -70,11 +58,9 @@
                 },
             });
         }
-    </script>
-    <script>
-        showEnrollmentChart();
-
-        function showEnrollmentChart() {
+    
+        
+        function showCourseCountChart() {
             //this chat is copied from https://www.chartjs.org/docs/latest/#creating-a-chart
             const ctx = document.getElementById('enrollment').getContext('2d');
             const myChart = new Chart(ctx, {
@@ -82,46 +68,23 @@
                 data: {
                     labels: ['BSCS', 'BS Crim','BSIT','BM','BSHM','BS Psych','BS Ed'],
                     datasets: [{
-                        label: 'Enrollment Slots',
-                        data: [120, 560,100,100,313,342,442],
+                        label: 'Course Count',
+                        data: [120, 260,100,100,313,342,14],
                         backgroundColor: [
-                            'rgba(95, 117, 104, 0.5)',
-                            'rgba(24, 186, 91, 0.5 )',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
                         ],
-                        borderColor: [
-                            'rgba(95, 117, 104, 1)',
-                            'rgba(18, 130, 64 , 1)',
-                        ],
-                        borderColor: [
-                            'rgba(95, 117, 104, 1)',
-                            'rgba(18, 130, 64 , 1)',
-                        ],
-                        borderColor: [
-                            'rgba(95, 117, 104, 1)',
-                            'rgba(18, 130, 64 , 1)',
-                        ],
-                        borderColor: [
-                            'rgba(95, 117, 104, 1)',
-                            'rgba(18, 130, 64 , 1)',
-                        ],
-                        borderColor: [
-                            'rgba(95, 117, 104, 1)',
-                            'rgba(18, 130, 64 , 1)',
-                        ], borderColor: [
-                            'rgba(95, 117, 104, 1)',
-                            'rgba(18, 130, 64 , 1)',
-                        ],
-
-                        borderWidth: 1
-                    }]
+                    },
+                  ]
                 },
             });
         }
-    </script>
-    <script>
-        showEnrollmentChart();
-
-        function showEnrollmentChart() {
+    
+        function showEnrollmentperMonthChart() {
             //this chat is copied from https://www.chartjs.org/docs/latest/#creating-a-chart
             const ctx = document.getElementById('enrollmentpermonth').getContext('2d');
            
@@ -134,47 +97,22 @@
                         'April',
                         'May',
                         'June',
-                        'July',
-                        'August',
-                        'September',
-                        'October',
-                        'November',
-                        'December'],
+                        ],
                     datasets: [{
                         label: 'Enrollment Per Month',
-                        data: [120, 560, 100, 100, 313, 342, 442,212,123,6535,345,255],
+                        data: [120, 160, 100, 100, 13, 42],
                         backgroundColor: [
-                            'rgba(95, 117, 104, 0.5)',
-                            'rgba(24, 186, 91, 0.5 )',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
                         ],
-                        borderColor: [
-                            'rgba(95, 117, 104, 1)',
-                            'rgba(18, 130, 64 , 1)',
-                        ],
-                        borderColor: [
-                            'rgba(95, 117, 104, 1)',
-                            'rgba(18, 130, 64 , 1)',
-                        ],
-                        borderColor: [
-                            'rgba(95, 117, 104, 1)',
-                            'rgba(18, 130, 64 , 1)',
-                        ],
-                        borderColor: [
-                            'rgba(95, 117, 104, 1)',
-                            'rgba(18, 130, 64 , 1)',
-                        ],
-                        borderColor: [
-                            'rgba(95, 117, 104, 1)',
-                            'rgba(18, 130, 64 , 1)',
-                        ], borderColor: [
-                            'rgba(95, 117, 104, 1)',
-                            'rgba(18, 130, 64 , 1)',
-                        ],
-
-                        borderWidth: 1
                     }]
                 },
             });
         }
+    
     </script>
 }

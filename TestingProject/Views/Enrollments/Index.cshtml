@@ -1,8 +1,12 @@
 ﻿@model EnrollmentSystem.Models.EnrollmentsModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Enrollments";
     Layout = "~/Views/Shared/Registrar_Layout.cshtml";
+    
+    string url = HttpContext.Current.Request.Url.AbsoluteUri;
+    Uri myUri = new Uri(url);
+    string enrollmentType = HttpUtility.ParseQueryString(myUri.Query).Get("type");
 }
 
 
@@ -22,19 +26,29 @@
 }
 
 <section class="row pb-5 w-100 overflow-auto">
-    <div class="d-flex justify-content-between py-3">
+   <div class="d-flex justify-content-between py-3">
         <h3>@ViewBag.Title</h3>
-    </div>
-   <div class="w-100 overflow-auto py-3">
-         <table id="dataTable" class="table table-striped" style="width:100%">
-    </table>
-    </div>
+   </div>
+   <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active @(enrollmentType == null ? "bg-success text-white" :  "" ) " href="/Enrollments">Regular</a>
+      </li>
+      <li class="nav-item mx-1">
+        <a class="nav-link active @(enrollmentType == "Incoming" ? "bg-success text-white" :  "" ) " href="/Enrollments?type=Incoming">Incoming</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active @(enrollmentType == "Returnee" ? "bg-success text-white" :  "" ) " href="/Enrollments?type=Returnee">Returnee</a>
+      </li>
+   <div class="w-100 overflow-auto px-3 py-4 ">
+        <table id="dataTable" class="table table-striped" style="width:100%"> </table>
+   </div>
+  </ul> 
+  
 </section>
 @section scripts{
  <script>
     $(document).ready(function() {
     
-        
         var enrollmentsData = '@ViewBag.Enrollments';
         var enrollments = JSON.parse(enrollmentsData.replace(/&quot;/g,'"'));
         for(var i = 0; i < enrollments.length; i++){

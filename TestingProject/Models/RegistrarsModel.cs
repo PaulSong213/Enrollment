@@ -12,6 +12,16 @@ namespace EnrollmentSystem.Models
         public int Id { get; set; }
 
         [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
+        [Required]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
@@ -31,12 +41,13 @@ namespace EnrollmentSystem.Models
         [Display(Name = "Is Active")]
         public int IsActive { get; set; }
 
-        [Required]
         [Display(Name = "Profile File Name")]
         public string ProfileFileName { get; set; }
 
+        public HttpPostedFileBase UploadedProfileFileName { get; set; }
 
 
-        
+
+
     }
 }
