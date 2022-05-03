@@ -4,7 +4,13 @@ body {
 .hello{
     background-color:white;
     border-radius: 10px;
-    height:20vh;
+    height:15vh;
+
+}
+.parentguardian {
+    background-color: white;
+    border-radius: 10px;
+    height: 7vh;
 }
 .form-group{
     background-color: white;
