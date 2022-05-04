@@ -18,8 +18,8 @@ namespace EnrollmentSystem.Controllers
 {
     public class AccountController : Controller
     {
-        private static string ApiKey = "AIzaSyB3kuislzQfHVOr-3Zw5ecu_l4QBT3KP2Q";
-        private static string Bucket = "enrollment-system-fc139.appspot.com";
+        public static string ApiKey = "AIzaSyB3kuislzQfHVOr-3Zw5ecu_l4QBT3KP2Q";
+        public static string Bucket = "enrollment-system-fc139.appspot.com";
 
         SqlConnection con = new SqlConnection();
         SqlCommand com = new SqlCommand();

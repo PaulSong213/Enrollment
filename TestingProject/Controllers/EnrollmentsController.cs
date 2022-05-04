@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Web.Mvc;
 using EnrollmentSystem.Models;
@@ -28,18 +29,17 @@ namespace EnrollmentSystem.Controllers
                 {
                     EnrollmentsModel enrollment = new EnrollmentsModel();
                     enrollment.Id = (int)dr["id"];
-                    enrollment.BirthCertificateFileName = dr["BirthCertificateFileName"].ToString();
-                    enrollment.CertificateOfTransferFileName = dr["CertificateOfTransferFileName"].ToString();
-                    enrollment.GoodMoralFileName = dr["GoodMoralFileName"].ToString();
-                    enrollment.HonorableDismissalFileName = dr["HonorableDismissalFileName"].ToString();
+                    enrollment.BirthCertificateFileName = dr["BirthCertificateFileName"] != DBNull.Value ? dr["BirthCertificateFileName"].ToString() : "";
+                    enrollment.CertificateOfTransferFileName = dr["CertificateOfTransferFileName"] != DBNull.Value ? dr["CertificateOfTransferFileName"].ToString() : "" ;
+                    enrollment.GoodMoralCertificateFileName = dr["goodMoralCertificateFileName"] != DBNull.Value ? dr["GoodMoralFileName"].ToString() : "";
+                    enrollment.HonorableDismissalFileName = dr["HonorableDismissalFileName"] != DBNull.Value ? dr["HonorableDismissalFileName"].ToString() : "" ;
                     enrollment.ProfileFileName = dr["ProfileFileName"].ToString();
                     enrollment.ReportCardFileName = dr["ReportCardFileName"].ToString();
                     enrollment.SchoolYearStart = dr["SchoolYearStart"].ToString();
                     enrollment.CourseId = (int)dr["CourseId"];
-                    enrollment.IsActive = (int)dr["IsActive"];
+                    enrollment.IsActive = dr["IsActive"].ToString();
                     enrollment.StudentId = (int)dr["StudentId"];
                     enrollment.TypeId = (int)dr["TypeId"];
-
                     enrollments.Add(enrollment);
                 }
             }

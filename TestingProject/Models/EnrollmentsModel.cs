@@ -37,8 +37,8 @@ namespace EnrollmentSystem.Models
         [Display(Name = "Birth Certificate File Name")]
         public string BirthCertificateFileName { get; set; }
 
-        [Display(Name = "Good Moral File Name")]
-        public string GoodMoralFileName { get; set; }
+        [Display(Name = "Good Moral Certificate File Name")]
+        public string GoodMoralCertificateFileName { get; set; }
 
         [Display(Name = "Certificate Of Transfer File Name")]
         public string CertificateOfTransferFileName { get; set; }
@@ -47,7 +47,7 @@ namespace EnrollmentSystem.Models
         public string HonorableDismissalFileName { get; set; }
 
         [Display(Name = "Is Active")]
-        public int IsActive { get; set; }
+        public string IsActive { get; set; }
 
 
 
