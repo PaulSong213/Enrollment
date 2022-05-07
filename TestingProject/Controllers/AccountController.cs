@@ -31,7 +31,7 @@ namespace EnrollmentSystem.Controllers
 
         public string getConnectionString()
         {
-            return "data source=paul;initial catalog=enrollment_system;user id=sa;password=Relente1"; 
+            return "Data Source=DESKTOP-9R1M64D\\SQLEXPRESS;Initial Catalog=enrollment_system;Integrated Security=True"; 
         }
 
         [AllowAnonymous]
@@ -208,16 +208,17 @@ namespace EnrollmentSystem.Controllers
             }
 
             // Info.
-            return this.View();
+            return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
         public async Task<ActionResult> Login(LoginViewModel model)
         {
-
+            
             try
             {
+                this.connectionString();
                 // Verification.
                 if (ModelState.IsValid)
                 {
@@ -236,7 +237,7 @@ namespace EnrollmentSystem.Controllers
                     else
                     {
                         // Setting.
-                        ModelState.AddModelError(string.Empty, "Invalid username or password.");
+                        ModelState.AddModelError(string.Empty, "Invalid email or password.");
                     }
                 }
             }
@@ -244,10 +245,11 @@ namespace EnrollmentSystem.Controllers
             {
                 // Info
                 Console.Write(ex);
+                ModelState.AddModelError(string.Empty, ex.Message);
             }
 
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError(string.Empty, "Invalid username or password.");
+            ModelState.AddModelError(string.Empty, "Invalid test email or password.");
             return this.View(model);
         }
 
@@ -266,6 +268,29 @@ namespace EnrollmentSystem.Controllers
                 var authenticationManager = ctx.Authentication;
                 // Sign In.
                 authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, claimIdenties);
+
+                //save user session
+                con.Open();
+                com.Connection = con;
+                com.CommandText = $"SELECT *  FROM [dbo].[students] WHERE email='{email}'";
+                dr = com.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        this.Session["userId"] = dr["id"];
+                        this.Session["userEmail"] = dr["email"];
+                        this.Session["userFirstName"] = dr["firstName"];
+                        this.Session["userMiddleName"] = dr["middleName"];
+                        this.Session["userLastName"] = dr["lastName"];
+                        this.Session["userGender"] = dr["gender"];
+                        this.Session["userAddress"] = dr["address"];
+                        this.Session["userContactNumber"] = dr["contactNumber"];
+                        this.Session["userProfileFileName"] = dr["profileFileName"];
+                    }
+                }
+                con.Close();
+
             }
             catch (Exception ex)
             {
@@ -297,9 +322,7 @@ namespace EnrollmentSystem.Controllers
         {
             var ctx = Request.GetOwinContext();
             var authenticationManager = ctx.Authentication;
-            this.Session["tokenEmail"] = "";
-            this.Session["tokenPassword"] = "";
-            this.Session["userAccountID"] = "";
+            this.Session.Clear();
             authenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Login", "Account");
         }

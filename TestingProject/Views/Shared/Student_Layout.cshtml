@@ -12,9 +12,9 @@
             height: 3rem;
             width: 3rem;
         }
-            
-         .logo {
-            width: 3rem;    
+
+        .logo {
+            width: 3rem;
             margin-left: 1rem;
         }
     </style>
@@ -22,7 +22,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light position-absolute top-0 w-100 px-2">
         <div class="container-fluid">
-           
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -30,20 +30,25 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a href="/Enrollments" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-                          <img class="logo" src="/images/logo.png" />
-                          <span class="fs-6 mx-3">Student Portal</span>
+                            <img class="logo" src="/images/logo.png" />
+                            <span class="fs-6 mx-3">Student Portal</span>
                         </a>
                     </li>
-                   
+
                 </ul>
                 <div class="dropdown mx-5 px-5">
-                  <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                    <strong>mdo</strong>
-                  </a>
-                  <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                    <li><a class="dropdown-item" href="/Account/LogOff">Sign out</a></li>
-                  </ul>
+                    <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="/images/@Session["userProfileFileName"]" alt=" @Session["userFirstName"]" width="32" height="32" class="rounded-circle me-2">
+                        <strong>
+                            @Session["userFirstName"]
+                        </strong>
+                        <strong class="mx-1">
+                            @Session["userLastName"]
+                        </strong>
+                    </a>
+                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                        <li><a class="dropdown-item" href="/Account/LogOff">Sign out</a></li>
+                    </ul>
                 </div>
             </div>
         </div>

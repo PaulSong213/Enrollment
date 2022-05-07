@@ -25,10 +25,10 @@ namespace EnrollmentSystem.Controllers
         SqlDataReader dr;
 
         // GET: Student
+        //[Authorize]
         public ActionResult Portal()
         {
             ViewBag.UserType = "student";
-
             return View();
         }
 
