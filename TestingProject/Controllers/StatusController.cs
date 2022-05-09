@@ -22,7 +22,7 @@ namespace EnrollmentSystem.Controllers
             con.ConnectionString = new AccountController().getConnectionString();
             con.Open();
             com.Connection = con;
-            com.CommandText = $"SELECT * FROM [enrollment_system].[dbo].[status]";
+            com.CommandText = $"SELECT * FROM [dbo].[status]";
             dr = com.ExecuteReader();
             if (dr.HasRows)
             {
@@ -54,7 +54,7 @@ namespace EnrollmentSystem.Controllers
                 con.ConnectionString = new AccountController().getConnectionString();
                 con.Open();
                 com.Connection = con;
-                com.CommandText = $"INSERT INTO [enrollment_system].[dbo].[status] (name) VALUES ('{model.Name}' ) ";
+                com.CommandText = $"INSERT INTO [dbo].[status] (name) VALUES ('{model.Name}' ) ";
                 Boolean isUpdated = com.ExecuteNonQuery() > 0;
                 if (isUpdated)
                 {
@@ -82,7 +82,7 @@ namespace EnrollmentSystem.Controllers
             con.ConnectionString = new AccountController().getConnectionString();
             con.Open();
             com.Connection = con;
-            com.CommandText = $"SELECT * FROM [enrollment_system].[dbo].[status] WHERE id = '{id}'";
+            com.CommandText = $"SELECT * FROM [dbo].[status] WHERE id = '{id}'";
             dr = com.ExecuteReader();
             if (dr.HasRows)
             {
@@ -104,7 +104,7 @@ namespace EnrollmentSystem.Controllers
                 con.ConnectionString = new AccountController().getConnectionString();
                 con.Open();
                 com.Connection = con;
-                com.CommandText = $"UPDATE [enrollment_system].[dbo].[status] SET name = '{model.Name.ToString()}' WHERE id = '{model.Id}'";
+                com.CommandText = $"UPDATE [dbo].[status] SET name = '{model.Name.ToString()}' WHERE id = '{model.Id}'";
                 Boolean isUpdated = com.ExecuteNonQuery() > 0;
                 if (isUpdated)
                 {
@@ -131,7 +131,7 @@ namespace EnrollmentSystem.Controllers
                 con.ConnectionString = new AccountController().getConnectionString();
                 con.Open();
                 com.Connection = con;
-                com.CommandText = $"DELETE FROM [enrollment_system].[dbo].[status] WHERE id = '{id}'";
+                com.CommandText = $"DELETE FROM [dbo].[status] WHERE id = '{id}'";
                 Boolean isUpdated = com.ExecuteNonQuery() > 0;
                 if (isUpdated)
                 {

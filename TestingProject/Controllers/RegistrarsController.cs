@@ -34,7 +34,7 @@ namespace EnrollmentSystem.Controllers
             con.ConnectionString = new AccountController().getConnectionString();
             con.Open();
             com.Connection = con;
-            com.CommandText = $"SELECT * FROM [enrollment_system].[dbo].[registrars] WHERE IsActive = 1";
+            com.CommandText = $"SELECT * FROM [dbo].[registrars] WHERE IsActive = 1";
             dr = com.ExecuteReader();
             if (dr.HasRows)
             {

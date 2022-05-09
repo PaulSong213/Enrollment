@@ -42,7 +42,7 @@ namespace EnrollmentSystem.Controllers
             con.ConnectionString = new AccountController().getConnectionString();
             con.Open();
             com.Connection = con;
-            com.CommandText = $"SELECT * FROM [enrollment_system].[dbo].[students] WHERE isActive = 1";
+            com.CommandText = $"SELECT * FROM [dbo].[students] WHERE isActive = 1";
             dr = com.ExecuteReader();
             if (dr.HasRows)
             {
@@ -73,7 +73,7 @@ namespace EnrollmentSystem.Controllers
             //Get courses
             List<CoursesModel> courses = new List<CoursesModel>();
             dr.Close();
-            com.CommandText = $"SELECT * FROM [enrollment_system].[dbo].[courses]";
+            com.CommandText = $"SELECT * FROM [dbo].[courses]";
             dr = com.ExecuteReader();
             if (dr.HasRows)
             {
@@ -91,7 +91,7 @@ namespace EnrollmentSystem.Controllers
             //Get status
             List<StatusModel> status = new List<StatusModel>();
             dr.Close();
-            com.CommandText = $"SELECT * FROM [enrollment_system].[dbo].[status]";
+            com.CommandText = $"SELECT * FROM [dbo].[status]";
             dr = com.ExecuteReader();
             if (dr.HasRows)
             {
@@ -120,7 +120,7 @@ namespace EnrollmentSystem.Controllers
             con.ConnectionString = new AccountController().getConnectionString();
             con.Open();
             com.Connection = con;
-            com.CommandText = $"SELECT * FROM [enrollment_system].[dbo].[students] WHERE id = '{id}'; ";
+            com.CommandText = $"SELECT * FROM [dbo].[students] WHERE id = '{id}'; ";
             dr = com.ExecuteReader();
             if (dr.HasRows)
             {
@@ -142,7 +142,7 @@ namespace EnrollmentSystem.Controllers
             dr.Close();
             //Get courses
             List<CoursesModel> courses = new List<CoursesModel>();
-            com.CommandText = $"SELECT * FROM [enrollment_system].[dbo].[courses]";
+            com.CommandText = $"SELECT * FROM [dbo].[courses]";
             dr = com.ExecuteReader();
             if (dr.HasRows)
             {
@@ -162,7 +162,7 @@ namespace EnrollmentSystem.Controllers
 
             //Get courses
             List<StatusModel> status = new List<StatusModel>();
-            com.CommandText = $"SELECT * FROM [enrollment_system].[dbo].[status]";
+            com.CommandText = $"SELECT * FROM [dbo].[status]";
             dr = com.ExecuteReader();
             if (dr.HasRows)
             {
@@ -192,7 +192,7 @@ namespace EnrollmentSystem.Controllers
                 con.ConnectionString = new AccountController().getConnectionString();
                 con.Open();
                 com.Connection = con;
-                com.CommandText = $"UPDATE [enrollment_system].[dbo].[students] SET FirstName = '{model.FirstName}', MiddleName = '{model.MiddleName}' , LastName = '{model.LastName}', Address='{model.Address}', CourseId = {model.CourseId}, StatusId= {model.StatusId}, ContactNumber= '{model.ContactNumber}', Age={model.Age}, Gender= '{model.Gender}'  WHERE id = '{model.id}' ";
+                com.CommandText = $"UPDATE [dbo].[students] SET FirstName = '{model.FirstName}', MiddleName = '{model.MiddleName}' , LastName = '{model.LastName}', Address='{model.Address}', CourseId = {model.CourseId}, StatusId= {model.StatusId}, ContactNumber= '{model.ContactNumber}', Age={model.Age}, Gender= '{model.Gender}'  WHERE id = '{model.id}' ";
                 Boolean isUpdated = com.ExecuteNonQuery() > 0;
                 if (isUpdated)
                 {
@@ -219,7 +219,7 @@ namespace EnrollmentSystem.Controllers
                 con.ConnectionString = new AccountController().getConnectionString();
                 con.Open();
                 com.Connection = con;
-                com.CommandText = $"UPDATE [enrollment_system].[dbo].[students] SET isActive = 0  WHERE id = '{id}'";
+                com.CommandText = $"UPDATE [dbo].[students] SET isActive = 0  WHERE id = '{id}'";
                 Boolean isUpdated = com.ExecuteNonQuery() > 0;
                 if (isUpdated)
                 {

@@ -214,6 +214,21 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Sprache">
+      <HintPath>..\packages\Sprache.2.3.1\lib\net45\Sprache.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetEnv">
+      <HintPath>..\packages\DotNetEnv.2.3.0\lib\netstandard1.3\DotNetEnv.dll</HintPath>
+    </Reference>
+    <Reference Include="PCLStorage.Abstractions">
+      <HintPath>..\packages\PCLStorage.1.0.2\lib\net45\PCLStorage.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="PCLStorage">
+      <HintPath>..\packages\PCLStorage.1.0.2\lib\net45\PCLStorage.dll</HintPath>
+    </Reference>
+    <Reference Include="Database">
+      <HintPath>..\packages\Database.2.5.0\lib\Database.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
@@ -246,6 +261,7 @@
     <Compile Include="Models\EnrollmentsModel.cs" />
     <Compile Include="Controllers\EnrollmentsController.cs" />
     <Compile Include="Models\RegistrarSecurityViewModel.cs" />
+    <Compile Include="Models\EnrollmentPreviewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -355,6 +371,8 @@
     <Content Include="Views\Enrollments\Incoming.cshtml" />
     <Content Include="Views\Registrars\Security.cshtml" />
     <Content Include="Views\Registrars\SignUp.cshtml" />
+    <None Include=".env" />
+    <None Include="env.example" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

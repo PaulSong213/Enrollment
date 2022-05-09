@@ -26,12 +26,13 @@ namespace EnrollmentSystem.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            List<CoursesModel> courses = new List<CoursesModel>();
+
+            List <CoursesModel> courses = new List<CoursesModel>();
 
             con.ConnectionString = new AccountController().getConnectionString();
             con.Open();
             com.Connection = con;
-            com.CommandText = $"SELECT * FROM [enrollment_system].[dbo].[courses]";
+            com.CommandText = $"SELECT * FROM [dbo].[courses]";
             dr = com.ExecuteReader();
             if (dr.HasRows)
             {
@@ -55,7 +56,7 @@ namespace EnrollmentSystem.Controllers
             con.ConnectionString = new AccountController().getConnectionString();
             con.Open();
             com.Connection = con;
-            com.CommandText = $"SELECT * FROM [enrollment_system].[dbo].[courses] WHERE id = '{id}'";
+            com.CommandText = $"SELECT * FROM [dbo].[courses] WHERE id = '{id}'";
             dr = com.ExecuteReader();
             if (dr.HasRows)
             {
@@ -78,7 +79,7 @@ namespace EnrollmentSystem.Controllers
                 con.ConnectionString = new AccountController().getConnectionString();
                 con.Open();
                 com.Connection = con;
-                com.CommandText = $"UPDATE [enrollment_system].[dbo].[courses] SET name = '{model.Name.ToString()}', description = '{model.Description.ToString()}'  WHERE id = '{model.Id}'";
+                com.CommandText = $"UPDATE [dbo].[courses] SET name = '{model.Name.ToString()}', description = '{model.Description.ToString()}'  WHERE id = '{model.Id}'";
                 Boolean isUpdated = com.ExecuteNonQuery() > 0;
                 if (isUpdated)
                 {
@@ -106,7 +107,7 @@ namespace EnrollmentSystem.Controllers
                 con.ConnectionString = new AccountController().getConnectionString();
                 con.Open();
                 com.Connection = con;
-                com.CommandText = $"DELETE FROM [enrollment_system].[dbo].[courses] WHERE id = '{id}'";
+                com.CommandText = $"DELETE FROM [dbo].[courses] WHERE id = '{id}'";
                 Boolean isUpdated = com.ExecuteNonQuery() > 0;
                 if (isUpdated)
                 {
@@ -140,7 +141,7 @@ namespace EnrollmentSystem.Controllers
                 con.ConnectionString = new AccountController().getConnectionString();
                 con.Open();
                 com.Connection = con;
-                com.CommandText = $"INSERT INTO [enrollment_system].[dbo].[courses] (name,description) VALUES ('{model.Name}' , '{model.Description}' ) ";
+                com.CommandText = $"INSERT INTO [dbo].[courses] (name,description) VALUES ('{model.Name}' , '{model.Description}' ) ";
                 Boolean isUpdated = com.ExecuteNonQuery() > 0;
                 if (isUpdated)
                 {

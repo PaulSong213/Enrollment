@@ -20,7 +20,7 @@
         @TempData["ErrorResult"]
     </div>
 }
-
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 <section class="row pb-5 w-100 overflow-auto">
     <div class="d-flex justify-content-between py-3">
         <h3>@ViewBag.Title</h3>

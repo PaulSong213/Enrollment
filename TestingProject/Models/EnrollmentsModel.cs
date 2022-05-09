@@ -49,8 +49,5 @@ namespace EnrollmentSystem.Models
         [Display(Name = "Is Active")]
         public string IsActive { get; set; }
 
-
-
-
     }
 }
