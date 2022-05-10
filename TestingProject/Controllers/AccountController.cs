@@ -32,7 +32,8 @@ namespace EnrollmentSystem.Controllers
 
         public string getConnectionString()
         {
-            return System.Environment.GetEnvironmentVariable("CONN_STRING");
+            //return "Data Source=DESKTOP-9R1M64D\\SQLEXPRESS;Initial Catalog=enrollment_system;Integrated Security=True";
+            return DotNetEnv.Env.GetString("CONN_STRING", "Data Source=DESKTOP-9R1M64D\\SQLEXPRESS;Initial Catalog=enrollment_system;Integrated Security=True");
         }
 
         [AllowAnonymous]

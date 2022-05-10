@@ -305,6 +305,7 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Properties\launchSettings.json" />
+    <None Include=".env" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -371,13 +372,11 @@
     <Content Include="Views\Enrollments\Incoming.cshtml" />
     <Content Include="Views\Registrars\Security.cshtml" />
     <Content Include="Views\Registrars\SignUp.cshtml" />
-    <None Include=".env" />
     <None Include="env.example" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="images\" />
-    <Folder Include="Views\Courses\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
