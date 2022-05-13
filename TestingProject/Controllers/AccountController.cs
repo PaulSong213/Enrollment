@@ -285,7 +285,7 @@ namespace EnrollmentSystem.Controllers
                         this.Session["userFirstName"] = dr["firstName"];
                         this.Session["userMiddleName"] = dr["middleName"];
                         this.Session["userLastName"] = dr["lastName"];
-                        this.Session["userGender"] = dr["gender"];
+                        this.Session["userGender"] = dr["gender"].ToString() == "1" ? "Male" : "Female" ;
                         this.Session["userAddress"] = dr["address"];
                         this.Session["userContactNumber"] = dr["contactNumber"];
                         this.Session["userProfileFileName"] = dr["profileFileName"];
