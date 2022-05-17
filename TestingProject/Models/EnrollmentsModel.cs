@@ -25,7 +25,7 @@ namespace EnrollmentSystem.Models
 
         [Required]
         [Display(Name = "Status Id")]
-        public int TypeId { get; set; }
+        public string Type { get; set; }
 
         [Required]
         [Display(Name = "ProfileFileName")]
@@ -46,8 +46,14 @@ namespace EnrollmentSystem.Models
         [Display(Name = "Honorable Dismissal File Name")]
         public string HonorableDismissalFileName { get; set; }
 
-        [Display(Name = "Is Active")]
-        public string IsActive { get; set; }
+        [Display(Name = "Date Enrolled")]
+        public string DateEnrolled { get; set; }
+
+        [Display(Name = "Status")]
+        public string Status { get; set; }
+
+        [Display(Name = "StudentModel")]
+        public StudentsModel studentModel { get; set; }
 
     }
 }

@@ -32,6 +32,8 @@
 
 @section scripts{
     <script>
+        
+    
         showEnrollmentChart();
         showCourseCountChart();    
         showEnrollmentperMonthChart();
@@ -61,15 +63,35 @@
     
         
         function showCourseCountChart() {
+            
+            var coursesChartData = {
+                acronyms : [],
+                slots : []
+            };
+    
+            var coursesData = '@ViewBag.Courses';
+            var courses = JSON.parse(coursesData.replace(/&quot;/g,'"'));
+            console.log(courses);
+            
+            var i = 0;
+            courses.map((course)=>{
+                console.log(course);
+                coursesChartData.acronyms[i] = course.Acronym;
+                coursesChartData.slots[i] = course.Slots;
+                i++;
+            });
+    
+            //console.log(coursesChartData);
+            
             //this chat is copied from https://www.chartjs.org/docs/latest/#creating-a-chart
             const ctx = document.getElementById('enrollment').getContext('2d');
             const myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['BSCS', 'BS Crim','BSIT','BM','BSHM','BS Psych','BS Ed'],
+                    labels: coursesChartData.acronyms,
                     datasets: [{
                         label: 'Course Count',
-                        data: [120, 260,100,100,313,342,14],
+                        data: coursesChartData.slots,
                         backgroundColor: [
                             'rgba(255, 99, 132, 1)',
                             'rgba(54, 162, 235, 1)',

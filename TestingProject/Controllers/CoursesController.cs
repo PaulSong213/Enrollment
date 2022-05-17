@@ -32,7 +32,7 @@ namespace EnrollmentSystem.Controllers
             con.ConnectionString = new AccountController().getConnectionString();
             con.Open();
             com.Connection = con;
-            com.CommandText = $"SELECT * FROM [dbo].[courses]";
+            com.CommandText = $"SELECT * FROM [enrollment_system].[dbo].[courses]";
             dr = com.ExecuteReader();
             if (dr.HasRows)
             {
@@ -41,7 +41,8 @@ namespace EnrollmentSystem.Controllers
                     CoursesModel course = new CoursesModel();
                     course.Id = (int)dr["id"];
                     course.Name = dr["Name"].ToString();
-                    course.Description = dr["Description"].ToString();
+                    course.Acronym = dr["Acronym"].ToString();
+                    course.Slots = (int)dr["Slots"];
                     courses.Add(course);
                 }
             }
@@ -63,7 +64,8 @@ namespace EnrollmentSystem.Controllers
                 while (dr.Read())
                 {
                     model.Name = dr["Name"].ToString();
-                    model.Description = dr["Description"].ToString();
+                    model.Acronym = dr["Acronym"].ToString();
+                    model.Slots = (int)dr["Slots"];
                     model.Id = (int)dr["id"];
                 }
             }
@@ -79,7 +81,7 @@ namespace EnrollmentSystem.Controllers
                 con.ConnectionString = new AccountController().getConnectionString();
                 con.Open();
                 com.Connection = con;
-                com.CommandText = $"UPDATE [dbo].[courses] SET name = '{model.Name.ToString()}', description = '{model.Description.ToString()}'  WHERE id = '{model.Id}'";
+                com.CommandText = $"UPDATE [dbo].[courses] SET name = '{model.Name.ToString()}', acronym = '{model.Acronym.ToString()}', slots = {(int)model.Slots}  WHERE id = '{model.Id}'";
                 Boolean isUpdated = com.ExecuteNonQuery() > 0;
                 if (isUpdated)
                 {
@@ -141,7 +143,7 @@ namespace EnrollmentSystem.Controllers
                 con.ConnectionString = new AccountController().getConnectionString();
                 con.Open();
                 com.Connection = con;
-                com.CommandText = $"INSERT INTO [dbo].[courses] (name,description) VALUES ('{model.Name}' , '{model.Description}' ) ";
+                com.CommandText = $"INSERT INTO [dbo].[courses] (name,acronym,slots) VALUES ('{model.Name}' , '{model.Acronym}','{model.Slots}' ) ";
                 Boolean isUpdated = com.ExecuteNonQuery() > 0;
                 if (isUpdated)
                 {

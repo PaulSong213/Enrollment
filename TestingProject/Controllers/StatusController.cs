@@ -22,7 +22,7 @@ namespace EnrollmentSystem.Controllers
             con.ConnectionString = new AccountController().getConnectionString();
             con.Open();
             com.Connection = con;
-            com.CommandText = $"SELECT * FROM [dbo].[status]";
+            com.CommandText = $"SELECT * FROM [enrollment_system].[dbo].[status]";
             dr = com.ExecuteReader();
             if (dr.HasRows)
             {

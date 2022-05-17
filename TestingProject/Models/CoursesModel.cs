@@ -11,10 +11,13 @@ namespace EnrollmentSystem.Models
         [Key]
         public int Id { get; set; }
         [Required]
+        [Display(Name = "Acronym")]
+        public string Acronym { get; set; }
+        [Required]
         [Display(Name = "Name")]
         public string Name { get; set; }
 
-        [Display(Name = "Description")]
-        public string Description { get; set; }
+        [Display(Name = "Slots")]
+        public int Slots { get; set; }
     }
 }

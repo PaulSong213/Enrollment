@@ -23,6 +23,26 @@ namespace EnrollmentSystem.Controllers
 
         public ActionResult Analytics()
         {
+            List<CoursesModel> courses = new List<CoursesModel>();
+            con.ConnectionString = new AccountController().getConnectionString();
+            con.Open();
+            com.Connection = con;
+            com.CommandText = $"SELECT * FROM [dbo].[courses]";
+            dr = com.ExecuteReader();
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    CoursesModel course = new CoursesModel();
+                    course.Id = (int)dr["id"];
+                    course.Acronym = dr["Acronym"].ToString();
+                    course.Name = dr["Name"].ToString();
+                    course.Slots = (int)dr["Slots"];
+                    courses.Add(course);
+                }
+            }
+            con.Close();
+            ViewBag.Courses = JsonConvert.SerializeObject(courses);
             return View();
         }
 

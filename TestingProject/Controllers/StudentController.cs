@@ -152,7 +152,8 @@ namespace EnrollmentSystem.Controllers
                     {
                         Id = (int)dr["Id"],
                         Name = dr["Name"].ToString(),
-                        Description = dr["Description"].ToString()
+                        Acronym = dr["Acronym"].ToString(),
+                        Slots = (int)dr["Acronym"]
                     };
                     courses.Add(course);
                 }
