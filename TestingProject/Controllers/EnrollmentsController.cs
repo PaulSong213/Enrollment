@@ -65,11 +65,11 @@ namespace EnrollmentSystem.Controllers
                     student.MiddleName = dr["studentMiddleName"].ToString();
                     student.LastName = dr["studentLastName"].ToString();
                     student.Address = dr["studentAddress"].ToString();
-                    student.ContactNumber = dr["studentFContactNumber"].ToString();
-                    student.Email = dr["studentFEmail"].ToString();
-                    student.Gender = dr["studentFGender"].ToString() == "2" ? "Female" : "Male";
-                    student.Age = (int)dr["studentFAge"];
-                    student.ProfileFileName = dr["studentFProfileFileName"].ToString();
+                    student.ContactNumber = dr["studentContactNumber"].ToString();
+                    student.Email = dr["studentEmail"].ToString();
+                    student.Gender = dr["studentGender"].ToString() == "2" ? "Female" : "Male";
+                    student.Age = (int)dr["studentAge"];
+                    student.ProfileFileName = dr["studentProfileFileName"].ToString();
 
                     enrollment.studentModel = student;
                     enrollments.Add(enrollment);
