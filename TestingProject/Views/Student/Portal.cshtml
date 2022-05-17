@@ -4,32 +4,51 @@
     Layout = "~/Views/Shared/Student_Layout.cshtml";
 }
 
-<h2>Student Portal</h2>
 <div class="container mt-5">
     <div class="main-body ">
         <div class="card mb-4">
             <div class="content p-4" style="background-color: #EAFAF9;">
                 <h3 align="center">Enrollment status</h3>
-                <h1 class="text-warning" style="font-size: 6em; text-align: center;">Pending</h1>
-                <h5 style=" width: 70%; text-align: center; margin: auto;">Your enrollment application is currently on list to be checked by the registrar. Kindly wait for an email notification about your enrollment status</h5>
+                <h1 class="text-warning" style="font-size: 4em; text-align: center;">Pending</h1>
+                <h5 style=" width: 70%; text-align: center; margin: auto;" class="text-justify">
+                    Your enrollment application is currently on list to be checked by the registrar. 
+                    Kindly wait for an email notification about your enrollment status
+                </h5>
+            </div>
+
+        </div>
+        <div class="my-5">
+            <h3>Apply an Enrollment</h3>
+            <div class="row-cols-3">
+                <a href="/Enrollments/Regular" class="col-11 col-md-3 my-2 mx-3">
+                    <button class="btn btn-portal btn-success px-4 ">Regular</button>
+                </a>
+                <a href="/Enrollments/Incoming" class="col-11 col-md-3 my-2 mx-3">
+                    <button class="btn btn-portal btn-success px-4 ">Incoming</button>
+                </a>
+                <a href="/Enrollments/Transferee" class="col-11 col-md-3 my-2 mx-3">
+                    <button class="btn btn-portal btn-success px-4 ">Transferee</button>
+                </a>
+              
 
             </div>
 
         </div>
-
 
         <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                            <img src="/images/@Session["userProfileFileName"]" alt=" @Session["userFirstName"]" class="rounded-circle" width="150">
                             <div class="mt-3">
-                                <h4>John Doe</h4>
-                                <p class="text-secondary mb-1">Full Stack Developer</p>
-                                <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
-                                <button class="btn btn-primary">Follow</button>
-                                <button class="btn btn-outline-primary">Message</button>
+                                <h4>
+                                    <span class="mx-1"> @Session["userFirstName"]</span>
+                                    <span class="mx-1"> @Session["userMiddleName"]</span>
+                                    <span class="mx-1"> @Session["userLastName"]</span>
+                                </h4>
+                                <p class="text-secondary mb-1">Regular Student</p>
+                                
                             </div>
                         </div>
                     </div>
@@ -41,10 +60,30 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Full Name</h6>
+                                <h6 class="mb-0">First Name</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                Kenneth Valdez
+                                @Session["userFirstName"]
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Middle Name</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Session["userMiddleName"]
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Last Name</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Session["userLastName"]
                             </div>
                         </div>
                         <hr>
@@ -53,25 +92,26 @@
                                 <h6 class="mb-0">Email</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                fip@jukmuh.al
+                                @Session["userEmail"]
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Phone</h6>
+                                <h6 class="mb-0">Gender</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                (239) 816-9029
+
+                                @Session["userGender"]
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Mobile</h6>
+                                <h6 class="mb-0">Contact number</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                (320) 380-4539
+                                @Session["userContactNumber"]
                             </div>
                         </div>
                         <hr>
@@ -80,15 +120,11 @@
                                 <h6 class="mb-0">Address</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                Bay Area, San Francisco, CA
+                                @Session["userAddress"]
                             </div>
                         </div>
                         <hr>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <a class="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
 
