@@ -52,8 +52,23 @@ namespace EnrollmentSystem.Models
         [Display(Name = "Status")]
         public string Status { get; set; }
 
-        [Display(Name = "StudentModel")]
-        public StudentsModel studentModel { get; set; }
+        [Display(Name = "Student Model")]
+        public StudentsModel studentsModel { get; set; }
+
+        [Display(Name = "Course Model")]
+        public CoursesModel coursesModel { get; set; }
+
+        [Display(Name = "Registrar Evaluator Model")]
+        public RegistrarsModel registrarsModel { get; set; }
+
+        [Display(Name = "Year")]
+        public int Year { get; set; }
+
+        [Display(Name = "Section")]
+        public int Section { get; set; }
+
+        [Display(Name = "Registrar Evaluator Id")]
+        public int RegistrarEvaluatorId { get; set; }
 
     }
 }

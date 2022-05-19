@@ -373,6 +373,8 @@
     <Content Include="Views\Registrars\Security.cshtml" />
     <Content Include="Views\Registrars\SignUp.cshtml" />
     <None Include="env.example" />
+    <Content Include="Views\Enrollments\Confirmation.cshtml" />
+    <Content Include="Views\Shared\Blank_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
