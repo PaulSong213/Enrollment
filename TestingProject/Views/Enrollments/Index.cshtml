@@ -146,7 +146,7 @@
                                                 <h4>
                                                     <span class="mx-1"> Year Level: </span>
                                                     <span class="mx-1"> ${selectedEnrollment.Year} </span>
-                                                </h4>`
+                                                </h4>`;
     
             var studentsPersonalData = `
                 <div class="container">
@@ -156,7 +156,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="d-flex flex-column align-items-center text-center">
-                                            <img src="/images/${selectedEnrollment.studentModel.ProfileFileName}" alt="  ${selectedEnrollment.studentModel.FirstName} " class="rounded-circle border border-secondary" height="150" width="150">
+                                            <img src="/images/${selectedEnrollment.studentsModel.ProfileFileName}" alt="  ${selectedEnrollment.studentsModel.FirstName} " class="rounded-circle border border-secondary" height="150" width="150">
                                             <div class="mt-3">
                                                 ${
                                                     yearLevelTemplate
@@ -165,7 +165,7 @@
                                                     <span class="mx-1"> Student Id: </span>
                                                     <span class="mx-1"> ${selectedEnrollment.StudentId} </span>
                                                 </h6>
-                                                <h6 class="text-secondary mb-1">Regular Student</h6>
+                                                <h6 class="text-secondary mb-1 text-capitalize">${selectedEnrollment.Type} Student</h6>
                                                 
                                             </div>
                                         </div>
@@ -181,7 +181,7 @@
                                                 <h6 class="mb-0">First Name</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                ${selectedEnrollment.studentModel.FirstName}
+                                                ${selectedEnrollment.studentsModel.FirstName}
                                             </div>
                                         </div>
                                         <hr>
@@ -192,7 +192,7 @@
                                             </div>
                                             <div class="col-sm-9 text-secondary">
                                                 @Session["userMiddleName"]
-                                                ${selectedEnrollment.studentModel.MiddleName}
+                                                ${selectedEnrollment.studentsModel.MiddleName}
                                             </div>
                                         </div>
                                         <hr>
@@ -202,7 +202,7 @@
                                                 <h6 class="mb-0">Last Name</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                ${selectedEnrollment.studentModel.LastName}
+                                                ${selectedEnrollment.studentsModel.LastName}
                                                 
                                             </div>
                                         </div>
@@ -212,7 +212,7 @@
                                                 <h6 class="mb-0">Email</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                ${selectedEnrollment.studentModel.Email}
+                                                ${selectedEnrollment.studentsModel.Email}
                                             </div>
                                         </div>
                                         <hr>
@@ -222,7 +222,7 @@
                                             </div>
                                             <div class="col-sm-9 text-secondary">
 
-                                                ${selectedEnrollment.studentModel.Gender}
+                                                ${selectedEnrollment.studentsModel.Gender}
                                             </div>
                                         </div>
                                         <hr>
@@ -231,7 +231,7 @@
                                                 <h6 class="mb-0">Contact number</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                ${selectedEnrollment.studentModel.ContactNumber}
+                                                ${selectedEnrollment.studentsModel.ContactNumber}
                                             </div>
                                         </div>
                                         <hr>
@@ -240,7 +240,7 @@
                                                 <h6 class="mb-0">Address</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                ${selectedEnrollment.studentModel.Address}
+                                                ${selectedEnrollment.studentsModel.Address}
                                             </div>
                                         </div>
                                         <hr>
@@ -343,7 +343,7 @@
                               <h4 class="d-flex align-items-center mb-3 text-success">
                                  Qualified Enrollment Form:
                               </h4>
-                             <form>
+                             <form action="/Enrollments/Accept" method="POST">
                                   <div class="form-group mb-4">
                                     <label class="mb-1 text-left w-100" style="text-align: left" for="section">Section: </label>
                                     <select class="form-select" required id="section">
@@ -354,7 +354,7 @@
                                   </div>
                                   <div class="form-group mb-4">
                                     <label class="mb-1 text-left w-100" style="text-align: left" for="Additional">Additional Message</label>
-                                    <textarea class="form-control" style="height: 5rem" id="Additional" placeholder="Additional message to the student that will sent to the email. (Example : about the requirements that needs to be followed) Optional." cols="3" rows="3"></textarea>
+                                    <textarea class="form-control" style="height: 5rem" id="Additional" placeholder="Additional message to the student that will sent be to the email. (Example : about the requirements that needs to be followed) Optional." cols="3" rows="3"></textarea>
                                   </div>
                                   <button class="btn btn-success fs-5">Accept Enrollment Application</button>
                                 </form>
@@ -370,15 +370,10 @@
                                  Rejected Enrollment Form:
                               </h4>
                              <form>
+                                
                                   <div class="form-group mb-4">
-                                    <label class="mb-1 text-left w-100" style="text-align: left" for="section">Missed Requirements: </label>
-                                    <select multiple required class="form-control" id="section">
-                                      <option>Certificate of Grades</option>
-                                    </select>
-                                  </div>
-                                  <div class="form-group mb-4">
-                                    <label class="mb-1 text-left w-100" style="text-align: left" for="Additional">Additional Message</label>
-                                    <textarea class="form-control" style="height: 5rem" id="Additional" placeholder="Additional message to the student that will sent to the email. (Example : informations on why their application was rejected) Optional." cols="3" rows="3"></textarea>
+                                    <label class="mb-1 text-left w-100" style="text-align: left" for="Additional">Reason of rejection:</label>
+                                    <textarea class="form-control" style="height: 5rem" id="Additional" placeholder="Reason why the enrollment application was rejected" cols="3" rows="3"></textarea>
                                   </div>
                                   <button class="btn btn-danger fs-5">Reject Enrollment Application</button>
                                 </form>

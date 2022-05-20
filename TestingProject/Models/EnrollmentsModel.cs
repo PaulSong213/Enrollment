@@ -11,23 +11,18 @@ namespace EnrollmentSystem.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
         [Display(Name = "Student Id")]
         public int StudentId { get; set; }
 
-        [Required]
         [Display(Name = "Course Id")]
         public int CourseId { get; set; }
 
-        [Required]
         [Display(Name = "School Year")]
-        public string SchoolYearStart { get; set; }
+        public DateTime SchoolYearStart { get; set; }
 
-        [Required]
-        [Display(Name = "Status Id")]
+        [Display(Name = "Type")]
         public string Type { get; set; }
 
-        [Required]
         [Display(Name = "ProfileFileName")]
         public string ProfileFileName { get; set; }
 

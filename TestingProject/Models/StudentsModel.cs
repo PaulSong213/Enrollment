@@ -57,5 +57,8 @@ namespace EnrollmentSystem.Models
 
         [Display(Name = "Password")]
         public string Password { get; set; }
+
+        [Display(Name = "Birth date")]
+        public DateTime BirthDate { get; set; }
     }
 }

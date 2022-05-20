@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Globalization;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using EnrollmentSystem.Models;
@@ -30,7 +34,7 @@ namespace EnrollmentSystem.Controllers
             con.ConnectionString = new AccountController().getConnectionString();
             con.Open();
             com.Connection = con;
-            com.CommandText = $"SELECT * FROM [dbo].[enrollments] AS enrollments INNER JOIN (select id, name as courseName, acronym as courseAcronym from courses) [courses] ON [enrollments].[courseId] = [courses].[id] INNER JOIN (select id, firstName as studentFirstName, middleName as studentMiddleName, lastName as studentLastName, gender as studentGender, age as studentAge, address as studentAddress, contactNumber as studentContactNumber, email as studentEmail, profileFileName as studentProfileFileName from students)  [students] ON [enrollments].[studentId] = students.id WHERE type = '{enrollmentType}' AND status = 'pending'";
+            com.CommandText = $"SELECT * FROM [dbo].[enrollments] AS enrollments INNER JOIN (select id, name as courseName, acronym as courseAcronym from courses) [courses] ON [enrollments].[courseId] = [courses].[id] INNER JOIN (select id, birthDate as studentBirthDate, firstName as studentFirstName, middleName as studentMiddleName, lastName as studentLastName, gender as studentGender, age as studentAge, address as studentAddress, contactNumber as studentContactNumber, email as studentEmail, profileFileName as studentProfileFileName from students)  [students] ON [enrollments].[studentId] = students.id WHERE type = '{enrollmentType}' AND status = 'pending'";
             dr = com.ExecuteReader();
             if (dr.HasRows)
             {
@@ -48,17 +52,17 @@ namespace EnrollmentSystem.Controllers
                     enrollment.Id = (int)dr["id"];
                     enrollment.BirthCertificateFileName = dr["BirthCertificateFileName"] != DBNull.Value ? dr["BirthCertificateFileName"].ToString() : "";
                     enrollment.DateEnrolled = dr["DateEnrolled"] != DBNull.Value ? dr["DateEnrolled"].ToString() : "";
-                    enrollment.CertificateOfTransferFileName = dr["CertificateOfTransferFileName"] != DBNull.Value ? dr["CertificateOfTransferFileName"].ToString() : "" ;
+                    enrollment.CertificateOfTransferFileName = dr["CertificateOfTransferFileName"] != DBNull.Value ? dr["CertificateOfTransferFileName"].ToString() : "";
                     enrollment.GoodMoralCertificateFileName = dr["goodMoralCertificateFileName"] != DBNull.Value ? dr["GoodMoralFileName"].ToString() : "";
-                    enrollment.HonorableDismissalFileName = dr["HonorableDismissalFileName"] != DBNull.Value ? dr["HonorableDismissalFileName"].ToString() : "" ;
+                    enrollment.HonorableDismissalFileName = dr["HonorableDismissalFileName"] != DBNull.Value ? dr["HonorableDismissalFileName"].ToString() : "";
                     enrollment.ProfileFileName = dr["ProfileFileName"].ToString();
                     enrollment.ReportCardFileName = dr["ReportCardFileName"].ToString();
-                    enrollment.SchoolYearStart = dr["SchoolYearStart"].ToString();
+                    enrollment.SchoolYearStart = (System.DateTime)dr["SchoolYearStart"];
                     enrollment.CourseId = (int)dr["CourseId"];
                     enrollment.Status = dr["Status"].ToString();
                     enrollment.StudentId = (int)dr["StudentId"];
                     enrollment.Year = (int)dr["Year"];
-                    enrollment.Type =dr["Type"].ToString();
+                    enrollment.Type = dr["Type"].ToString();
 
                     //Save the student enrolled
                     StudentsModel student = new StudentsModel();
@@ -71,6 +75,7 @@ namespace EnrollmentSystem.Controllers
                     student.Gender = dr["studentGender"].ToString() == "2" ? "Female" : "Male";
                     student.Age = (int)dr["studentAge"];
                     student.ProfileFileName = dr["studentProfileFileName"].ToString();
+                    student.BirthDate = (System.DateTime)dr["studentBirthDate"];
 
                     enrollment.studentsModel = student;
                     enrollments.Add(enrollment);
@@ -79,7 +84,6 @@ namespace EnrollmentSystem.Controllers
             }
             con.Close();
             ViewBag.Enrollments = JsonConvert.SerializeObject(enrollments);
-            ViewBag.EnrollmentPreviews = JsonConvert.SerializeObject(enrollmentPreviews);
             ViewBag.EnrollmentPreviews = JsonConvert.SerializeObject(enrollmentPreviews);
             return View();
         }
@@ -111,7 +115,7 @@ namespace EnrollmentSystem.Controllers
             con.ConnectionString = new AccountController().getConnectionString();
             con.Open();
             com.Connection = con;
-            com.CommandText = $"SELECT * FROM [dbo].[enrollments] AS enrollments INNER JOIN (select id, name as courseName, acronym as courseAcronym from courses) [courses] ON [enrollments].[courseId] = [courses].[id] INNER JOIN (select id, firstName as studentFirstName, middleName as studentMiddleName, lastName as studentLastName, gender as studentGender, age as studentAge, address as studentAddress, contactNumber as studentContactNumber, email as studentEmail, profileFileName as studentProfileFileName from students)  [students] ON [enrollments].[studentId] = students.id INNER JOIN (select id, firstName as registrarFirstName, middleName as registrarMiddleName, lastName as registrarLastName, profileFileName as registrarProfileFileName from registrars) [registrars] ON [enrollments].[registrarEvaluatorId] = [registrars].[id] WHERE enrollments.id = {id} AND status != 'pending'";
+            com.CommandText = $"SELECT * FROM [dbo].[enrollments] AS enrollments INNER JOIN (select id, name as courseName, acronym as courseAcronym from courses) [courses] ON [enrollments].[courseId] = [courses].[id] INNER JOIN (select id, birthDate as studentBirthDate ,firstName as studentFirstName, middleName as studentMiddleName, lastName as studentLastName, gender as studentGender, age as studentAge, address as studentAddress, contactNumber as studentContactNumber, email as studentEmail, profileFileName as studentProfileFileName from students)  [students] ON [enrollments].[studentId] = students.id INNER JOIN (select id, firstName as registrarFirstName, middleName as registrarMiddleName, lastName as registrarLastName, profileFileName as registrarProfileFileName from registrars) [registrars] ON [enrollments].[registrarEvaluatorId] = [registrars].[id] WHERE enrollments.id = {id} AND status != 'pending'";
             dr = com.ExecuteReader();
             if (dr.HasRows)
             {
@@ -127,14 +131,14 @@ namespace EnrollmentSystem.Controllers
                     enrollment.HonorableDismissalFileName = dr["HonorableDismissalFileName"] != DBNull.Value ? dr["HonorableDismissalFileName"].ToString() : "";
                     enrollment.ProfileFileName = dr["ProfileFileName"].ToString();
                     enrollment.ReportCardFileName = dr["ReportCardFileName"].ToString();
-                    enrollment.SchoolYearStart = dr["SchoolYearStart"].ToString();
+                    enrollment.SchoolYearStart = (System.DateTime)dr["SchoolYearStart"];
                     enrollment.CourseId = (int)dr["CourseId"];
                     enrollment.Status = dr["Status"].ToString();
                     enrollment.StudentId = (int)dr["StudentId"];
                     enrollment.Year = (int)dr["Year"];
                     enrollment.Type = dr["Type"].ToString();
                     enrollment.Section = (int)dr["Section"];
-                    
+
                     //Save the student enrolled
                     StudentsModel student = new StudentsModel();
                     student.FirstName = dr["studentFirstName"].ToString();
@@ -146,6 +150,7 @@ namespace EnrollmentSystem.Controllers
                     student.Gender = dr["studentGender"].ToString() == "2" ? "Female" : "Male";
                     student.Age = (int)dr["studentAge"];
                     student.ProfileFileName = dr["studentProfileFileName"].ToString();
+                    student.BirthDate = (System.DateTime)dr["studentBirthDate"];
 
                     //save registrar
                     RegistrarsModel registrar = new RegistrarsModel();
@@ -173,6 +178,35 @@ namespace EnrollmentSystem.Controllers
             ViewBag.Enrollment = enrollment;
             return View();
         }
+
+        [HttpPost]
+        public ActionResult Accept(EnrollmentsModel model)
+        {
+            var htmlString = "<h1>test</h1>";
+            try
+            {
+                MailMessage message = new MailMessage();
+                SmtpClient smtp = new SmtpClient();
+                message.From = new MailAddress("enrollmentsystemproject@gmail.com");
+                message.To.Add(new MailAddress("greatpaul321@gmail.com"));
+                message.Subject = "Test";
+                message.IsBodyHtml = true; //to make message body as html  
+                message.Body = htmlString;
+                smtp.Port = 587;
+                smtp.Host = "smtp.gmail.com"; //for gmail host  
+                smtp.EnableSsl = true;
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new NetworkCredential("enrollmentsystemproject@gmail.com", "P@$$w0rd12345!");
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtp.Send(message);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return View("Index");
+        }
+
 
 
 
