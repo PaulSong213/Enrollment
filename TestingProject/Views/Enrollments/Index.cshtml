@@ -50,7 +50,6 @@
 </style>
 
 @model EnrollmentSystem.Models.EnrollmentsModel
-
 @{
     ViewBag.Title = "Enrollments";
     Layout = "~/Views/Shared/Registrar_Layout.cshtml";
@@ -58,6 +57,7 @@
     string url = HttpContext.Current.Request.Url.AbsoluteUri;
     Uri myUri = new Uri(url);
     string enrollmentType = HttpUtility.ParseQueryString(myUri.Query).Get("type");
+    string domainName = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
 }
 
 
@@ -254,7 +254,6 @@
     
         var documentData = "";
     
-    
         switch(selectedEnrollment.Type) {
             case "incoming":
                 documentData = `
@@ -343,22 +342,26 @@
                               <h4 class="d-flex align-items-center mb-3 text-success">
                                  Qualified Enrollment Form:
                               </h4>
-                             <form action="/Enrollments/Accept" method="POST">
-                                  <div class="form-group mb-4">
-                                    <label class="mb-1 text-left w-100" style="text-align: left" for="section">Section: </label>
-                                    <select class="form-select" required id="section">
-                                      <option>1</option>
-                                      <option>2</option>
-                                      <option>3</option>
+                            <form method="POST" action="/Enrollments/Accept">
+                                
+                                <div class="form-group mb-4">
+                                    <label class="mb-1 text-left w-100" style="text-align: left" for="section">Section</label>
+                                    <select class="form-select" id="section" name="section">
+                                      <option value="1">1</option>
+                                      <option value="2">2</option>
+                                      <option value="3">3</option>
                                     </select>
-                                  </div>
+                              </div>
                                   <div class="form-group mb-4">
                                     <label class="mb-1 text-left w-100" style="text-align: left" for="Additional">Additional Message</label>
-                                    <textarea class="form-control" style="height: 5rem" id="Additional" placeholder="Additional message to the student that will sent be to the email. (Example : about the requirements that needs to be followed) Optional." cols="3" rows="3"></textarea>
+                                    <textarea class="form-control" name="registrarMessage" style="height: 5rem" id="Additional" placeholder="Additional message to the student that will sent be to the email. (Example : about the requirements that needs to be followed) Optional." cols="3" rows="3"></textarea>
                                   </div>
-                                  <button class="btn btn-success fs-5">Accept Enrollment Application</button>
-                                </form>
-                              </div>
+                                    <input type="hidden" value="${selectedEnrollment.Id}" name="enrollmentId" />
+                                    <input type="hidden" value="${selectedEnrollment.studentsModel.FirstName} ${selectedEnrollment.studentsModel.LastName}" name="studentName" />
+                                  
+                                  <input type="submit"  value="Accept Enrollment Application" class="btn btn-success fs-5" />
+                          </form>
+                                </div>
                             </div>
                           </div>
                         </div>
