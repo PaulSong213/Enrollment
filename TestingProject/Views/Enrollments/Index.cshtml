@@ -358,7 +358,7 @@
                                   </div>
                                     <input type="hidden" value="${selectedEnrollment.Id}" name="enrollmentId" />
                                     <input type="hidden" value="${selectedEnrollment.studentsModel.FirstName} ${selectedEnrollment.studentsModel.LastName}" name="studentName" />
-                                  
+                                    <input type="hidden" value="${selectedEnrollment.emailRecipient}" name="emailRecipient" />
                                   <input type="submit"  value="Accept Enrollment Application" class="btn btn-success fs-5" />
                           </form>
                                 </div>
@@ -372,14 +372,19 @@
                               <h4 class="d-flex align-items-center mb-3 text-danger">
                                  Rejected Enrollment Form:
                               </h4>
-                             <form>
-                                
+    
+                             <form method="POST" action="/Enrollments/Reject">
                                   <div class="form-group mb-4">
                                     <label class="mb-1 text-left w-100" style="text-align: left" for="Additional">Reason of rejection:</label>
-                                    <textarea class="form-control" style="height: 5rem" id="Additional" placeholder="Reason why the enrollment application was rejected" cols="3" rows="3"></textarea>
+                                    <textarea required class="form-control" style="height: 5rem" name="registrarMessage" id="Additional" placeholder="Reason why the enrollment application was rejected" cols="3" rows="3"></textarea>
                                   </div>
+                                  <input type="hidden" value="${selectedEnrollment.Id}" name="enrollmentId" />
+                                   <input type="hidden" value="${selectedEnrollment.studentsModel.FirstName} ${selectedEnrollment.studentsModel.LastName}" name="studentName" />
+                                   <input type="hidden" value="${selectedEnrollment.EmailRecipient}" name="emailRecipient" />
                                   <button class="btn btn-danger fs-5">Reject Enrollment Application</button>
-                                </form>
+                             </form>
+    
+    
                               </div>
                             </div>
                           </div>

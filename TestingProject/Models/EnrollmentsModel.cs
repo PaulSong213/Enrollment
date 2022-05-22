@@ -65,5 +65,9 @@ namespace EnrollmentSystem.Models
         [Display(Name = "Registrar Evaluator Id")]
         public int RegistrarEvaluatorId { get; set; }
 
+
+        [Display(Name = "Enrollment Notification Email Receipient")]
+        public string EmailRecipient { get; set; }
+
     }
 }
