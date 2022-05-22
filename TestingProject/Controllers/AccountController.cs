@@ -136,7 +136,7 @@ namespace EnrollmentSystem.Controllers
                         //save data to database
                         con.Open();
                         com.Connection = con;
-                        com.CommandText = $"INSERT INTO [dbo].[students] ([firstName] ,[middleName] ,[lastName] ,[gender] ,[age] ,[address] ,[contactNumber] ,[accountId] ,[email],[profileFileName] ) VALUES ('{model.FirstName}' ,'{model.MiddleName}' , '{model.LastName}' , '{model.Gender}' , {model.Age} , '{model.Address}' , '{model.Address}' ,'' , '{model.Email}','blank.jpg' )";
+                        com.CommandText = $"INSERT INTO [dbo].[students] ([firstName] ,[middleName] ,[lastName] ,[gender] ,[age] ,[address] ,[contactNumber] ,[accountId] ,[email],[profileFileName] ) VALUES ('{model.FirstName}' ,'{model.MiddleName}' , '{model.LastName}' , '{model.Gender}' , {model.Age} , '{model.Address}' , '{model.ContactNumber}' ,'' , '{model.Email}','blank.jpg' )";
                         dr = com.ExecuteReader();
                         con.Close();
 
