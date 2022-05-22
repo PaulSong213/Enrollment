@@ -235,9 +235,9 @@ namespace EnrollmentSystem.Controllers
                     message.IsBodyHtml = true; //to make message body as html  
                     message.Body = htmlString;
                     smtp.Port = 587;
+                    smtp.UseDefaultCredentials = true;
                     smtp.Host = "smtp.gmail.com"; //for gmail host  
                     smtp.EnableSsl = true;
-                    smtp.UseDefaultCredentials = false;
                     smtp.Credentials = new NetworkCredential("enrollmentsystemproject@gmail.com", "P@$$w0rd12345!");
                     smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                     smtp.Send(message);
