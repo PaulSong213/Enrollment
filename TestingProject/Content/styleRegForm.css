@@ -4,8 +4,7 @@ body {
 .hello{
     background-color:white;
     border-radius: 10px;
-    height:15vh;
-
+    height:17vh;
 }
 .parentguardian {
     background-color: white;
@@ -15,6 +14,7 @@ body {
 .form-group{
     background-color: white;
     border-radius: 10px;
+    border: 1px solid #CCC;
 }
 
 input{
