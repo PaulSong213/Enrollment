@@ -51,27 +51,6 @@ namespace EnrollmentSystem.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ActionResult Edit(int id, CoursesModel model)
-        {
-            con.ConnectionString = new AccountController().getConnectionString();
-            con.Open();
-            com.Connection = con;
-            com.CommandText = $"SELECT * FROM [dbo].[courses] WHERE id = '{id}'";
-            dr = com.ExecuteReader();
-            if (dr.HasRows)
-            {
-                while (dr.Read())
-                {
-                    model.Name = dr["Name"].ToString();
-                    model.Acronym = dr["Acronym"].ToString();
-                    model.Slots = (int)dr["Slots"];
-                    model.Id = (int)dr["id"];
-                }
-            }
-            con.Close();
-            return View(model);
-        }
 
         [HttpPost]
         public ActionResult Edit(CoursesModel model)
@@ -85,20 +64,22 @@ namespace EnrollmentSystem.Controllers
                 Boolean isUpdated = com.ExecuteNonQuery() > 0;
                 if (isUpdated)
                 {
-                    ViewBag.SaveResult = true;
+                    TempData["MessageResult"] = "Course with id:" + model.Id + " edited successfully.";
+
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "There was a problem updating course. Please try again.");
+                    TempData["ErrorResult"] = "Course not edited. Please try again.";
                 }
                 con.Close();
 
             }
             catch (Exception e)
             {
-                ModelState.AddModelError(string.Empty, e.Message);
+                TempData["ErrorResult"] = e.Message;
+
             }
-            return View();
+            return RedirectToAction("Index", "Courses");
         }
 
         [HttpGet]
@@ -113,7 +94,7 @@ namespace EnrollmentSystem.Controllers
                 Boolean isUpdated = com.ExecuteNonQuery() > 0;
                 if (isUpdated)
                 {
-                    TempData["MessageResult"] = "Course with id:" +  id +   "deleted successfully.";
+                    TempData["MessageResult"] = "Course with id:" +  id +   " deleted successfully.";
                 }
                 else
                 {

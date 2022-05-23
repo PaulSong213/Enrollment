@@ -60,5 +60,8 @@ namespace EnrollmentSystem.Models
 
         [Display(Name = "Birth date")]
         public DateTime BirthDate { get; set; }
+
+        [Display(Name = "Course")]
+        public CoursesModel coursesModel { get; set; }
     }
 }

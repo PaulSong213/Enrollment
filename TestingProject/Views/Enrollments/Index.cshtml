@@ -129,8 +129,14 @@
               },
            
         });
-         
+        
         $(".evaluateItem").on('click', function(event){
+            
+            let itemId = $(this).closest('tr').attr('id');
+            location.href= "/Enrollments/Evaluate/" + itemId;
+        });
+        
+        $(".evaluateItemEx").on('click', function(event){
             
             let itemId = $(this).closest('tr').attr('id');
             $(this).attr('id',  "btn" + itemId);
@@ -202,7 +208,6 @@
                                             </div>
                                             <div class="col-sm-9 text-secondary">
                                                 ${selectedEnrollment.studentsModel.LastName}
-                                                
                                             </div>
                                         </div>
                                         <hr>

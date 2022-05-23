@@ -30,34 +30,23 @@
     </table>
     </div>
 </section>
+
+<section>@RenderPage("./View.cshtml")</section>
+
+
 @section scripts{
  <script>
     $(document).ready(function() {
     
-        var studentsData = '@students';
-        var coursesData = '@ViewBag.Courses';
-        var statusData = '@ViewBag.Status';
+        var studentsData = '@ViewBag.studentsPreview';
+        var studentsRaw = '@ViewBag.students';
     
     
         var students = JSON.parse(studentsData.replace(/&quot;/g,'"'));
-        var courses = JSON.parse(coursesData.replace(/&quot;/g,'"'));
-        var status = JSON.parse(statusData.replace(/&quot;/g,'"'));
         console.log(status);
         for(var i = 0; i < students.length; i++){
             let student = students[i];
             students[i] = Object.keys(student).map((key) =>{
-                if(key === 'CourseId'){
-                    for(var j = 0; j < courses.length; j++){
-                        if(courses[j]['Id'] == student[key] )return courses[j]['Name'];
-                    }
-                }
-                
-                if(key === 'StatusId'){
-                    for(var j = 0; j < status.length; j++){
-                        if(status[j]['Id'] == student[key] )return status[j]['Name'];
-                    }
-                }
-                
                 return student[key];
             });
         }
@@ -67,22 +56,16 @@
             columns: [
                 { title: "ID" },
                 { title: "Email" },
-                { title: "First name" },
-                { title: "Middle name" },
-                { title: "Last name" },
+                { title: "Full name" },
                 { title: "Gender" },
                 { title: "Age" },
-                { title: "Address" },
-                { title: "Contact number" },
-                { title: "Firebase ID" },
                 { title: "Course" },
-                { title: "Status" },
-                { title: "Profile File Name" },
-                { title: "", "defaultContent": "<button class='editItem btn btn-success'>Edit</button>" },
-                { title: "", "defaultContent": "<button class='deleteitem btn btn-secondary text-white'>Mark as Inactive</button>" }
             ],
             "fnRowCallback": function(nRow, aData, iDisplayIndex) {
               nRow.setAttribute('id',aData[0]);
+              nRow.setAttribute('class',"clickableRow");
+              nRow.setAttribute('data-bs-toggle',"modal");
+              nRow.setAttribute('data-bs-target',"#viewCourse");
               },
             dom: 'Bfrtip',
             buttons: [
@@ -92,14 +75,22 @@
             ]
         });
          
-        $(".editItem").on('click', function(event){
-            let itemId = $(this).closest('tr').attr('id');
-            location.href = "/Student/Edit/" + itemId;
+        $(".clickableRow").on('click', function(event){
+            let itemId = $(this).attr('id');
+            let item = findItemById(itemId);
+            
+            $(this).attr('data-bs-id',   itemId);
+            
         });
-        $(".deleteitem").on('click', function(event){
-            let itemId = $(this).closest('tr').attr('id');
-            location.href = "/Student/Delete/" + itemId;
-        });
+    
+        function findItemById(id){
+            for(var i = 0; i < studentsRaw.length; i++){
+                let item = studentsRaw[i];
+                if(id == item.Id)return item;
+            }
+            return null;
+        }
+    
     } );
     
     

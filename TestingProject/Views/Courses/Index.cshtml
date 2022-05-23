@@ -1,4 +1,6 @@
-﻿@model EnrollmentSystem.Models.CoursesModel
+﻿
+
+@model EnrollmentSystem.Models.CoursesModel
 
 @{
     ViewBag.Title = "Courses";
@@ -24,13 +26,21 @@
 <section class="row pb-5 w-100 overflow-auto">
     <div class="d-flex justify-content-between py-3">
         <h3>@ViewBag.Title</h3>
-        <a href="/Courses/Add" class="btn btn-primary ml-auto">Add Course</a>
+       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCourse" >
+            Add Course
+       </button>
     </div>
    <div class="w-100 overflow-auto py-3">
          <table id="dataTable" class="table table-striped" style="width:100%">
     </table>
     </div>
 </section>
+
+<section>@RenderPage("./Edit.cshtml")</section>
+<section>@RenderPage("./Add.cshtml")</section>
+<section>@RenderPage("./View.cshtml")</section>
+
+
 @section scripts{
  <script>
     $(document).ready(function() {
@@ -38,10 +48,12 @@
         
         var coursesData = '@courses';
         var courses = JSON.parse(coursesData.replace(/&quot;/g,'"'));
+        var coursesRaw = JSON.parse(coursesData.replace(/&quot;/g,'"'));
+       
+    
         for(var i = 0; i < courses.length; i++){
             let course = courses[i];
             courses[i] = Object.keys(course).map((key) => course[key]);
-            
         }
         var courseTable = $('#dataTable').DataTable( {
             responsive: true,
@@ -51,11 +63,14 @@
                 { title: "Acronym" },
                 { title: "Name" },
                 { title: "Slots" },
-                { title: "", "defaultContent": "<button class='editItem btn btn-success'>Edit</button>" },
+                { title: "", "defaultContent": "<button type='button' class='btn btn-success editItem' data-bs-toggle='modal' data-bs-target='#editCourse' data-bs-id='1'> Edit Course </button>" },
                 { title: "", "defaultContent": "<button class='deleteitem btn btn-danger'>Delete</button>" }
             ],
             "fnRowCallback": function(nRow, aData, iDisplayIndex) {
               nRow.setAttribute('id',aData[0]);
+              nRow.setAttribute('class',"clickableRow");
+              nRow.setAttribute('data-bs-toggle',"modal");
+              nRow.setAttribute('data-bs-target',"#viewCourse");
               },
             dom: 'Bfrtip',
             buttons: [
@@ -67,12 +82,43 @@
          
         $(".editItem").on('click', function(event){
             let itemId = $(this).closest('tr').attr('id');
-            location.href = "/Courses/Edit/" + itemId;
+            let item = findItemById(itemId);
+            
+            $(this).attr('data-bs-id',   itemId);
+            if(item != null){
+                $(this).attr('data-bs-Name',   item.Name);
+                $(this).attr('data-bs-Slots',   item.Slots);
+                $(this).attr('data-bs-Acronym',   item.Acronym);
+            }
         });
+    
+        $(".clickableRow").on('click', function(event){
+            let itemId = $(this).attr('id');
+            let item = findItemById(itemId);
+            
+            $(this).attr('data-bs-id',   itemId);
+            if(item != null){
+                $(this).attr('data-bs-Name',   item.Name);
+                $(this).attr('data-bs-Slots',   item.Slots);
+                $(this).attr('data-bs-Acronym',   item.Acronym);
+            }
+        });
+    
         $(".deleteitem").on('click', function(event){
             let itemId = $(this).closest('tr').attr('id');
             location.href = "/Courses/Delete/" + itemId;
         });
+    
+    
+        function findItemById(id){
+            for(var i = 0; i < coursesRaw.length; i++){
+                let course = coursesRaw[i];
+                if(id == course.Id)return course;
+                console.log(id, course.Id);
+            }
+            return null;
+        }
+    
     } );
     
     
