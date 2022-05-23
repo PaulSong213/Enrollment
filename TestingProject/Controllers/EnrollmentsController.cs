@@ -53,7 +53,7 @@ namespace EnrollmentSystem.Controllers
                     enrollment.BirthCertificateFileName = dr["BirthCertificateFileName"] != DBNull.Value ? dr["BirthCertificateFileName"].ToString() : "";
                     enrollment.DateEnrolled = dr["DateEnrolled"] != DBNull.Value ? dr["DateEnrolled"].ToString() : "";
                     enrollment.CertificateOfTransferFileName = dr["CertificateOfTransferFileName"] != DBNull.Value ? dr["CertificateOfTransferFileName"].ToString() : "";
-                    enrollment.GoodMoralCertificateFileName = dr["goodMoralCertificateFileName"] != DBNull.Value ? dr["GoodMoralFileName"].ToString() : "";
+                    enrollment.GoodMoralCertificateFileName = dr["goodMoralCertificateFileName"] != DBNull.Value ? dr["goodMoralCertificateFileName"].ToString() : "";
                     enrollment.HonorableDismissalFileName = dr["HonorableDismissalFileName"] != DBNull.Value ? dr["HonorableDismissalFileName"].ToString() : "";
                     enrollment.ProfileFileName = dr["ProfileFileName"].ToString();
                     enrollment.ReportCardFileName = dr["ReportCardFileName"].ToString();
@@ -78,6 +78,12 @@ namespace EnrollmentSystem.Controllers
                     student.ProfileFileName = dr["studentProfileFileName"].ToString();
                     student.BirthDate = (System.DateTime)dr["studentBirthDate"];
 
+                    //save course info
+                    CoursesModel course = new CoursesModel();
+                    course.Acronym = dr["courseAcronym"].ToString();
+                    course.Name = dr["courseName"].ToString();
+
+                    enrollment.coursesModel = course;
                     enrollment.studentsModel = student;
                     enrollments.Add(enrollment);
 
@@ -115,7 +121,7 @@ namespace EnrollmentSystem.Controllers
             con.ConnectionString = new AccountController().getConnectionString();
             con.Open();
             com.Connection = con;
-            com.CommandText = $"SELECT * FROM [dbo].[enrollments] AS enrollments INNER JOIN (select id, name as courseName, acronym as courseAcronym from courses) [courses] ON [enrollments].[courseId] = [courses].[id] INNER JOIN (select id, birthDate as studentBirthDate , firstName as studentFirstName, middleName as studentMiddleName, lastName as studentLastName, gender as studentGender, age as studentAge, address as studentAddress, contactNumber as studentContactNumber, email as studentEmail, profileFileName as studentProfileFileName from students)  [students] ON [enrollments].[studentId] = students.id INNER JOIN (select id, firstName as registrarFirstName, middleName as registrarMiddleName, lastName as registrarLastName, profileFileName as registrarProfileFileName from registrars) [registrars] ON [enrollments].[registrarEvaluatorId] = [registrars].[id] WHERE enrollments.id = 1 AND enrollments.[status] != 'pending';";
+            com.CommandText = $"SELECT * FROM [dbo].[enrollments] AS enrollments INNER JOIN (select id, name as courseName, acronym as courseAcronym from courses) [courses] ON [enrollments].[courseId] = [courses].[id] INNER JOIN (select id, birthDate as studentBirthDate , firstName as studentFirstName, middleName as studentMiddleName, lastName as studentLastName, gender as studentGender, age as studentAge, address as studentAddress, contactNumber as studentContactNumber, email as studentEmail, profileFileName as studentProfileFileName from students)  [students] ON [enrollments].[studentId] = students.id INNER JOIN (select id, firstName as registrarFirstName, middleName as registrarMiddleName, lastName as registrarLastName, profileFileName as registrarProfileFileName from registrars) [registrars] ON [enrollments].[registrarEvaluatorId] = [registrars].[id] WHERE enrollments.id = {id} AND enrollments.[status] != 'pending';";
             dr = com.ExecuteReader();
             if (dr.HasRows)
             {
@@ -235,7 +241,7 @@ namespace EnrollmentSystem.Controllers
                     message.IsBodyHtml = true; //to make message body as html  
                     message.Body = htmlString;
                     smtp.Port = 587;
-                    smtp.UseDefaultCredentials = true;
+                    smtp.UseDefaultCredentials = false;
                     smtp.Host = "smtp.gmail.com"; //for gmail host  
                     smtp.EnableSsl = true;
                     smtp.Credentials = new NetworkCredential("enrollmentsystemproject@gmail.com", "P@$$w0rd12345!");
