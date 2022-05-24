@@ -1,7 +1,7 @@
 ﻿@model EnrollmentSystem.Models.StatusModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Registars";
     Layout = "~/Views/Shared/Registrar_Layout.cshtml";
 }
 
@@ -35,9 +35,12 @@
         
         var registrarsData = '@ViewBag.Registrars';
         var registrars = JSON.parse(registrarsData.replace(/&quot;/g,'"'));
+        console.log(registrars);
         for(var i = 0; i < registrars.length; i++){
             let registrar = registrars[i];
-            registrars[i] = Object.keys(registrar).map((key) => registrar[key]);
+            registrars[i] = Object.keys(registrar).map((key) => {
+                return registrar[key];
+            });
             
         }
         var registrarTable = $('#dataTable').DataTable( {
@@ -45,9 +48,9 @@
             data: registrars,
             columns: [
                 { title: "ID" },
-                { title: "Name" },
-                { title: "Description" },
-                { title: "", "defaultContent": "<button class='editItem btn btn-success'>Edit</button>" },
+                { title: "First Name" },
+                { title: "Middle Name" },
+                { title: "Last Name" },
                 { title: "", "defaultContent": "<button class='deleteitem btn btn-secondary'>Mark as Inactive</button>" }
             ],
             "fnRowCallback": function(nRow, aData, iDisplayIndex) {

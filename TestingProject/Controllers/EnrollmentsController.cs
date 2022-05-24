@@ -42,8 +42,8 @@ namespace EnrollmentSystem.Controllers
                 {
                     //Preview of enrollment
                     EnrollmentPreviewModel enrollmentPreview = new EnrollmentPreviewModel();
-                    enrollmentPreview.Id = (int)dr["id"];
                     enrollmentPreview.StudentId = (int)dr["StudentId"];
+                    enrollmentPreview.Id = (int)dr["Id"];
                     enrollmentPreview.CourseName = dr["courseAcronym"].ToString();
                     enrollmentPreviews.Add(enrollmentPreview);
 
@@ -96,6 +96,73 @@ namespace EnrollmentSystem.Controllers
         }
 
         [HttpGet]
+        public ActionResult Evaluate(int id)
+        {
+            string enrollmentType = "regular";
+
+            string url = Request.Url.AbsoluteUri;
+            Uri myUri = new Uri(url);
+            string type = HttpUtility.ParseQueryString(myUri.Query).Get("type");
+            if (type != null) enrollmentType = type;
+
+            EnrollmentsModel enrollment = new EnrollmentsModel();
+
+            con.ConnectionString = new AccountController().getConnectionString();
+            con.Open();
+            com.Connection = con;
+            com.CommandText = $"SELECT * FROM [dbo].[enrollments] AS enrollments INNER JOIN (select id, name as courseName, acronym as courseAcronym from courses) [courses] ON [enrollments].[courseId] = [courses].[id] INNER JOIN (select id, birthDate as studentBirthDate, firstName as studentFirstName, middleName as studentMiddleName, lastName as studentLastName, gender as studentGender, age as studentAge, address as studentAddress, contactNumber as studentContactNumber, email as studentEmail, profileFileName as studentProfileFileName from students)  [students] ON [enrollments].[studentId] = students.id WHERE enrollments.id = '{id}'";
+            dr = com.ExecuteReader();
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+
+                    //Save the whole enrollment information
+                    enrollment.Id = (int)dr["id"];
+                    enrollment.BirthCertificateFileName = dr["BirthCertificateFileName"] != DBNull.Value ? dr["BirthCertificateFileName"].ToString() : "";
+                    enrollment.DateEnrolled = dr["DateEnrolled"] != DBNull.Value ? dr["DateEnrolled"].ToString() : "";
+                    enrollment.CertificateOfTransferFileName = dr["CertificateOfTransferFileName"] != DBNull.Value ? dr["CertificateOfTransferFileName"].ToString() : "";
+                    enrollment.GoodMoralCertificateFileName = dr["goodMoralCertificateFileName"] != DBNull.Value ? dr["goodMoralCertificateFileName"].ToString() : "";
+                    enrollment.HonorableDismissalFileName = dr["HonorableDismissalFileName"] != DBNull.Value ? dr["HonorableDismissalFileName"].ToString() : "";
+                    enrollment.ProfileFileName = dr["ProfileFileName"].ToString();
+                    enrollment.ReportCardFileName = dr["ReportCardFileName"].ToString();
+                    enrollment.SchoolYearStart = (System.DateTime)dr["SchoolYearStart"];
+                    enrollment.CourseId = (int)dr["CourseId"];
+                    enrollment.Status = dr["Status"].ToString();
+                    enrollment.StudentId = (int)dr["StudentId"];
+                    enrollment.Year = (int)dr["Year"];
+                    enrollment.Type = dr["Type"].ToString();
+                    enrollment.EmailRecipient = dr["EmailRecipient"].ToString();
+
+                    //Save the student enrolled
+                    StudentsModel student = new StudentsModel();
+                    student.FirstName = dr["studentFirstName"].ToString();
+                    student.MiddleName = dr["studentMiddleName"].ToString();
+                    student.LastName = dr["studentLastName"].ToString();
+                    student.Address = dr["studentAddress"].ToString();
+                    student.ContactNumber = dr["studentContactNumber"].ToString();
+                    student.Email = dr["studentEmail"].ToString();
+                    student.Gender = dr["studentGender"].ToString() == "2" ? "Female" : "Male";
+                    student.Age = (int)dr["studentAge"];
+                    student.ProfileFileName = dr["studentProfileFileName"].ToString();
+                    student.BirthDate = (System.DateTime)dr["studentBirthDate"];
+
+                    //save course info
+                    CoursesModel course = new CoursesModel();
+                    course.Acronym = dr["courseAcronym"].ToString();
+                    course.Name = dr["courseName"].ToString();
+
+                    enrollment.coursesModel = course;
+                    enrollment.studentsModel = student;
+
+                }
+            }
+            con.Close();
+            ViewBag.Enrollment = enrollment;
+            return View();
+        }
+
+        [HttpGet]
         public ActionResult Regular()
         {
             return View();
@@ -133,7 +200,7 @@ namespace EnrollmentSystem.Controllers
                     enrollment.BirthCertificateFileName = dr["BirthCertificateFileName"] != DBNull.Value ? dr["BirthCertificateFileName"].ToString() : "";
                     enrollment.DateEnrolled = dr["DateEnrolled"] != DBNull.Value ? dr["DateEnrolled"].ToString() : "";
                     enrollment.CertificateOfTransferFileName = dr["CertificateOfTransferFileName"] != DBNull.Value ? dr["CertificateOfTransferFileName"].ToString() : "";
-                    enrollment.GoodMoralCertificateFileName = dr["goodMoralCertificateFileName"] != DBNull.Value ? dr["GoodMoralFileName"].ToString() : "";
+                    enrollment.GoodMoralCertificateFileName = dr["goodMoralCertificateFileName"] != DBNull.Value ? dr["goodMoralCertificateFileName"].ToString() : "";
                     enrollment.HonorableDismissalFileName = dr["HonorableDismissalFileName"] != DBNull.Value ? dr["HonorableDismissalFileName"].ToString() : "";
                     enrollment.ProfileFileName = dr["ProfileFileName"].ToString();
                     enrollment.ReportCardFileName = dr["ReportCardFileName"].ToString();
@@ -184,6 +251,8 @@ namespace EnrollmentSystem.Controllers
             ViewBag.Enrollment = enrollment;
             return View();
         }
+
+
 
         [HttpPost]
         [ValidateInput(false)]

@@ -49,22 +49,23 @@ namespace EnrollmentSystem.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            List<RegistrarsModel> registrars = new List<RegistrarsModel>();
+            List<RegistrarsModelPreview> registrars = new List<RegistrarsModelPreview>();
 
             con.ConnectionString = new AccountController().getConnectionString();
             con.Open();
             com.Connection = con;
-            com.CommandText = $"SELECT * FROM [dbo].[registrars] WHERE IsActive = 1";
+            com.CommandText = $"SELECT * FROM [dbo].[registrars]";
             dr = com.ExecuteReader();
             if (dr.HasRows)
             {
                 while (dr.Read())
                 {
-                    RegistrarsModel registrar = new RegistrarsModel();
+                    RegistrarsModelPreview registrar = new RegistrarsModelPreview();
                     registrar.Id = (int)dr["id"];
                     registrar.FirstName = dr["FirstName"].ToString();
                     registrar.LastName = dr["LastName"].ToString();
                     registrar.MiddleName = dr["MiddleName"].ToString();
+                    registrars.Add(registrar);
                 }
             }
             con.Close();

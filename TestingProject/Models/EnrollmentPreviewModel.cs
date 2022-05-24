@@ -18,6 +18,5 @@ namespace EnrollmentSystem.Models
         [Required]
         [Display(Name = "Course")]
         public string CourseName { get; set; }
-
     }
 }

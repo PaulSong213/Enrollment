@@ -46,8 +46,5 @@ namespace EnrollmentSystem.Models
 
         public HttpPostedFileBase UploadedProfileFileName { get; set; }
 
-
-
-
     }
 }

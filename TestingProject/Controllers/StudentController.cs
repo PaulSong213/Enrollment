@@ -38,11 +38,12 @@ namespace EnrollmentSystem.Controllers
         {
 
             List<StudentsModel> students = new List<StudentsModel>();
+            List<StudentsPreviewModel> studentsPreview = new List<StudentsPreviewModel>();
 
             con.ConnectionString = new AccountController().getConnectionString();
             con.Open();
             com.Connection = con;
-            com.CommandText = $"SELECT * FROM [dbo].[students] WHERE isActive = 1";
+            com.CommandText = $"SELECT * FROM [dbo].[students] INNER JOIN (select id, name as courseName, acronym as courseAcronym from courses) [courses] ON [students].[courseId] = [courses].[id] WHERE isActive = 1";
             dr = com.ExecuteReader();
             if (dr.HasRows)
             {
@@ -50,6 +51,20 @@ namespace EnrollmentSystem.Controllers
                 {
                     String currentGender = "Male";
                     if (dr["Gender"].ToString() == "2") currentGender = "Female";
+
+                    //previews of students
+                    StudentsPreviewModel studentPreview = new StudentsPreviewModel
+                    {
+                        id = (int)dr["id"],
+                        FirstName = $"{dr["FirstName"].ToString()} {dr["MiddleName"].ToString()[0]}. {dr["LastName"].ToString()}",
+                        Age = (int)dr["Age"],
+                        Gender = currentGender,
+                        Email = dr["Email"].ToString(),
+                        Course = dr["CourseAcronym"].ToString(),
+                    };
+                    studentsPreview.Add(studentPreview);
+
+                    //full data of student
                     StudentsModel student = new StudentsModel
                     {
                         id = (int)dr["id"],
@@ -70,47 +85,12 @@ namespace EnrollmentSystem.Controllers
                 }
             }
 
-            //Get courses
-            List<CoursesModel> courses = new List<CoursesModel>();
-            dr.Close();
-            com.CommandText = $"SELECT * FROM [dbo].[courses]";
-            dr = com.ExecuteReader();
-            if (dr.HasRows)
-            {
-                while (dr.Read())
-                {
-                    CoursesModel course = new CoursesModel
-                    {
-                        Id = (int)dr["Id"],
-                        Name = dr["Name"].ToString()
-                    };
-                    courses.Add(course);
-                }
-            }
 
-            //Get status
-            List<StatusModel> status = new List<StatusModel>();
-            dr.Close();
-            com.CommandText = $"SELECT * FROM [dbo].[status]";
-            dr = com.ExecuteReader();
-            if (dr.HasRows)
-            {
-                while (dr.Read())
-                {
-                    StatusModel newStatus = new StatusModel
-                    {
-                        Id = (int)dr["Id"],
-                        Name = dr["Name"].ToString()
-                    };
-                    status.Add(newStatus);
-                }
-            }
-
+           
 
             con.Close();
             ViewBag.Students = JsonConvert.SerializeObject(students);
-            ViewBag.Courses = JsonConvert.SerializeObject(courses);
-            ViewBag.Status = JsonConvert.SerializeObject(status);
+            ViewBag.studentsPreview = JsonConvert.SerializeObject(studentsPreview);
 
             return View();
         }
