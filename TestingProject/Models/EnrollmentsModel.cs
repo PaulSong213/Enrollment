@@ -23,23 +23,35 @@ namespace EnrollmentSystem.Models
         [Display(Name = "Type")]
         public string Type { get; set; }
 
-        [Display(Name = "ProfileFileName")]
-        public string ProfileFileName { get; set; }
-
         [Display(Name = "Report Card File Name")]
         public string ReportCardFileName { get; set; }
+
+        [Display(Name = "ReportCardFileNameUpload")]
+        public HttpPostedFileBase ReportCardFileNameUpload { get; set; }
 
         [Display(Name = "Birth Certificate File Name")]
         public string BirthCertificateFileName { get; set; }
 
+        [Display(Name = "BirthCertificateFileNameUpload")]
+        public HttpPostedFileBase BirthCertificateFileNameUpload { get; set; }
+
         [Display(Name = "Good Moral Certificate File Name")]
         public string GoodMoralCertificateFileName { get; set; }
+
+        [Display(Name = "GoodMoralCertificateFileNameUpload")]
+        public HttpPostedFileBase GoodMoralCertificateFileNameUpload { get; set; }
 
         [Display(Name = "Certificate Of Transfer File Name")]
         public string CertificateOfTransferFileName { get; set; }
 
+        [Display(Name = "CertificateOfTransferFileNameUpload")]
+        public HttpPostedFileBase CertificateOfTransferFileNameUpload { get; set; }
+
         [Display(Name = "Honorable Dismissal File Name")]
         public string HonorableDismissalFileName { get; set; }
+
+        [Display(Name = "HonorableDismissalFileNameUpload")]
+        public HttpPostedFileBase HonorableDismissalFileNameUpload { get; set; }
 
         [Display(Name = "Date Enrolled")]
         public string DateEnrolled { get; set; }

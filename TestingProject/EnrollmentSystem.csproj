@@ -386,6 +386,7 @@
     <Content Include="Views\Student\View.cshtml" />
     <Content Include="Views\Registrars\View.cshtml" />
     <Content Include="Views\Registrars\Add.cshtml" />
+    <Content Include="Views\Enrollments\Irregular.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

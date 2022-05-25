@@ -5,6 +5,20 @@
 }
 
 <div class="container mt-5">
+    
+    @if (TempData["MessageResult"] != null)
+    {
+        <div class="alert alert-primary">
+            @TempData["MessageResult"]
+        </div>
+    }
+
+    @if (TempData["ErrorResult"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorResult"]
+        </div>
+    }
     <div class="main-body ">
         <div class="card mb-4">
             <div class="content p-4" style="background-color: #EAFAF9;">
@@ -20,16 +34,18 @@
         <div class="my-5">
             <h3>Apply an Enrollment</h3>
             <div class="row-cols-3">
-                <a href="/Enrollments/Regular" class="  " target="_blank">
+                <a href="/Enrollments/Regular" class="  " >
                     <button class="btn btn-portal btn-success pe-2 col-12 my-2  mx-1 col-md-3">Regular</button>
                 </a>
-                <a href="/Enrollments/Incoming" class=""  target="_blank">
+                <a href="/Enrollments/Incoming" class=""  >
                     <button class="btn btn-portal btn-success pe-2 col-12 my-2 mx-1 col-md-3 ">Incoming</button>
                 </a>
-                <a href="/Enrollments/Transferee" class="  "  target="_blank">
+                <a href="/Enrollments/Transferee" class="  "  >
                     <button class="btn btn-portal btn-success pe-2 col-12 my-2 mx-1 col-md-3">Transferee</button>
                 </a>
-              
+               <a href="/Enrollments/Irregular" class="  " >
+                    <button class="btn btn-portal btn-success pe-2 col-12 my-2 mx-1 col-md-3">Irregular</button>
+                </a>
 
             </div>
 

@@ -106,10 +106,10 @@
     $(document).ready(function() {
         var fullEnrollmentsData = '@ViewBag.Enrollments';
         var fullEnrollments = JSON.parse(fullEnrollmentsData.replace(/&quot;/g,'"'));
-        console.log(fullEnrollments);
-    
+        
         var enrollmentsPreviewData = '@ViewBag.EnrollmentPreviews';
         var enrollments = JSON.parse(enrollmentsPreviewData.replace(/&quot;/g,'"'));
+    
         for(var i = 0; i < enrollments.length; i++){
             let enrollment = enrollments[i];
             enrollments[i] = Object.keys(enrollment).map((key) => enrollment[key]);
@@ -126,12 +126,12 @@
             ],
             "fnRowCallback": function(nRow, aData, iDisplayIndex) {
               nRow.setAttribute('id',aData[0]);
+              nRow.setAttribute('class','clickableRow');
               },
            
         });
         
         $(".evaluateItem").on('click', function(event){
-            
             let itemId = $(this).closest('tr').attr('id');
             location.href= "/Enrollments/Evaluate/" + itemId;
         });

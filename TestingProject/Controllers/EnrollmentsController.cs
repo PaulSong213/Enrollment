@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -42,8 +43,8 @@ namespace EnrollmentSystem.Controllers
                 {
                     //Preview of enrollment
                     EnrollmentPreviewModel enrollmentPreview = new EnrollmentPreviewModel();
-                    enrollmentPreview.StudentId = (int)dr["StudentId"];
                     enrollmentPreview.Id = (int)dr["Id"];
+                    enrollmentPreview.StudentId = (int)dr["StudentId"];
                     enrollmentPreview.CourseName = dr["courseAcronym"].ToString();
                     enrollmentPreviews.Add(enrollmentPreview);
 
@@ -55,7 +56,6 @@ namespace EnrollmentSystem.Controllers
                     enrollment.CertificateOfTransferFileName = dr["CertificateOfTransferFileName"] != DBNull.Value ? dr["CertificateOfTransferFileName"].ToString() : "";
                     enrollment.GoodMoralCertificateFileName = dr["goodMoralCertificateFileName"] != DBNull.Value ? dr["goodMoralCertificateFileName"].ToString() : "";
                     enrollment.HonorableDismissalFileName = dr["HonorableDismissalFileName"] != DBNull.Value ? dr["HonorableDismissalFileName"].ToString() : "";
-                    enrollment.ProfileFileName = dr["ProfileFileName"].ToString();
                     enrollment.ReportCardFileName = dr["ReportCardFileName"].ToString();
                     enrollment.SchoolYearStart = (System.DateTime)dr["SchoolYearStart"];
                     enrollment.CourseId = (int)dr["CourseId"];
@@ -124,7 +124,6 @@ namespace EnrollmentSystem.Controllers
                     enrollment.CertificateOfTransferFileName = dr["CertificateOfTransferFileName"] != DBNull.Value ? dr["CertificateOfTransferFileName"].ToString() : "";
                     enrollment.GoodMoralCertificateFileName = dr["goodMoralCertificateFileName"] != DBNull.Value ? dr["goodMoralCertificateFileName"].ToString() : "";
                     enrollment.HonorableDismissalFileName = dr["HonorableDismissalFileName"] != DBNull.Value ? dr["HonorableDismissalFileName"].ToString() : "";
-                    enrollment.ProfileFileName = dr["ProfileFileName"].ToString();
                     enrollment.ReportCardFileName = dr["ReportCardFileName"].ToString();
                     enrollment.SchoolYearStart = (System.DateTime)dr["SchoolYearStart"];
                     enrollment.CourseId = (int)dr["CourseId"];
@@ -165,19 +164,202 @@ namespace EnrollmentSystem.Controllers
         [HttpGet]
         public ActionResult Regular()
         {
+
+            List<CoursesModel> courses = new List<CoursesModel>();
+
+            con.ConnectionString = new AccountController().getConnectionString();
+            con.Open();
+            com.Connection = con;
+            com.CommandText = "SELECT * FROM [dbo].[courses]";
+            dr = com.ExecuteReader();
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    //save course info
+                    CoursesModel course = new CoursesModel();
+                    course.Acronym = dr["Acronym"].ToString();
+                    course.Id = (int)dr["Id"];
+                    course.Name = dr["Name"].ToString();
+                    courses.Add(course);
+
+                }
+            }
+            con.Close();
+            ViewBag.Courses = courses;
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Irregular()
+        {
+
+            List<CoursesModel> courses = new List<CoursesModel>();
+
+            con.ConnectionString = new AccountController().getConnectionString();
+            con.Open();
+            com.Connection = con;
+            com.CommandText = "SELECT * FROM [dbo].[courses]";
+            dr = com.ExecuteReader();
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    //save course info
+                    CoursesModel course = new CoursesModel();
+                    course.Acronym = dr["Acronym"].ToString();
+                    course.Id = (int)dr["Id"];
+                    course.Name = dr["Name"].ToString();
+                    courses.Add(course);
+
+                }
+            }
+            con.Close();
+            ViewBag.Courses = courses;
             return View();
         }
 
         [HttpGet]
         public ActionResult Transferee()
         {
+            List<CoursesModel> courses = new List<CoursesModel>();
+
+            con.ConnectionString = new AccountController().getConnectionString();
+            con.Open();
+            com.Connection = con;
+            com.CommandText = "SELECT * FROM [dbo].[courses]";
+            dr = com.ExecuteReader();
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    //save course info
+                    CoursesModel course = new CoursesModel();
+                    course.Acronym = dr["Acronym"].ToString();
+                    course.Id = (int)dr["Id"];
+                    course.Name = dr["Name"].ToString();
+                    courses.Add(course);
+
+                }
+            }
+            con.Close();
+            ViewBag.Courses = courses;
             return View();
         }
 
         [HttpGet]
         public ActionResult Incoming()
         {
-            return View();  
+            List<CoursesModel> courses = new List<CoursesModel>();
+
+            con.ConnectionString = new AccountController().getConnectionString();
+            con.Open();
+            com.Connection = con;
+            com.CommandText = "SELECT * FROM [dbo].[courses]";
+            dr = com.ExecuteReader();
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    //save course info
+                    CoursesModel course = new CoursesModel();
+                    course.Acronym = dr["Acronym"].ToString();
+                    course.Id = (int)dr["Id"];
+                    course.Name = dr["Name"].ToString();
+                    courses.Add(course);
+
+                }
+            }
+            con.Close();
+            ViewBag.Courses = courses;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Save(EnrollmentsModel model)
+        {
+            DateTime myDateTime = DateTime.Now;
+            string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
+
+            try
+            {
+                var type = model.Type;
+                con.ConnectionString = new AccountController().getConnectionString();
+                con.Open();
+                com.Connection = con;
+                string imagesPath = HttpContext.Server.MapPath("~/Content/img");
+
+                //upload report card
+                var reportCardFileName = "";
+                string reportCardFileNameExtension = Path.GetExtension(model.ReportCardFileNameUpload.FileName);
+                reportCardFileName = model.StudentId + "_reportcard" + reportCardFileNameExtension;
+                string saveToPath = Path.Combine(imagesPath, reportCardFileName);
+                model.ReportCardFileNameUpload.SaveAs(saveToPath);
+
+                switch (type)
+                {
+                    case "incoming":
+                       
+                        //upload birthCertificateFileName
+                        var birthCertificateFileName = "";
+                        string birthCertificateFileNameExt = Path.GetExtension(model.BirthCertificateFileNameUpload.FileName);
+                        birthCertificateFileName = model.StudentId + "_birthcert" + birthCertificateFileNameExt;
+                        string saveToPathBirthCertificateFileNameUpload = Path.Combine(imagesPath, birthCertificateFileName);
+                        model.BirthCertificateFileNameUpload.SaveAs(saveToPathBirthCertificateFileNameUpload);
+
+                        //upload goodMoralCertificateFileName
+                        var goodMoralCertificateFileName = "";
+                        string goodMoralCertificateFileNameExt = Path.GetExtension(model.GoodMoralCertificateFileNameUpload.FileName);
+                        goodMoralCertificateFileName = model.StudentId + "_goodMoralCertificate" + goodMoralCertificateFileNameExt;
+                        string saveToPathgoodMoralCertificateFileName = Path.Combine(imagesPath, goodMoralCertificateFileName);
+                        model.GoodMoralCertificateFileNameUpload.SaveAs(saveToPathgoodMoralCertificateFileName);
+
+
+
+
+                        com.CommandText = $"INSERT INTO enrollments (goodMoralCertificateFileName,birthCertificateFileName,type,studentId,courseId,schoolYearStart,reportCardFileName,dateEnrolled,status,year,emailRecipient) VALUES ('{goodMoralCertificateFileName}','{birthCertificateFileName}','incoming',{model.StudentId},{model.CourseId},'2022-06-11','{reportCardFileName}', '{sqlFormattedDate}' ,'pending',1,'{model.EmailRecipient}');";
+                        break;
+                    case "transferee":
+                        //upload birthCertificateFileName
+                        var birthCertificateFileName2 = "";
+                        string birthCertificateFileNameExt2 = Path.GetExtension(model.BirthCertificateFileNameUpload.FileName);
+                        birthCertificateFileName2 = model.StudentId + "_birthcert" + birthCertificateFileNameExt2;
+                        string saveToPathBirthCertificateFileNameUpload2 = Path.Combine(imagesPath, birthCertificateFileName2);
+                        model.BirthCertificateFileNameUpload.SaveAs(saveToPathBirthCertificateFileNameUpload2);
+
+                        //upload certificateOfTransferFileName
+                        var certificateOfTransferFileName = "";
+                        string certificateOfTransferFileNameExt = Path.GetExtension(model.BirthCertificateFileNameUpload.FileName);
+                        certificateOfTransferFileName = model.StudentId + "_certificateOfTransfer" + certificateOfTransferFileNameExt;
+                        string saveTocertificateOfTransferFileName = Path.Combine(imagesPath, certificateOfTransferFileName);
+                        model.CertificateOfTransferFileNameUpload.SaveAs(saveTocertificateOfTransferFileName);
+
+                        // upload honorableDismissalFileName
+                        var honorableDismissalFileName = "";
+                        string honorableDismissalFileNameExt = Path.GetExtension(model.BirthCertificateFileNameUpload.FileName);
+                        honorableDismissalFileName = model.StudentId + "honorableDismissal" + honorableDismissalFileNameExt;
+                        string saveTohonorableDismissalFileName = Path.Combine(imagesPath, honorableDismissalFileName);
+                        model.HonorableDismissalFileNameUpload.SaveAs(saveTohonorableDismissalFileName);
+
+                        com.CommandText = $"INSERT INTO enrollments (honorableDismissalFileName,certificateOfTransferFileName,birthCertificateFileName,type,studentId,courseId,schoolYearStart,reportCardFileName,dateEnrolled,status,year,emailRecipient) VALUES ('{honorableDismissalFileName}','{certificateOfTransferFileName}','{birthCertificateFileName2}','transferee',{model.StudentId},{model.CourseId},'2022-06-11','{reportCardFileName}', '{sqlFormattedDate}' ,'pending',{model.Year},'{model.EmailRecipient}');";
+
+                        break;
+                    default:
+                        //regular and irreg
+
+                        //command text
+                        com.CommandText = $"INSERT INTO enrollments (type,studentId,courseId,schoolYearStart,reportCardFileName,dateEnrolled,status,year,emailRecipient) VALUES ('{model.Type}',{model.StudentId},{model.CourseId},'2022-06-11','{reportCardFileName}', '{sqlFormattedDate}' ,'pending',{model.Year},'{model.EmailRecipient}');";
+                        break;
+                }
+                Boolean isUpdated = com.ExecuteNonQuery() > 0;
+                TempData["MessageResult"] = "Your enrollment application was SUBMITTED. Kindly wait for our email update about your application.";
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorResult"] = ex.Message;
+            }
+            return RedirectToAction("Portal", "Student");
         }
 
         [HttpGet]
@@ -202,7 +384,6 @@ namespace EnrollmentSystem.Controllers
                     enrollment.CertificateOfTransferFileName = dr["CertificateOfTransferFileName"] != DBNull.Value ? dr["CertificateOfTransferFileName"].ToString() : "";
                     enrollment.GoodMoralCertificateFileName = dr["goodMoralCertificateFileName"] != DBNull.Value ? dr["goodMoralCertificateFileName"].ToString() : "";
                     enrollment.HonorableDismissalFileName = dr["HonorableDismissalFileName"] != DBNull.Value ? dr["HonorableDismissalFileName"].ToString() : "";
-                    enrollment.ProfileFileName = dr["ProfileFileName"].ToString();
                     enrollment.ReportCardFileName = dr["ReportCardFileName"].ToString();
                     enrollment.SchoolYearStart = (System.DateTime)dr["SchoolYearStart"];
                     enrollment.CourseId = (int)dr["CourseId"];
@@ -334,10 +515,6 @@ namespace EnrollmentSystem.Controllers
             return RedirectToAction("Index", "Enrollments");
         }
 
-        public ActionResult Test()
-        {
-            return View();
-        }
 
         public string getEmailString(Boolean isAccepted, FormCollection collection)
         {

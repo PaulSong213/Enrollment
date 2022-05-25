@@ -150,7 +150,7 @@ namespace EnrollmentSystem.Controllers
                             this.Session["tokenPassword"] = model.Password;
                             this.Session["userAccountID"] = user.LocalId;
                             //Upload file
-                            string imagesPath = HttpContext.Server.MapPath("~/images");
+                            string imagesPath = HttpContext.Server.MapPath("~/Content/img");
                             string extension = Path.GetExtension(UploadedProfileFileName.FileName);
                             string newFileName = user.LocalId + extension;
                             string saveToPath = Path.Combine(imagesPath, newFileName);

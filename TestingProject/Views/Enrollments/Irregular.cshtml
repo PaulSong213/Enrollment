@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Registration Form for Regular Students";
+    ViewBag.Title = "Registration Form for Irregular Students";
     Layout = "~/Views/Shared/Student_Layout.cshtml";
     
     var currentEmail = "test@email.com";
@@ -15,7 +15,6 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Regular - CvSU Bacoor Campus Enrollment System</title>
     <link rel="shortcut icon" type="image/x-icon" href="/images/logo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -50,7 +49,7 @@
             </div>
             
             <input type="hidden" name="studentId" value="@currentStudentNumber">
-            <input type="hidden" name="type" value="regular">
+            <input type="hidden" name="type" value="irregular">
                 
             <div class="form-group mt-4 ps-3 py-4">
                 <label for="exampleInputEmail1"><strong>Email address reciever of your Enrollment Updates</strong></label>
@@ -92,7 +91,24 @@
                         </select>
                      </div>    
                 </div>
+                    
+                <div class="input-group">
+                  <label for="courseId" class="form-label mt-3">
+                      <span class="fw-bold">Retake subjects codename</span>
+                  </label>
+                  <div class="input-group">
+                      <input type="text" class="form-control">
+                      <input type="text" class="form-control">
+                      <input type="text" class="form-control">
+                      <input type="text" class="form-control">
+                      <input type="text" class="form-control">      
+                  </div>
+                </div>    
+                    
+                    
             </div>    
+                
+            
             
             <!-- Documents -->
             <div class="form-group mt-4 ps-3 py-4">
