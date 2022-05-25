@@ -24,6 +24,7 @@
 <section class="row pb-5 w-100 overflow-auto">
     <div class="d-flex justify-content-between py-3">
         <h3>@ViewBag.Title</h3>
+        
     </div>
    <div class="w-100 overflow-auto py-3">
          <table id="dataTable" class="table table-striped" style="width:100%">
@@ -39,7 +40,7 @@
     $(document).ready(function() {
     
         var studentsData = '@ViewBag.studentsPreview';
-        var studentsRaw = '@ViewBag.students';
+        var studentsRaw = JSON.parse(('@ViewBag.students').replace(/&quot;/g,'"'));
     
     
         var students = JSON.parse(studentsData.replace(/&quot;/g,'"'));
@@ -65,7 +66,7 @@
               nRow.setAttribute('id',aData[0]);
               nRow.setAttribute('class',"clickableRow");
               nRow.setAttribute('data-bs-toggle',"modal");
-              nRow.setAttribute('data-bs-target',"#viewCourse");
+              nRow.setAttribute('data-bs-target',"#viewData");
               },
             dom: 'Bfrtip',
             buttons: [
@@ -78,15 +79,14 @@
         $(".clickableRow").on('click', function(event){
             let itemId = $(this).attr('id');
             let item = findItemById(itemId);
-            
             $(this).attr('data-bs-id',   itemId);
-            
+            $(this).attr('data-bs-item',   JSON.stringify(item));
         });
     
         function findItemById(id){
             for(var i = 0; i < studentsRaw.length; i++){
                 let item = studentsRaw[i];
-                if(id == item.Id)return item;
+                if(id == item.id)return item;
             }
             return null;
         }

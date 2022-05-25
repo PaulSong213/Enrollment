@@ -1,4 +1,4 @@
-﻿@model EnrollmentSystem.Models.StatusModel
+﻿@model EnrollmentSystem.Models.RegistrarsModel
 
 @{
     ViewBag.Title = "Registars";
@@ -23,17 +23,24 @@
 <section class="row pb-5 w-100 overflow-auto">
     <div class="d-flex justify-content-between py-3">
         <h3>@ViewBag.Title</h3>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addData" >
+            Register a  new Registrar
+       </button>
     </div>
    <div class="w-100 overflow-auto py-3">
          <table id="dataTable" class="table table-striped" style="width:100%">
     </table>
     </div>
 </section>
+<section>@RenderPage("./View.cshtml")</section>
+<section>@RenderPage("./Add.cshtml")</section>
+
 @section scripts{
  <script>
     $(document).ready(function() {
         
-        var registrarsData = '@ViewBag.Registrars';
+        var registrarsData = '@ViewBag.RegistrarPreview';
+        var registrarsRaw = JSON.parse(('@ViewBag.Registrars').replace(/&quot;/g,'"'));
         var registrars = JSON.parse(registrarsData.replace(/&quot;/g,'"'));
         console.log(registrars);
         for(var i = 0; i < registrars.length; i++){
@@ -41,37 +48,40 @@
             registrars[i] = Object.keys(registrar).map((key) => {
                 return registrar[key];
             });
-            
         }
         var registrarTable = $('#dataTable').DataTable( {
             responsive: true,
             data: registrars,
             columns: [
                 { title: "ID" },
-                { title: "First Name" },
-                { title: "Middle Name" },
-                { title: "Last Name" },
-                { title: "", "defaultContent": "<button class='deleteitem btn btn-secondary'>Mark as Inactive</button>" }
+                { title: "Full Name" },
+                { title: "Email" },
             ],
             "fnRowCallback": function(nRow, aData, iDisplayIndex) {
               nRow.setAttribute('id',aData[0]);
-              },
+              nRow.setAttribute('class',"clickableRow");
+              nRow.setAttribute('data-bs-toggle',"modal");
+              nRow.setAttribute('data-bs-target',"#viewData");
+             },
             dom: 'Bfrtip',
-            buttons: [
-                'print','copyHtml5',
-            'excelHtml5',
-            'pdfHtml5'
-            ]
         });
          
-        $(".editItem").on('click', function(event){
-            let itemId = $(this).closest('tr').attr('id');
-            location.href = "/Registrars/Edit/" + itemId;
+        $(".clickableRow").on('click', function(event){
+            let itemId = $(this).attr('id');
+            let item = findItemById(itemId);
+            
+            $(this).attr('data-bs-id',   itemId);
+            $(this).attr('data-bs-item',   JSON.stringify(item));
         });
-        $(".deleteitem").on('click', function(event){
-            let itemId = $(this).closest('tr').attr('id');
-            location.href = "/Registrars/Delete/" + itemId;
-        });
+    
+        function findItemById(id){
+            for(var i = 0; i < registrarsRaw.length; i++){
+                let item = registrarsRaw[i];
+                if(id == item.Id)return item;
+            }
+            return null;
+        }
+        
     } );
     
     

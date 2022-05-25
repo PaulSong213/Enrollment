@@ -1,5 +1,13 @@
 ﻿@{
+    ViewBag.Title = "Registration Form for Regular";
+    Layout = "~/Views/Shared/Student_Layout.cshtml";
     
+    var currentEmail = "test@email.com";
+    var currentFirst = "test";
+    var currentMiddle = "test";
+    var currentLast = "test";
+    var currentId = "test";
+    var currentStudentNumber = "1034";
 }
 <!DOCTYPE html>
 <html>
@@ -22,238 +30,43 @@
 </head>
 <body>
 
-    <div class="container-xl col-10 col-lg-6">
+    <div class="container-xl col-10 col-lg-6 py-5">
             <div class="form-group mb-3 py-5 px-4">
-                <h2>Registration Form for Regular CvSU-Bacoor Students</h2>
+                <h2> @ViewBag.Title</h2>
                 <div class="mt-2">
                     <small class="text-danger">* Required.</small>
                 </div>
             </div>
+            
         <!--student number-->
         <div class="form-group mt-1 ps-3 py-4">
             <label for="studentNo"><strong>Student Number</strong></label>
             <div class="col-8 pb-2">
-                <input type="text" class=" form-control form-control-lg mt-3" id="studentNo" placeholder="Enter student number">
+                <input type="text" class=" form-control form-control-lg mt-3" id="studentNo" placeholder="Enter student number" disabled="Yes" value="@currentStudentNumber">
             </div>
         </div>
 
         <div class="form-group mt-4 ps-3 py-4">
-            <label for="exampleInputEmail1"><strong>Email address</strong></label>
+            <label for="exampleInputEmail1"><strong>Email address reciever of your Enrollment Updates</strong></label>
             <div class="col-8">
-                <input type="email" class="form-control form-control-lg text mt-3" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                <input type="email" class="form-control form-control-lg text mt-3" id="email" aria-describedby="emailHelp" placeholder="Enter an email you want to recieve your enrollment update." value="@currentEmail">
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
         </div>
 
-        <div class="form-group mt-4 ps-3 py-4">
-            <label for="lName"><strong>Last Name</strong></label>
-            <div class="col-8 pb-2">
-                <input type="text" class=" form-control form-control-lg mt-3" id="lName" placeholder="Enter last name">
-            </div>
-        </div>
-
-        <div class="form-group mt-4 ps-3 py-4">
-            <label for="fName"><strong>First Name</strong></label>
-            <div class="col-8 pb-2">
-                <input type="text" class=" form-control form-control-lg mt-3" id="fName" placeholder="Enter first name">
-            </div>
-        </div>
-
-        <div class="form-group mt-4 ps-3 py-4">
-            <label for="age"><strong>Middle Name</strong></label>
-            <div class="col-8 pb-2">
-                <input type="text" class=" form-control form-control-lg mt-3" id="age" placeholder="Enter middle name">
-            </div>
-        </div>
-
-        <div class="form-group mt-4 ps-3 py-4">
-            <label for="mName"><strong>Age</strong></label>
-            <div class="col-8 pb-2">
-                <input type="text" class=" form-control form-control-lg mt-3" id="mName" placeholder="Enter age">
-            </div>
-        </div>
-
-        <!--gender-->
-        <div class="form-group mt-4 ps-3 py-4">
-            <label><strong>Sex at birth</strong></label>
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="radioGenderMale">
-                <label class="form-check-label" for="flexRadioDefault1">
-                    Male
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="radioGenderFemale">
-                <label class="form-check-label" for="flexRadioDefault2">
-                    Female
-                </label>
-            </div>
-        </div>
-
-        <!--birthdate-->
-        <div class="form-group mt-4 ps-3 py-4">
-            <label for="lastName"><strong>Date of birth</strong></label>
-            <div class="col-5 pb-2">
-                <input placeholder="Selected date" type="date" id="date-picker-example" class="form-control datepicker mt-3">
-            </div>
-        </div>
-
-        <!--address-->
-        <div class="form-group mt-4 ps-3 py-4">
-            <label for="address"><strong>Address</strong></label>
-            <div class="col-9 pb-2">
-                <input type="text" class=" form-control form-control-lg mt-3" id="address" placeholder="Enter address">
-            </div>
-        </div>
-
-        <!--phonenumber-->
-        <div class="form-group mt-4 ps-3 py-4">
-            <label for="phoneNo"><strong>Phone Number</strong></label>
-            <div class="col-8 pb-2">
-                <input type="text" class=" form-control form-control-lg mt-3" id="phoneNo" placeholder="Enter Phone Number">
-            </div>
-        </div>
-
-        <!--zipcode-->
-        <div class="form-group mt-4 ps-3 py-4">
-            <label for="zipCode"><strong>Zip Code</strong></label>
-            <div class="col-8 pb-2">
-                <input type="text" class=" form-control form-control-lg mt-3" id="zipCode" placeholder="Enter Zip Code">
-            </div>
-        </div>
-
-        <!--School Year-->
-        <div class="form-group mt-4 ps-3 py-4">
-            <label for="schoolYear"><strong>School Year</strong></label>
-            <div class="col-8 pb-2">
-                <input type="text" class=" form-control form-control-lg mt-3" id="zipCode" placeholder="Enter School Year">
-            </div>
-        </div>
-
-        <!--gpa-->
-        <div class="form-group mt-4 ps-3 py-4">
-            <label for="gpa"><strong>GPA</strong></label>
-            <div class="col-8 pb-2">
-                <input type="text" class=" form-control form-control-lg mt-3" id="gpa" placeholder="Enter GPA">
-            </div>
-        </div>
-
-        <!--Good Moral and form 137-->
+        <!-- Documents -->
         <div class="form-group mt-4 ps-3 py-4">
             <div>
                 <strong>Documents</strong>
             </div>
 
-            <label for="goodMoralFile" class="form-label mt-3">Attach a clear photo of your Good Moral.</label>
+            <label for="goodMoralFile" class="form-label mt-3">Attach a clear photo of your 
+                <span class="fw-bold">Certificate of Grades</span>
+            </label>
             <div class="col-8 pb-2">
-                <input class="form-control" type="file" id="goodMoralFile">
+                <input class="form-control" type="file" id="goodMoralFile" accept="image">
             </div>
-            <label for="form137File" class="form-label mt-2">Attach a clear photo of your Form 137.</label>
-            <div class="col-8 pb-2">
-                <input class="form-control" type="file" id="form137File">
-            </div>
-        </div>
-
-
-        <!--*Parents Guardian info-->
-        <div class="parentguardian container-xl mt-5 pt-1 pb-1">
-            <h2 class=" pt-1 mt-2 ms-2">Parental Information</h2>
-        </div>
-
-        <!--Mother information-->
-        <div class="form-group mt-4 ps-3 py-4">
-            <label for="motherName"><strong>Mother's Name</strong></label>
-            <div class="col-8 pb-2">
-                <input type="text" class=" form-control form-control-lg mt-3" id="motherName" placeholder="Enter Mother's Name">
-            </div>
-        </div>
-
-        <div class="form-group mt-4 ps-3 py-4">
-            <label for="motherAddress"><strong>Address</strong></label>
-            <div class="col-9 pb-2">
-                <input type="text" class=" form-control form-control-lg mt-3" id="motherAddress" placeholder="Enter address">
-            </div>
-        </div>
-
-        <div class="form-group mt-4 ps-3 py-4">
-            <label for="motherEmail"><strong>Mother's Email address</strong></label>
-            <div class="col-8">
-                <input type="email" class="form-control form-control-lg text mt-3" id="motherEmail" aria-describedby="emailHelp" placeholder="Enter email">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-            </div>
-        </div>
-
-        <div class="form-group mt-4 ps-3 py-4">
-            <label for="motherPhoneNo"><strong>Mother's Phone Number</strong></label>
-            <div class="col-8">
-                <input type="email" class="form-control form-control-lg text mt-3" id="motherPhoneNo" aria-describedby="emailHelp" placeholder="Enter Phone Number">
-
-            </div>
-        </div>
-
-        <!--Father's information-->
-        <div class="form-group mt-4 ps-3 py-4">
-            <label for="fatherName"><strong>Father's Name</strong></label>
-            <div class="col-8 pb-2">
-                <input type="text" class=" form-control form-control-lg mt-3" id="fatherName" placeholder="Enter Father's Name">
-            </div>
-        </div>
-
-        <div class="form-group mt-4 ps-3 py-4">
-            <label for="fatherAddress"><strong>Address</strong></label>
-            <div class="col-9 pb-2">
-                <input type="text" class=" form-control form-control-lg mt-3" id="fatherAddress" placeholder="Enter address">
-            </div>
-        </div>
-
-        <div class="form-group mt-4 ps-3 py-4">
-            <label for="fatherEmail"><strong>Father's Email address</strong></label>
-            <div class="col-8">
-                <input type="email" class="form-control form-control-lg text mt-3" id="fEmail" aria-describedby="emailHelp" placeholder="Enter email">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-            </div>
-        </div>
-
-        <div class="form-group mt-4 ps-3 py-4">
-            <label for="fatherPhoneNo"><strong>Father's Phone Number</strong></label>
-            <div class="col-8">
-                <input type="text" class="form-control form-control-lg text mt-3" id="fatherPhoneNo" placeholder="Enter Phone Number">
-            </div>
-        </div>
-
-        <!--Guardian info-->
-        <div class="parentguardian container-xl mt-5 pt-1 pb-1">
-            <h2 class=" mt-3 ms-4">Guardian Information</h2>
-        </div>
-
-        <!--Guardian information-->
-        <div class="form-group mt-4 ps-3 py-4">
-            <label for="guardianName"><strong>Guardian's Name</strong></label>
-            <div class="col-8 pb-2">
-                <input type="text" class=" form-control form-control-lg mt-3" id="guardianName" placeholder="Enter Guardian's Name">
-            </div>
-        </div>
-
-        <div class="form-group mt-4 ps-3 py-4">
-            <label for="guardianAddress"><strong>Address</strong></label>
-            <div class="col-9 pb-2">
-                <input type="text" class=" form-control form-control-lg mt-3" id="guardianAddress" placeholder="Enter address">
-            </div>
-        </div>
-
-        <div class="form-group mt-4 ps-3 py-4">
-            <label for="guardianEmail"><strong>Guardian's Email address</strong></label>
-            <div class="col-8">
-                <input type="email" class="form-control form-control-lg text mt-3" id="guardianEmail" aria-describedby="emailHelp" placeholder="Enter email">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-            </div>
-        </div>
-
-        <div class="form-group mt-4 ps-3 py-4">
-            <label for="fatherPhoneNo"><strong>Guardian's Phone Number</strong></label>
-            <div class="col-8">
-                <input type="text" class="form-control form-control-lg text mt-3" id="guardianPhoneNo" placeholder="Enter Phone Number">
-            </div>
+            
         </div>
 
 
@@ -265,8 +78,8 @@
                 <label class="form-check-label" for="getInfoCheck">
                     By checking this you are allowing the collection of your data...
                 </label>
-                <div class="mt-3">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="mt-3 w-100 px-3">
+                    <button type="submit" class="btn btn-primary w-100 fs-5">Submit</button>
                 </div>
 
             </div>

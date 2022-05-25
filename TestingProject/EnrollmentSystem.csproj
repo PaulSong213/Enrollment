@@ -382,6 +382,8 @@
     <Content Include="Views\Courses\Edit.cshtml" />
     <Content Include="Views\Courses\View.cshtml" />
     <Content Include="Views\Student\View.cshtml" />
+    <Content Include="Views\Registrars\View.cshtml" />
+    <Content Include="Views\Registrars\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -11,17 +11,15 @@ namespace EnrollmentSystem.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        [Display(Name = "First Name")]
-        public string FirstName { get; set; }
+        [Display(Name = "Full Name")]
+        public string FullName { get; set; }
 
-        [Required]
-        [Display(Name = "Middle Name")]
-        public string MiddleName { get; set; }
+        [Display(Name = "Email")]
+        public string Email { get; set; }
 
-        [Required]
-        [Display(Name = "Last Name")]
-        public string LastName { get; set; }
+
+        [Display(Name = "ProfileFileName")]
+        public string ProfileFileName { get; set; }
 
 
     }

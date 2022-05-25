@@ -49,7 +49,8 @@ namespace EnrollmentSystem.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            List<RegistrarsModelPreview> registrars = new List<RegistrarsModelPreview>();
+            List<RegistrarsModel> registrars= new List<RegistrarsModel>();
+            List<RegistrarsModelPreview> registrarsPreview = new List<RegistrarsModelPreview>();
 
             con.ConnectionString = new AccountController().getConnectionString();
             con.Open();
@@ -60,16 +61,28 @@ namespace EnrollmentSystem.Controllers
             {
                 while (dr.Read())
                 {
-                    RegistrarsModelPreview registrar = new RegistrarsModelPreview();
+                    //save preview of registrar
+                    RegistrarsModelPreview registrarPreview = new RegistrarsModelPreview();
+                    registrarPreview.Id = (int)dr["id"];
+                    registrarPreview.FullName = $"{ dr["FirstName"].ToString()} { dr["MiddleName"].ToString()[0]}. { dr["LastName"].ToString()}";
+                    registrarPreview.Email = dr["Email"].ToString();
+                    registrarPreview.ProfileFileName = dr["ProfileFileName"].ToString();
+                    registrarsPreview.Add(registrarPreview);
+
+                    //save whole data of registrar
+                    RegistrarsModel registrar = new RegistrarsModel();
                     registrar.Id = (int)dr["id"];
                     registrar.FirstName = dr["FirstName"].ToString();
                     registrar.LastName = dr["LastName"].ToString();
                     registrar.MiddleName = dr["MiddleName"].ToString();
+                    registrar.Email = dr["Email"].ToString();
+                    registrar.ProfileFileName = dr["ProfileFileName"].ToString();
                     registrars.Add(registrar);
                 }
             }
             con.Close();
             ViewBag.Registrars = JsonConvert.SerializeObject(registrars);
+            ViewBag.RegistrarPreview = JsonConvert.SerializeObject(registrarsPreview);
             return View();
         }
 
