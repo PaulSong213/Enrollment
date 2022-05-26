@@ -28,7 +28,36 @@ namespace EnrollmentSystem.Controllers
         //[Authorize]
         public ActionResult Portal()
         {
-            ViewBag.UserType = "student";
+            this.Session["userId"] = 1040;
+            var studentId = this.Session["userId"];
+            var status = "empty";
+            var enrollmentId = 0;
+            StudentsModel student = new StudentsModel();
+            con.ConnectionString = new AccountController().getConnectionString();
+            con.Open();
+            com.Connection = con;
+            com.CommandText = $"SELECT * FROM [dbo].[enrollments] INNER JOIN (select id, firstName as studentFirstName, middleName as studentMiddleName, lastName as studentLastName from students) [students] ON [enrollments].[studentId] = [students].[id] WHERE [enrollments].[studentId] = {studentId};";
+            dr = com.ExecuteReader();
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    status = dr["status"].ToString();
+                    enrollmentId = (int)dr["id"];
+                    enrollmentId = (int)dr["id"];
+                    student = new StudentsModel
+                    {
+                        id = (int)dr["id"],
+                        FirstName = dr["studentFirstName"].ToString(),
+                        MiddleName = dr["studentMiddleName"].ToString(),
+                        LastName = dr["studentLastName"].ToString(),
+                    };
+                }
+            }
+            con.Close();
+            ViewBag.Status = status;
+            ViewBag.Student = student;
+            ViewBag.EnrollmentId = enrollmentId;
             return View();
         }
 
