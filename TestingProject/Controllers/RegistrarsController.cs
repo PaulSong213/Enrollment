@@ -104,95 +104,36 @@ namespace EnrollmentSystem.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ActionResult SignUp()
-        {
-
-            try
-            {
-                // Verification.
-                if (this.Request.IsAuthenticated)
-                {
-                    return this.RedirectToAction("Index");
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            if (System.Web.HttpContext.Current.Session["isSecuredRegistrar"] == null) return RedirectToAction("Security");
-            Session["isSecuredRegistrar"] = null;
-            return View();
-        }
-
         [HttpPost]
-        [AllowAnonymous]
-        public async Task<ActionResult> SignUp(RegistrarsModel model, HttpPostedFileBase UploadedProfileFileName)
+        public ActionResult Add(RegistrarsModel model)
         {
-
             try
             {
                 con.ConnectionString = new AccountController().getConnectionString();
-
-
-                if (UploadedProfileFileName != null && UploadedProfileFileName.ContentLength > 0)
+                con.Open();
+                com.Connection = con;
+                com.CommandText = $"INSERT INTO [dbo].[registrars] (firstName,middleName,lastName,isActive,email,profileFileName) VALUES ('{model.FirstName}' , '{model.MiddleName}', '{model.LastName}', 1, '{model.Email}', 'person.jpg' )";
+                Boolean isUpdated = com.ExecuteNonQuery() > 0;
+                if (isUpdated)
                 {
-                    //save data to database
-                    con.Open();
-                    com.Connection = con;
-                    com.CommandText = $"INSERT INTO [dbo].[registrars] ([firstName] ,[middleName] ,[lastName] ,[email],[profileFileName] ) VALUES ('{model.FirstName}' ,'{model.MiddleName}' , '{model.LastName}' , '{model.Email}','blank.jpg' )";
-                    dr = com.ExecuteReader();
-                    con.Close();
-
-                    //create firebase account
-                    var auth = new FirebaseAuthProvider(new FirebaseConfig(AccountController.ApiKey));
-                    var a = await auth.CreateUserWithEmailAndPasswordAsync(model.Email, model.Password, model.FirstName, true);
-                    var ab = await auth.SignInWithEmailAndPasswordAsync(model.Email, model.Password);
-                    string token = ab.FirebaseToken;
-                    var user = ab.User;
-                    this.Session["tokenEmail"] = model.Email;
-                    this.Session["tokenPassword"] = model.Password;
-                    this.Session["userAccountID"] = user.LocalId;
-                    //Upload file
-                    string imagesPath = HttpContext.Server.MapPath("~/images");
-                    string extension = Path.GetExtension(UploadedProfileFileName.FileName);
-                    string newFileName = user.LocalId + extension;
-                    string saveToPath = Path.Combine(imagesPath, newFileName);
-                    UploadedProfileFileName.SaveAs(saveToPath);
-
-                    //save profile file and firebase account id
-                    con.Open();
-
-                    com.Connection = con;
-                    com.CommandText = $"UPDATE [dbo].[registrars] SET [profileFileName] = '{newFileName}', [accountId] = '{user.LocalId}'  WHERE [email] = '{user.Email}'";
-                    com.ExecuteNonQuery();
-                    con.Close();
-
-                    //redirect to verify page
-                    if (token != "")
-                    {
-                        this.SignInUser(user.Email, token, false);
-                        return this.RedirectToAction("Verify", "Account");
-                    }
-                    else
-                    {
-
-                    }
-
+                    TempData["MessageResult"] = "Course added successfully.";
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "File not selected.");
+                    TempData["ErrorResult"] = "There was a problem adding course. Please try again.";
+                    return View();
                 }
+                con.Close();
 
             }
             catch (Exception e)
             {
-                string firebaseError = "Email is invalid or already used";
-                ModelState.AddModelError(string.Empty, e.Message);
+                TempData["ErrorResult"] = e.Message;
+                return View();
             }
-            return View();
+            return RedirectToAction("Index", "Registrars");
         }
+
 
         private void SignInUser(string email, string token, bool isPersistent)
         {

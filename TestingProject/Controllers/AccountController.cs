@@ -67,41 +67,46 @@ namespace EnrollmentSystem.Controllers
         [Authorize]
         public async Task<ActionResult> Verify()
         {
-            if((bool)this.Session["isRegistar"] == true)
+            if (this.Session["userType"].ToString() == "registrar")
             {
                 return this.RedirectToAction("Index", "Enrollments");
             }
+            else
+            {
 
-            var tokenEmail = this.Session["tokenEmail"];
-            var tokenPassword = this.Session["tokenPassword"];
-            if(tokenEmail == null)
-            {
-                return this.RedirectToAction("LogOff", "Account");
-            }
-            try
-            {
-                var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
+                var tokenEmail = this.Session["tokenEmail"];
+                var tokenPassword = this.Session["tokenPassword"];
+                if (tokenEmail == null)
+                {
+                    return this.RedirectToAction("LogOff", "Account");
+                }
+                try
+                {
+                    var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
 
-                var ab = await auth.SignInWithEmailAndPasswordAsync(tokenEmail.ToString(), tokenPassword.ToString());
-                string token = ab.FirebaseToken;
-                await ab.RefreshUserDetails();
-                var user = ab.User;
-                ViewBag.IsEmailVerified = user.IsEmailVerified;
-                ViewBag.CurrentEmail = user.Email;
-                if (user.IsEmailVerified)
-                {
-                    return this.RedirectToAction("Portal", "Student");
+                    var ab = await auth.SignInWithEmailAndPasswordAsync(tokenEmail.ToString(), tokenPassword.ToString());
+                    string token = ab.FirebaseToken;
+                    await ab.RefreshUserDetails();
+                    var user = ab.User;
+                    ViewBag.IsEmailVerified = user.IsEmailVerified;
+                    ViewBag.CurrentEmail = user.Email;
+                    if (user.IsEmailVerified)
+                    {
+                        return this.RedirectToAction("Portal", "Student");
+                    }
+                    else
+                    {
+                        var fAuth = await ab.GetFreshAuthAsync();
+                        await auth.SendEmailVerificationAsync(fAuth);
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    var fAuth = await ab.GetFreshAuthAsync();
-                    await auth.SendEmailVerificationAsync(fAuth);
+                    //return this.RedirectToAction("LogOff", "Account");
                 }
             }
-            catch (Exception)
-            {
-                //return this.RedirectToAction("LogOff", "Account");
-            }
+
+
 
             return View();
         }
@@ -229,12 +234,21 @@ namespace EnrollmentSystem.Controllers
                 con.ConnectionString = new AccountController().getConnectionString();
                 con.Open();
                 com.Connection = con;
-                com.CommandText = $"SELECT * FROM [dbo].[registrars] where '{model.Email}'";
+                com.CommandText = $"SELECT * FROM [dbo].[registrars] where  email ='{model.Email}'";
                 dr = com.ExecuteReader();
                 if (dr.HasRows)
                 {
-                    this.Session["isRegistar"] = true;
-                    this.SignInUser(model.Email, "registrarToken", false);
+                    while (dr.Read())
+                    {
+                        this.Session["userType"] = "registrar";
+                        this.Session["userId"] = dr["id"];
+                        this.Session["userEmail"] = dr["email"];
+                        this.Session["userFirstName"] = dr["firstName"];
+                        this.Session["userMiddleName"] = dr["middleName"];
+                        this.Session["userLastName"] = dr["lastName"];
+                        this.Session["userProfileFileName"] = dr["profileFileName"];
+                        return this.RedirectToAction("Index", "Enrollments");
+                    }
                 }
                 else
                 {
@@ -271,7 +285,7 @@ namespace EnrollmentSystem.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError(string.Empty, "Invalid test email or password.");
+            ModelState.AddModelError(string.Empty, "Invalid email or password..");
             return this.View(model);
         }
 
@@ -291,46 +305,29 @@ namespace EnrollmentSystem.Controllers
                 // Sign In.
                 authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, claimIdenties);
 
-                //save user session registrar
-                con.Open();
-                com.Connection = con;
-                com.CommandText = $"SELECT *  FROM [dbo].[registrars] WHERE email='{email}'";
-                dr = com.ExecuteReader();
-                if (dr.HasRows)
-                {
-                    while (dr.Read())
-                    {
-                        this.Session["userId"] = dr["id"];
-                        this.Session["userEmail"] = dr["email"];
-                        this.Session["userFirstName"] = dr["firstName"];
-                        this.Session["userMiddleName"] = dr["middleName"];
-                        this.Session["userLastName"] = dr["lastName"];
-                        this.Session["userProfileFileName"] = dr["profileFileName"];
-                    }
-                }
-                con.Close();
+                // save user session registrar
 
-                //save user session
-                con.Open();
-                com.Connection = con;
-                com.CommandText = $"SELECT *  FROM [dbo].[students] WHERE email='{email}'";
-                dr = com.ExecuteReader();
-                if (dr.HasRows)
-                {
-                    while (dr.Read())
+                    //save user session
+                    con.Open();
+                    com.Connection = con;
+                    com.CommandText = $"SELECT *  FROM [dbo].[students] WHERE email='{email}'";
+                    dr = com.ExecuteReader();
+                    if (dr.HasRows)
                     {
-                        this.Session["userId"] = dr["id"];
-                        this.Session["userEmail"] = dr["email"];
-                        this.Session["userFirstName"] = dr["firstName"];
-                        this.Session["userMiddleName"] = dr["middleName"];
-                        this.Session["userLastName"] = dr["lastName"];
-                        this.Session["userGender"] = dr["gender"].ToString() == "1" ? "Male" : "Female" ;
-                        this.Session["userAddress"] = dr["address"];
-                        this.Session["userContactNumber"] = dr["contactNumber"];
-                        this.Session["userProfileFileName"] = dr["profileFileName"];
+                        while (dr.Read())
+                        {
+                            this.Session["userId"] = dr["id"];
+                            this.Session["userEmail"] = dr["email"];
+                            this.Session["userFirstName"] = dr["firstName"];
+                            this.Session["userMiddleName"] = dr["middleName"];
+                            this.Session["userLastName"] = dr["lastName"];
+                            this.Session["userGender"] = dr["gender"].ToString() == "1" ? "Male" : "Female";
+                            this.Session["userAddress"] = dr["address"];
+                            this.Session["userContactNumber"] = dr["contactNumber"];
+                            this.Session["userProfileFileName"] = dr["profileFileName"];
+                        }
                     }
-                }
-                con.Close();
+                    con.Close();
 
             }
             catch (Exception ex)
