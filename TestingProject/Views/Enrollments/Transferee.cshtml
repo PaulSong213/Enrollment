@@ -1,14 +1,12 @@
 ﻿@{
     ViewBag.Title = "Registration Form for Transferee Students";
     Layout = "~/Views/Shared/Student_Layout.cshtml";
-    
-    var currentEmail = "test@email.com";
-    var currentFirst = "test";
-    var currentMiddle = "test";
-    var currentLast = "test";
+    var currentEmail = Session["userEmail"];
+    var currentFirst = Session["userFirstName"];
+    var currentMiddle = Session["userMiddleNane"];
+    var currentLast = Session["userLastName"];
     var currentFullName = $"{currentFirst} {currentMiddle} {currentLast}";
-    var currentId = "test";
-    var currentStudentNumber = "1036";
+    var currentStudentNumber = Session["userId"];
 }
 <!DOCTYPE html>
 <html>

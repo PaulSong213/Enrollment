@@ -162,9 +162,9 @@ namespace EnrollmentSystem.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Regular()
         {
-
             List<CoursesModel> courses = new List<CoursesModel>();
 
             con.ConnectionString = new AccountController().getConnectionString();
@@ -191,6 +191,8 @@ namespace EnrollmentSystem.Controllers
         }
 
         [HttpGet]
+        [Authorize]
+
         public ActionResult Irregular()
         {
 
@@ -220,6 +222,8 @@ namespace EnrollmentSystem.Controllers
         }
 
         [HttpGet]
+        [Authorize]
+
         public ActionResult Transferee()
         {
             List<CoursesModel> courses = new List<CoursesModel>();
@@ -248,6 +252,8 @@ namespace EnrollmentSystem.Controllers
         }
 
         [HttpGet]
+        [Authorize]
+
         public ActionResult Incoming()
         {
             List<CoursesModel> courses = new List<CoursesModel>();

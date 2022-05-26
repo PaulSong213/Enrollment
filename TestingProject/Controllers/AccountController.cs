@@ -33,7 +33,7 @@ namespace EnrollmentSystem.Controllers
         public string getConnectionString()
         {
             //return "Data Source=DESKTOP-9R1M64D\\SQLEXPRESS;Initial Catalog=enrollment_system;Integrated Security=True";
-            return DotNetEnv.Env.GetString("CONN_STRING", "Data Source=DESKTOP-9R1M64D\\SQLEXPRESS;Initial Catalog=enrollment_system;Integrated Security=True");
+            return DotNetEnv.Env.GetString("CONN_STRING", "Data Source=DESKTOP-9R1M64D\\SQLEXPRESS;Initial Catalog=enrollment_system_final;Integrated Security=True");
         }
 
         [AllowAnonymous]
@@ -67,6 +67,10 @@ namespace EnrollmentSystem.Controllers
         [Authorize]
         public async Task<ActionResult> Verify()
         {
+            if((bool)this.Session["isRegistar"] == true)
+            {
+                return this.RedirectToAction("Index", "Enrollments");
+            }
 
             var tokenEmail = this.Session["tokenEmail"];
             var tokenPassword = this.Session["tokenPassword"];
@@ -199,7 +203,6 @@ namespace EnrollmentSystem.Controllers
                 // Verification.
                 if (this.Request.IsAuthenticated)
                 {
-                   
                     return this.RedirectToAction("Verify", "Account");
                 }
             }
@@ -221,26 +224,43 @@ namespace EnrollmentSystem.Controllers
             try
             {
                 this.connectionString();
-                // Verification.
-                if (ModelState.IsValid)
+
+                //check first if registrar
+                con.ConnectionString = new AccountController().getConnectionString();
+                con.Open();
+                com.Connection = con;
+                com.CommandText = $"SELECT * FROM [dbo].[registrars] where '{model.Email}'";
+                dr = com.ExecuteReader();
+                if (dr.HasRows)
                 {
-                    var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
-                    var ab = await auth.SignInWithEmailAndPasswordAsync(model.Email, model.Password);
-                    string token = ab.FirebaseToken;
-                    var user = ab.User;
-                    this.Session["tokenEmail"] = model.Email;
-                    this.Session["tokenPassword"] = model.Password;
-                    this.Session["userAccountID"] = user.LocalId;
-                    if (token != "")
+                    this.Session["isRegistar"] = true;
+                    this.SignInUser(model.Email, "registrarToken", false);
+                }
+                else
+                {
+                    // Verification.
+                    if (ModelState.IsValid)
                     {
-                        this.SignInUser(user.Email, token, false);
-                        return this.RedirectToAction("Verify", "Account");
+                        var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
+                        var ab = await auth.SignInWithEmailAndPasswordAsync(model.Email, model.Password);
+                        string token = ab.FirebaseToken;
+                        var user = ab.User;
+                        this.Session["tokenEmail"] = model.Email;
+                        this.Session["tokenPassword"] = model.Password;
+                        this.Session["userAccountID"] = user.LocalId;
+                        if (token != "")
+                        {
+                            this.SignInUser(user.Email, token, false);
+                            return this.RedirectToAction("Verify", "Account");
+                        }
+                        else
+                        {
+                            // Setting.
+                            ModelState.AddModelError(string.Empty, "Invalid email or password.");
+                        }
                     }
-                    else
-                    {
-                        // Setting.
-                        ModelState.AddModelError(string.Empty, "Invalid email or password.");
-                    }
+
+                   
                 }
             }
             catch (Exception ex)
@@ -270,6 +290,25 @@ namespace EnrollmentSystem.Controllers
                 var authenticationManager = ctx.Authentication;
                 // Sign In.
                 authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, claimIdenties);
+
+                //save user session registrar
+                con.Open();
+                com.Connection = con;
+                com.CommandText = $"SELECT *  FROM [dbo].[registrars] WHERE email='{email}'";
+                dr = com.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        this.Session["userId"] = dr["id"];
+                        this.Session["userEmail"] = dr["email"];
+                        this.Session["userFirstName"] = dr["firstName"];
+                        this.Session["userMiddleName"] = dr["middleName"];
+                        this.Session["userLastName"] = dr["lastName"];
+                        this.Session["userProfileFileName"] = dr["profileFileName"];
+                    }
+                }
+                con.Close();
 
                 //save user session
                 con.Open();

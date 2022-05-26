@@ -25,11 +25,14 @@ namespace EnrollmentSystem.Controllers
         SqlDataReader dr;
 
         // GET: Student
-        //[Authorize]
+        [Authorize]
         public ActionResult Portal()
         {
-            this.Session["userId"] = 1040;
-            var studentId = this.Session["userId"];
+            var studentId = 1040;
+            if (this.Session["userId"] != null)
+            {
+                studentId = (int)this.Session["userId"];
+            }
             var status = "empty";
             var enrollmentId = 0;
             StudentsModel student = new StudentsModel();

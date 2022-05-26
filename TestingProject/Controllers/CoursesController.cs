@@ -32,7 +32,7 @@ namespace EnrollmentSystem.Controllers
             con.ConnectionString = new AccountController().getConnectionString();
             con.Open();
             com.Connection = con;
-            com.CommandText = $"SELECT * FROM [enrollment_system].[dbo].[courses]";
+            com.CommandText = $"SELECT * FROM [dbo].[courses]";
             dr = com.ExecuteReader();
             if (dr.HasRows)
             {
