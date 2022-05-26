@@ -2,17 +2,22 @@
 	padding: 0;
 	margin: 0;
 }
-
+h1{
+	font-size: 3em;
+}
 h2, h1 {
-	color: white;
+	color: #000;
 	text-align: center;
-	font-family: 'Poppins', sans-serif;
+
 }
 
-h4, h5, h6 {
-	color: white;
+h4, h5, h6, p {
+	color: #000;
 	text-align: center;
-	font-family: 'PT Serif', serif;
+	
+}
+p{
+	margin-bottom: 0px;
 }
 
 .control-label {
@@ -21,17 +26,16 @@ h4, h5, h6 {
 }
 
 small {
-	color: white;
-	font-family: 'PT Serif', serif;
+	color: #000;
+	text-align : center;
 }
 
 html {
 }
 
 body {
-	color: white;
-	background-image: url(img/bg.jpeg);
-	background-size: cover;
+	background-color: #1A5E53;
+	color: #000;
 	font-family: 'Poppins', sans-serif;
 }
 
@@ -40,152 +44,165 @@ body {
 	z-index: 3;
 }
 
-/*Contents*/
-.content {
-	margin-top: 2vh;
-}
+
+	
+	/*Contents*/
+	.content {
+		margin-top: 2vh;
+	}
 
 
 
 
+	@media (min-device-width: 480px) {
+		.logo {
+			margin-top: 6vh;
+			width: 100%;
+			padding-top: 5vh;
+		}
+	}
 
-.logo {
-	margin-top: 6vh;
-	width: 100%;
-	padding-top: 5vh;
-}
+	.logo {
+		width: 100%;
+		padding-top: 2vh;
+	}
 
-	.logo img {
-		width: 50px;
+		.logo img {
+			width: 50px;
+			margin: 0 auto;
+			display: block;
+		}
+
+	.container {
 		margin: 0 auto;
-		display: block;
 	}
 
-.container {
-	margin: 0 auto;
-	min-width: 410px;
-}
-
-.content {
-}
-
-
-
-
-/*form*/
-.form-group {
-	margin-top: 2vh;
-}
-
-.content .sign-up {
-	display: inline-flex;
-	text-align: center;
-}
-
-.sign-up a {
-	padding: 0;
-	margin-left: 5px;
-}
-/*form button*/
-.btn {
-	margin-top: 2vh;
-	width: 100%;
-}
-
-.btn {
-	color: white;
-}
-
-	.btn:hover {
-		border: 2px solid #fff;
-		transition: 0.5s;
+	.content {
 	}
 
+.head {
+	background-color: #4D852D;
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
 
-.form-group {
-	margin: auto;
-	width: 70%;
-}
-/*text box*/
-.input {
-	max-width: none;
 }
 
-.control-label {
-	margin-top: 1.7vh;
-}
-
-.text-box {
-	border: none;
-	border-bottom: 1px solid;
-	border-radius: 0;
-	border-color: lightslategrey;
-	background-color: inherit;
-	margin-top: 5px;
-}
-
-	.text-box:focus {
-		background-color: inherit;
+	.head {
 		color: white;
-		border-bottom: 1px solid white;
 	}
 
-/*File part*/
 
-.col-md-1 {
-	width: inherit;
-}
-
-
-
-
-@media (max-device-width: 774px) {
+	/*form*/
 	.form-group {
+		margin-top: 2vh;
 	}
-}
 
-.body-content {
-	background-color: rgba(0, 0, 0, 0.4);
-	border-radius: 10px;
-	background-repeat: no-repeat;
-	min-height: 500px;
-	padding-bottom: 5vh;
-}
-
-@media(min-device-width: 410px) {
-	.container {
-		width: 400px;
+	.content .sign-up {
+		display: inline-flex;
+		text-align: center;
 	}
-}
 
-@media(min-device-width: 600px) {
-	.container {
-		width: 500px;
+	.sign-up a {
+		padding: 0;
+		margin-left: 5px;
 	}
-}
-
-@media(min-device-width: 400px) {
-}
-
-@media (min-device-width: 1300px) {
-}
-
-@media (min-width: 992px) {
-	.container {
-		width: 600px;
+	/*form button*/
+	.btn {
+		margin-top: 2vh;
+		width: 100%;
 	}
+
+	.btn {
+		color: #fff;
+	}
+
+		.btn:hover {
+			border: 2px solid #fff;
+			transition: 0.5s;
+		}
+
+
+	.form-group {
+		margin: auto;
+		width: 83%;
+	}
+	/*text box*/
+	.input {
+		max-width: none;
+	}
+
+	.control-label {
+		margin-top: 1.7vh;
+	}
+
+	.text-box {
+		height: 4vh;
+		border-radius: 10px;
+		border-color: lightslategrey;
+		background-color: inherit;
+	}
+
+		.text-box:focus {
+			background-color: inherit;
+			color: #000;
+			border-bottom: 1px solid #000;
+		}
+
+	/*File part*/
 
 	.col-md-1 {
-		float: none;
+		width: inherit;
 	}
 
-	.col-md-7, .col-md-10 {
-		float: none;
+
+
+
+	@media (max-device-width: 774px) {
+		.form-group {
+		}
 	}
 
-	input {
-		margin-right: 0 auto;
-		display: block;
+	.body-content {
+		background-color: white;
+		border-radius: 10px;
+		background-repeat: no-repeat;
+		min-height: 500px;
+		padding-bottom: 5vh;
+		padding-left: 0;
+		padding-right: 0;
+		box-shadow: 0px 0px 10px 0px;
 	}
-}
+
+	@media(min-device-width: 410px) {
+		.container {
+			width: 400px;
+		}
+	}
+
+	@media(min-device-width: 600px) {
+		.container {
+			width: 500px;
+		}
+	}
+
+	@media(min-device-width: 400px) {
+	}
+
+	@media (min-device-width: 1300px) {
+	}
+
+	@media (min-width: 992px) {
+		.col-md-1 {
+			float: none;
+		}
+
+		.col-md-7, .col-md-10 {
+			float: none;
+		}
+
+		input {
+			margin-right: 0 auto;
+			display: block;
+		}
+	}
 

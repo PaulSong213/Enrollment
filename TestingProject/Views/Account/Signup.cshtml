@@ -12,20 +12,23 @@
     ViewBag.Title = "Sign Up";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<div class="logo">
-    <img src="~/Content/img/Cavite_State_University.png">
+<div class="">
+    <div class="logo">
+        <img src="~/Content/img/Cavite_State_University.png">
+    </div>
+    <p>Cavite State University - Bacoor Campus <br /> Enrollment System</p>
+    <h1>Sign Up</h1>
+    <p><b>Create new account</b></p>
+    <hr />
 </div>
-<h6>Cavite State University - Bacoor Campus <br /> Enrollment System</h6>
-<h1>Sign Up</h1>
 
 @using (Html.BeginForm("SignUp", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Create new account</h4>
-        <hr />
+        
+        
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-5" })
@@ -105,7 +108,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Sign up" class="btn btn-success" />
+            <input type="submit" value="Sign up" class="btn btn-lg btn-success" />
         </div>
         <div class="sign-up mt-3">
             <a style="text-align:center;" class="nav-link" href=" /Account/Login">Back to Log-in </a>

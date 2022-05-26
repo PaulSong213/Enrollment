@@ -5,6 +5,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=PT+Serif&family=Poppins:wght@300&display=swap" rel="stylesheet">
+<style>
+    body{
+        height:100%;
+        width:100%;
+    }
+    .body-content {
+        margin-top:10vh;
+    }
+</style>
 @{
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -15,8 +24,9 @@
 <div class="logo">
     <img src="~/Content/img/Cavite_State_University.png">
 </div>
-<p align="center">Cavite State University - Bacoor Campus <br /> Enrollment System</p>
-<h1>Log-in</h1>
+<p>Cavite State University - Bacoor Campus <br /> Enrollment System</p>
+<h1 class="mt-3">Log in</h1>
+<p><b>Sign-in to account</b></p>
 
 @using (Html.BeginForm())
 {
