@@ -161,7 +161,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="d-flex flex-column align-items-center text-center">
-                                            <img src="/images/${selectedEnrollment.studentsModel.ProfileFileName}" alt="  ${selectedEnrollment.studentsModel.FirstName} " class="rounded-circle border border-secondary" height="150" width="150">
+                                            <img src="/Content/img/${selectedEnrollment.studentsModel.ProfileFileName}" alt="  ${selectedEnrollment.studentsModel.FirstName} " class="rounded-circle border border-secondary" height="150" width="150">
                                             <div class="mt-3">
                                                 ${
                                                     yearLevelTemplate
@@ -268,10 +268,10 @@
                 var birthCertificateFileName = selectedEnrollment.birthCertificateFileName;
     
                 var emptyField = `<h5 class="text-warning">Student did not submit a file in this field</h5>`;
-                var honorableDismissalImage = honorableDismissalFileName ? `<img class="w-100" src="/images/${honorableDismissalFileName}" alt="Certificate of grades image" />` : emptyField ;
-                var certificateOfTransferImage = GoodMoralCertificateFileName ? `<img class="w-100" src="/images/${certificateOfTransferFileName}" alt="Certificate of grades image" />` : emptyField ;
-                var reportCardImage = ReportCardFileName ? `<img class="w-100" src="/images/${ReportCardFileName}" alt="Certificate of grades image" />` : emptyField ;
-                var birthCertificateImage = birthCertificateFileName ? `<img class="w-100" src="/images/${birthCertificateFileName}" alt="Certificate of grades image" />` : emptyField ;
+                var honorableDismissalImage = honorableDismissalFileName ? `<img class="w-100" src="/Content/img/${honorableDismissalFileName}" alt="Certificate of grades image" />` : emptyField ;
+                var certificateOfTransferImage = GoodMoralCertificateFileName ? `<img class="w-100" src="/Content/img/${certificateOfTransferFileName}" alt="Certificate of grades image" />` : emptyField ;
+                var reportCardImage = ReportCardFileName ? `<img class="w-100" src="/Content/img/${ReportCardFileName}" alt="Certificate of grades image" />` : emptyField ;
+                var birthCertificateImage = birthCertificateFileName ? `<img class="w-100" src="/Content/img/${birthCertificateFileName}" alt="Certificate of grades image" />` : emptyField ;
                                   
                 documentData = `
                      <div class="col-12">
@@ -292,7 +292,7 @@
                                         var itemId = 'btn${itemId}';
                                         
                                         Swal.fire({
-                                          imageUrl: '/images/${ReportCardFileName}',
+                                          imageUrl: '/Content/img/${ReportCardFileName}',
                                           imageWidth: 900,
                                           width: 900,
                                           imageAlt: 'Report Card',
@@ -326,7 +326,7 @@
                                         var itemId = 'btn${itemId}';
                                         
                                         Swal.fire({
-                                          imageUrl: '/images/${birthCertificateFileName}',
+                                          imageUrl: '/Content/img/${birthCertificateFileName}',
                                           imageWidth: 900,
                                           width: 900,
                                           imageAlt: 'birthCertificateFileName',
@@ -360,7 +360,7 @@
                                         var itemId = 'btn${itemId}';
                                         
                                         Swal.fire({
-                                          imageUrl: '/images/${certificateOfTransferFileName}',
+                                          imageUrl: '/Content/img/${certificateOfTransferFileName}',
                                           imageWidth: 900,
                                           width: 900,
                                           imageAlt: 'certificateOfTransferFileName',
@@ -393,7 +393,7 @@
                                         var itemId = 'btn${itemId}';
                                         
                                         Swal.fire({
-                                          imageUrl: '/images/${honorableDismissalFileName}',
+                                          imageUrl: '/Content/img/${honorableDismissalFileName}',
                                           imageWidth: 900,
                                           width: 900,
                                           imageAlt: 'honorableDismissalFileName',
@@ -482,9 +482,9 @@
                 var GoodMoralCertificateFileName = selectedEnrollment.GoodMoralCertificateFileName;
                 var ReportCardFileName = selectedEnrollment.ReportCardFileName;
                 var emptyField = `<h5 class="text-warning">Student did not submit a file in this field</h5>`;
-                var birthCertificateImage = BirthCertificateFileName ? `<img class="w-100" src="/images/${BirthCertificateFileName}" alt="Certificate of grades image" />` : emptyField ;
-                var goodMoralCertificateImage = GoodMoralCertificateFileName ? `<img class="w-100" src="/images/${GoodMoralCertificateFileName}" alt="Certificate of grades image" />` : emptyField ;
-                var reportCardImage = ReportCardFileName ? `<img class="w-100" src="/images/${ReportCardFileName}" alt="Certificate of grades image" />` : emptyField ;
+                var birthCertificateImage = BirthCertificateFileName ? `<img class="w-100" src="/Content/img/${BirthCertificateFileName}" alt="Certificate of grades image" />` : emptyField ;
+                var goodMoralCertificateImage = GoodMoralCertificateFileName ? `<img class="w-100" src="/Content/img/${GoodMoralCertificateFileName}" alt="Certificate of grades image" />` : emptyField ;
+                var reportCardImage = ReportCardFileName ? `<img class="w-100" src="/Content/img/${ReportCardFileName}" alt="Certificate of grades image" />` : emptyField ;
                                   
                 documentData = `
                      <div class="col-12">
@@ -505,7 +505,7 @@
                                         var itemId = 'btn${itemId}';
                                         
                                         Swal.fire({
-                                          imageUrl: '/images/${ReportCardFileName}',
+                                          imageUrl: '/Content/img/${ReportCardFileName}',
                                           imageWidth: 900,
                                           width: 900,
                                           imageAlt: 'Report Card',
@@ -539,7 +539,7 @@
                                         var itemId = 'btn${itemId}';
                                         
                                         Swal.fire({
-                                          imageUrl: '/images/${GoodMoralCertificateFileName}',
+                                          imageUrl: '/Content/img/${GoodMoralCertificateFileName}',
                                           imageWidth: 900,
                                           width: 900,
                                           imageAlt: 'GoodMoralCertificateFileName',
@@ -573,7 +573,7 @@
                                         var itemId = 'btn${itemId}';
                                         
                                         Swal.fire({
-                                          imageUrl: '/images/${BirthCertificateFileName}',
+                                          imageUrl: '/Content/img/${BirthCertificateFileName}',
                                           imageWidth: 900,
                                           width: 900,
                                           imageAlt: 'BirthCertificateFileName',
@@ -663,7 +663,7 @@
                     
                     var ReportCardFileName = selectedEnrollment.ReportCardFileName;
                 var emptyField = `<h5 class="text-warning">Student did not submit a file in this field</h5>`;
-                var reportCardImage = ReportCardFileName ? `<img class="w-100" src="/images/${ReportCardFileName}" alt="Certificate of grades image" />` : emptyField ;
+                var reportCardImage = ReportCardFileName ? `<img class="w-100" src="/Content/img/${ReportCardFileName}" alt="Certificate of grades image" />` : emptyField ;
                       
                 
                 documentData = `
@@ -686,7 +686,7 @@
                                         var itemId = 'btn${itemId}';
                                         
                                         Swal.fire({
-                                          imageUrl: '/images/${ReportCardFileName}',
+                                          imageUrl: '/Content/img/${ReportCardFileName}',
                                           imageWidth: 900,
                                           width: 900,
                                           imageAlt: 'ReportCardFileName',
@@ -783,7 +783,7 @@
     
                 var ReportCardFileName = selectedEnrollment.ReportCardFileName;
                 var emptyField = `<h5 class="text-warning">Student did not submit a file in this field</h5>`;
-                var reportCardImage = ReportCardFileName ? `<img class="w-100" src="/images/${ReportCardFileName}" alt="Certificate of grades image" />` : emptyField ;
+                var reportCardImage = ReportCardFileName ? `<img class="w-100" src="/Content/img/${ReportCardFileName}" alt="Certificate of grades image" />` : emptyField ;
                       
                 
                 documentData = `
@@ -806,7 +806,7 @@
                                         var itemId = 'btn${itemId}';
                                         
                                         Swal.fire({
-                                          imageUrl: '/images/${ReportCardFileName}',
+                                          imageUrl: '/Content/img/${ReportCardFileName}',
                                           imageWidth: 900,
                                           width: 900,
                                           imageAlt: 'ReportCardFileName',

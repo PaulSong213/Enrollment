@@ -1,4 +1,5 @@
-﻿using Firebase.Auth;
+﻿
+using Firebase.Auth;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System;
