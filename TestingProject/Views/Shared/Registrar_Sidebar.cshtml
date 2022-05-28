@@ -130,6 +130,12 @@
           <span class="my-auto d-block mx-2">Enrollments</span>
         </a>
       </li>
+    <li class="nav-item">
+        <a href="/Enrollments/Enrolled" class="nav-link my-2 d-flex fs-6 @( Context.Request.Path == "/Enrollments/Enrolled" ? "bg-success text-light" : "text-dark shadow-sm")" aria-current="page">
+          <ion-icon class="fs-4" name="receipt"></ion-icon>
+          <span class="my-auto d-block mx-2">Enrolled Students</span>
+        </a>
+      </li>
      <li class="nav-item">
         <a href="/Registrars/Analytics" class="nav-link my-2 d-flex fs-6 @( Context.Request.Path == "/Registrars/Analytics" ? "bg-success text-light" : "text-dark shadow-sm")" aria-current="page">
           <ion-icon class="fs-4" name="analytics"></ion-icon>
@@ -140,6 +146,13 @@
         <a href="/Courses" class="nav-link my-2 d-flex fs-6 @( Context.Request.Path == "/Courses" ? "bg-success text-light" : "text-dark shadow-sm")" aria-current="page">
           <ion-icon class="fs-4" name="bulb"></ion-icon>
           <span class="my-auto d-block mx-2">Courses</span>
+        </a>
+      </li>
+                    
+     <li class="nav-item">
+        <a href="/Schedules" class="nav-link my-2 d-flex fs-6 @( Context.Request.Path == "/Schedules" ? "bg-success text-light" : "text-dark shadow-sm")" aria-current="page">
+          <ion-icon class="fs-4" name="calendar-clear"></ion-icon>
+          <span class="my-auto d-block mx-2">Schedules</span>
         </a>
       </li>
     
@@ -182,6 +195,11 @@
       <li class="nav-item">
         <a href="/Enrollments" class="nav-link py-3 border-bottom @( Context.Request.Path == "/Enrollments" ? "bg-success text-light" : "text-dark shadow-sm")"" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
           <ion-icon class="fs-4" name="documents"></ion-icon>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/Enrollments/Enrolled" class="nav-link py-3 border-bottom @( Context.Request.Path == "/Enrollments/Enrolled" ? "bg-success text-light" : "text-dark shadow-sm")"" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
+          <ion-icon class="fs-4" name="receipt"></ion-icon>
         </a>
       </li>
       <li class="nav-item">

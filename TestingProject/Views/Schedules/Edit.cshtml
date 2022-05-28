@@ -1,0 +1,109 @@
+﻿<div class="modal fade" id="editData" tabindex="-1" aria-labelledby="editData" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="edit-title" id="modalLabel">Edit Schedule</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+        @model EnrollmentSystem.Models.SchedulesModel
+
+         @using(Html.BeginForm("Edit", "Schedules"))
+        {
+             <input type="hidden" name="Id" />  
+             <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            
+                    <div class="form-group my-3">
+                         <label for="" class="control-label">Course</label>
+                        <div class="col-md-12">
+                            <select class="form-select" name="courseId" id="courseId" aria-label="Default select example">
+                            </select>
+                            @Html.ValidationMessageFor(model => model.courseId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+            
+                    <div class="form-group my-3">
+                        @Html.LabelFor(model => model.year, htmlAttributes: new { @class = "control-label col-md-12 text-capitalize" })
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.year, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.year, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+            
+                    <div class="form-group my-3">
+                        @Html.LabelFor(model => model.section, htmlAttributes: new { @class = "control-label col-md-12 text-capitalize" })
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.section, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.section, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    
+                    <div class="form-group my-3">
+                        @Html.LabelFor(model => model.link, htmlAttributes: new { @class = "control-label col-md-12 text-capitalize" })
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.link, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.link, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                   
+                </div>
+     
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success" >Edit Schedule</button>
+                    
+      </div>
+                
+        }
+    </div>
+  </div>
+</div>
+
+<script>
+    var exampleModal = document.getElementById('editData')
+    exampleModal.addEventListener('show.bs.modal', function (event) {
+      setTimeout(()=>{
+          var button = event.relatedTarget;
+          var id = button.getAttribute('data-bs-id');
+           var item = JSON.parse(button.getAttribute('data-bs-item'));
+           var courses = JSON.parse(button.getAttribute('data-bs-courses'));
+            
+          console.log(courses);
+          for (const property in item) {
+            var currentItem = item[property];
+            //set inputs value
+            const currentInput = $('input[name= '+property+' ]');
+            if(currentInput){
+                currentInput.attr('value', currentItem);
+            }    
+           
+         }
+         var editCourseSelect = document.getElementById("courseId");
+         
+         //e.firstElementChild can be used.
+        var child = editCourseSelect.lastElementChild; 
+        while (child) {
+            editCourseSelect.removeChild(child);
+            child = editCourseSelect.lastElementChild;
+        } editCourseSelect
+        
+         for(var i = 0; i < courses.length; i++){
+            //set select option values
+            var currentItem = courses[i];
+            const option = document.createElement("option");
+            option.innerText = currentItem.Acronym;
+            option.value = currentItem.Id;
+            if(item.courseId == currentItem.Id)option.selected = "Yes";
+            editCourseSelect.appendChild(option);
+        
+         }
+                  
+        
+      }, 100);
+      
+    })
+        
+</script>
+

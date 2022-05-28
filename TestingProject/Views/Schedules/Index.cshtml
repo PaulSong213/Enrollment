@@ -1,0 +1,132 @@
+﻿@model EnrollmentSystem.Models.SchedulesModel
+
+
+@{
+    ViewBag.Title = "Scheadules";
+    Layout = "~/Views/Shared/Registrar_Layout.cshtml";
+    var schedule = ViewBag.SchedulesPreview;
+}
+
+
+@if (TempData["MessageResult"] != null)
+{
+    <div class="alert alert-primary">
+        @TempData["MessageResult"]
+    </div>
+}
+
+@if (TempData["ErrorResult"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorResult"]
+    </div>
+}
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<section class="row pb-5 w-100 overflow-auto">
+    <div class="d-flex justify-content-between py-3">
+        <h3>@ViewBag.Title</h3>
+       <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="addItem" data-bs-target="#addData" >
+            Add Scheadule
+       </button>
+    </div>
+   <div class="w-100 overflow-auto py-3">
+         <table id="dataTable" class="table table-striped" style="width:100%">
+    </table>
+    </div>
+</section>
+<section>@RenderPage("./View.cshtml")</section>
+<section>@RenderPage("./Add.cshtml")</section>
+<section>@RenderPage("./Edit.cshtml")</section>
+
+@section scripts{
+ <script>
+    $(document).ready(function() {
+    
+        
+        var scheduleData = '@schedule';
+        var cousesData = '@ViewBag.Courses';
+        var schedules = JSON.parse(scheduleData.replace(/&quot;/g,'"'));
+        var courses = JSON.parse(cousesData.replace(/&quot;/g,'"'));
+        var schedulesRaw = JSON.parse(('@ViewBag.Schedules').replace(/&quot;/g,'"'));
+       
+    
+        for(var i = 0; i < schedules.length; i++){
+            let schedule = schedules[i];
+            schedules[i] = Object.keys(schedule).map((key) => schedule[key]);
+        }
+        var scheduleTable = $('#dataTable').DataTable( {
+            responsive: true,
+            data: schedules,
+            columns: [
+                { title: "ID" },
+                { title: "Course" },
+                { title: "Year" },
+                { title: "Section" },
+                { title: "Link" },
+                { title: "", "defaultContent": "<button type='button' class='btn btn-success editItem' data-bs-toggle='modal' data-bs-target='#editData' data-bs-id='1'> Edit Scheadule </button>" },
+                { title: "", "defaultContent": "<button class='deleteitem btn btn-danger'>Delete</button>" }
+            ],
+            "fnRowCallback": function(nRow, aData, iDisplayIndex) {
+              nRow.setAttribute('id',aData[0]);
+              nRow.setAttribute('class',"clickableRow");
+              nRow.setAttribute('data-bs-toggle',"modal");
+              nRow.setAttribute('data-bs-target',"#viewData");
+              },
+            dom: 'Bfrtip',
+            buttons: [
+                'print','copyHtml5',
+            'excelHtml5',
+            'pdfHtml5'
+            ]
+        });
+         
+        $(".editItem").on('click', function(event){
+            let itemId = $(this).closest('tr').attr('id');
+            let item = findItemById(itemId);
+            
+            $(this).attr('data-bs-id',   itemId);
+            if(item != null){
+                $(this).attr('data-bs-item',  JSON.stringify(item) );
+            }
+            
+            $(this).attr('data-bs-courses',   JSON.stringify(courses) );
+        });
+    
+    
+        $("#addItem").on('click', function(event){
+            $(this).attr('data-bs-item',   JSON.stringify(courses) );
+        });
+    
+        $(".clickableRow").on('click', function(event){
+            let itemId = $(this).attr('id');
+            let item = findItemById(itemId);
+            
+            $(this).attr('data-bs-id',   itemId);
+            if(item != null){
+                $(this).attr('data-bs-item',   JSON.stringify(item));
+            }
+        });
+    
+        $(".deleteitem").on('click', function(event){
+            let itemId = $(this).closest('tr').attr('id');
+            location.href = "/Schedules/Delete/" + itemId;
+        });
+    
+    
+        function findItemById(id){
+            for(var i = 0; i < schedulesRaw.length; i++){
+                let scheadule = schedulesRaw[i];
+                if(id == scheadule.Id)return scheadule;
+                console.log(id, scheadule.Id);
+            }
+            return null;
+        }
+    
+    } );
+    
+    
+ </script>
+}
+
+
+

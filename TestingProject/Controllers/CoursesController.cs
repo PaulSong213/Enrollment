@@ -42,13 +42,21 @@ namespace EnrollmentSystem.Controllers
                     course.Id = (int)dr["id"];
                     course.Name = dr["Name"].ToString();
                     course.Acronym = dr["Acronym"].ToString();
-                    course.Slots = (int)dr["Slots"];
+                    course.Slots = dr["Slots"] != DBNull.Value ? (int)dr["Slots"] : 0;
+
                     courses.Add(course);
                 }
             }
             con.Close();
             ViewBag.Courses = JsonConvert.SerializeObject(courses);
-            return View();
+            if (Session["userType"] == null || Session["userType"].ToString() != "registrar")
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                return View();
+            }
         }
 
 

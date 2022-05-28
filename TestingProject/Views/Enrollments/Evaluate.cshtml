@@ -381,6 +381,7 @@
                     <textarea class="form-control" name="registrarMessage" style="height: 5rem" id="Additional" placeholder="Additional message to the student that will sent be to the email. (Example : about the requirements that needs to be followed) Optional." cols="3" rows="3"></textarea>
                   </div>
                     <input type="hidden" value="@selectedEnrollment.Id" name="enrollmentId" />
+                    <input type="hidden" value="@selectedEnrollment.Year" name="year" />
                     <input type="hidden" value="@selectedEnrollment.studentsModel.FirstName @selectedEnrollment.studentsModel.LastName" name="studentName" />
                    <input type="hidden" value="@selectedEnrollment.EmailRecipient" name="emailRecipient" />
                     

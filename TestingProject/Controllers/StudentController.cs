@@ -25,9 +25,11 @@ namespace EnrollmentSystem.Controllers
         SqlDataReader dr;
 
         // GET: Student
-        [Authorize]
+        //[Authorize]
         public ActionResult Portal()
         {
+            int year = 1;
+            int section = 1;
             var studentId = 1040;
             if (this.Session["userId"] != null)
             {
@@ -47,7 +49,8 @@ namespace EnrollmentSystem.Controllers
                 {
                     status = dr["status"].ToString();
                     enrollmentId = (int)dr["id"];
-                    enrollmentId = (int)dr["id"];
+                    year = (int)dr["year"];
+                    section = (int)dr["section"];
                     student = new StudentsModel
                     {
                         id = (int)dr["id"],
@@ -58,8 +61,26 @@ namespace EnrollmentSystem.Controllers
                 }
             }
             con.Close();
+
+            var scheduleLink = "https://docs.google.com/document/d/13b08LolVaE7YlGe0U7pu2bJyJKDgIQs71LdqoO6s_r4/edit";
+            con.Open();
+            com.Connection = con;
+            com.CommandText = $"SELECT link FROM [dbo].[schedules] WHERE year = {year} AND section = { section }";
+            dr = com.ExecuteReader();
+
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    scheduleLink = dr["link"].ToString();
+                }
+            }
+
+            con.Close();
+
             ViewBag.Status = status;
             ViewBag.Student = student;
+            ViewBag.scheduleLink = scheduleLink;
             ViewBag.EnrollmentId = enrollmentId;
             return View();
         }

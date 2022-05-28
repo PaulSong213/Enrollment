@@ -43,7 +43,14 @@ namespace EnrollmentSystem.Controllers
             }
             con.Close();
             ViewBag.Courses = JsonConvert.SerializeObject(courses);
-            return View();
+            if (Session["userType"] == null || Session["userType"].ToString() != "registrar")
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpGet]
@@ -83,7 +90,14 @@ namespace EnrollmentSystem.Controllers
             con.Close();
             ViewBag.Registrars = JsonConvert.SerializeObject(registrars);
             ViewBag.RegistrarPreview = JsonConvert.SerializeObject(registrarsPreview);
-            return View();
+            if (Session["userType"] == null || Session["userType"].ToString() != "registrar")
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpGet]

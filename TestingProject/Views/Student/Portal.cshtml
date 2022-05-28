@@ -302,7 +302,7 @@
     var student = @ViewBag.Student;
     var studentName = $"{Session["userFirstName"]} {Session["userLastName"]} ";
     var registrationCertificateLinks = "/Enrollments/Confirmation/" + enrollmentId;
-    var classScheaduleLink = "";
+    var classScheaduleLink = ViewBag.scheduleLink;
 }
 <div class="container mt-5">
     @if (TempData["MessageResult"] != null)
