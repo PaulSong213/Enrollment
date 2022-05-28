@@ -573,7 +573,7 @@ namespace EnrollmentSystem.Controllers
                     smtp.Host = "smtp.gmail.com"; //for gmail host  
                     smtp.EnableSsl = true;
                     smtp.UseDefaultCredentials = false;
-                    smtp.Credentials = new NetworkCredential("enrollmentsystemproject@gmail.com", "P@$$w0rd12345!");
+                    smtp.Credentials = new NetworkCredential("enrollmentsystemproject@gmail.com", "dlmemwzkrrpboahb");
                     smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                     smtp.Send(message);
                 }
