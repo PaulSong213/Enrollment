@@ -59,6 +59,9 @@ namespace EnrollmentSystem.Models
         [Display(Name = "Profile File Name")]
         public string ProfileFileName { get; set; }
 
+        [Display(Name = "Birth Date")]
+        public DateTime BirthDate { get; set; }
+
         public HttpPostedFileBase UploadedProfileFileName { get; set; }
 
     }

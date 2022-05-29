@@ -71,7 +71,8 @@ namespace EnrollmentSystem.Controllers
         [Authorize]
         public async Task<ActionResult> Verify()
         {
-            if (this.Session["userType"].ToString() == "registrar")
+
+            if (this.Session["userType"] != null && this.Session["userType"].ToString() == "registrar")
             {
                 return this.RedirectToAction("Index", "Enrollments");
             }
@@ -117,21 +118,29 @@ namespace EnrollmentSystem.Controllers
 
 
         // GET: Account
+        [HttpGet]
         public ActionResult SignUp()
         {
-            try
+            if (this.Session["userType"] != null && this.Session["userType"].ToString() == "registrar")
             {
-                // Verification.
-                if (this.Request.IsAuthenticated)
+                return this.RedirectToAction("Index", "Enrollments");
+            }
+            else
+            {
+                try
                 {
-                    return this.RedirectToAction("Verify", "Account");
+                    // Verification.
+                    if (this.Request.IsAuthenticated)
+                    {
+                        return this.RedirectToAction("Verify", "Account");
+                    }
                 }
+                catch (Exception)
+                {
+                    throw;
+                }
+                return View();
             }
-            catch (Exception)
-            {
-                throw;
-            }
-            return View();
         }
 
         [HttpPost]
@@ -149,7 +158,10 @@ namespace EnrollmentSystem.Controllers
                         //save data to database
                         con.Open();
                         com.Connection = con;
-                        com.CommandText = $"INSERT INTO [dbo].[students] ([firstName] ,[middleName] ,[lastName] ,[gender] ,[age] ,[address] ,[contactNumber] ,[accountId] ,[email],[profileFileName] ) VALUES ('{model.FirstName}' ,'{model.MiddleName}' , '{model.LastName}' , '{model.Gender}' , {model.Age} , '{model.Address}' , '{model.ContactNumber}' ,'' , '{model.Email}','blank.jpg' )";
+
+                        string sqlFormattedBirthDate = model.BirthDate.ToString("yyyy-MM-dd");
+
+                    com.CommandText = $"INSERT INTO [dbo].[students] ([firstName] ,[middleName] ,[lastName] ,[gender] ,[age] ,[address] ,[contactNumber] ,[accountId] ,[email],[profileFileName], [isActive], [birthDate] ) VALUES ('{model.FirstName}' ,'{model.MiddleName}' , '{model.LastName}' , '{model.Gender}' , {model.Age} , '{model.Address}' , '{model.ContactNumber}' ,'' , '{model.Email}','blank.jpg', 1, '{sqlFormattedBirthDate}' )";
                         dr = com.ExecuteReader();
                         con.Close();
 
@@ -207,22 +219,29 @@ namespace EnrollmentSystem.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            try
+            if (this.Session["userType"] != null && this.Session["userType"].ToString() == "registrar")
             {
-                // Verification.
-                if (this.Request.IsAuthenticated)
+                return this.RedirectToAction("Index", "Enrollments");
+            }
+            else
+            {
+                try
                 {
-                    return this.RedirectToAction("Verify", "Account");
+                    // Verification.
+                    if (this.Request.IsAuthenticated)
+                    {
+                        return this.RedirectToAction("Verify", "Account");
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                // Info
-                Console.Write(ex);
-            }
+                catch (Exception ex)
+                {
+                    // Info
+                    Console.Write(ex);
+                }
 
-            // Info.
-            return View();
+                // Info.
+                return View();
+            }
         }
 
         [HttpPost]
@@ -256,6 +275,8 @@ namespace EnrollmentSystem.Controllers
                 }
                 else
                 {
+                    con.Close();
+
                     // Verification.
                     if (ModelState.IsValid)
                     {
@@ -362,11 +383,21 @@ namespace EnrollmentSystem.Controllers
         [HttpGet]
         public ActionResult LogOff()
         {
+            try
+            {
+                con.Close();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             var ctx = Request.GetOwinContext();
             var authenticationManager = ctx.Authentication;
             this.Session.Clear();
             authenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Login", "Account");
+            
         }
 
     }

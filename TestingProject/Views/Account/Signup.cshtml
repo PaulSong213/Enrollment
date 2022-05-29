@@ -26,30 +26,30 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        
-        
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-5" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
+<div class="form-horizontal">
+
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-5" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
         </div>
+    </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-5" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control",  @required = "Yes", @onkeyup = "check()"  } })
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @required = "Yes", @onkeyup = "check()" } })
             @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
         </div>
     </div>
-    
+
     <div class="form-group">
-        <label for="confirm_password" class = "control-label col-md-5">Confirm Password</label>
+        <label for="confirm_password" class="control-label col-md-5">Confirm Password</label>
         <div class="col-md-10">
-            <input type="password" name="confirm_password" onkeyup='check();'  id="confirm_password" class = "form-control" required="Yes" />
+            <input type="password" name="confirm_password" onkeyup='check();' id="confirm_password" class="form-control" required="Yes" />
             <span id='message'></span>
         </div>
     </div>
@@ -57,7 +57,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-5" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control",  @required = "Yes" } })
+            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @required = "Yes" } })
             @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -73,7 +73,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-5" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control",  @required = "Yes" } })
+            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @required = "Yes" } })
             @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -81,7 +81,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-5" })
         <div class="col-md-10">
-            <select name="Gender" class="form-select form-control" >
+            <select name="Gender" class="form-select form-control">
                 <option value="1">Male</option>
                 <option value="2">Female</option>
                 <option value="0">Prefer not to say</option>
@@ -107,6 +107,15 @@
     </div>
 
     <div class="form-group">
+        <label class="control-label col-md-5" for="birthDate">
+            Birth Date
+        </label>
+        <div class="col-md-10">
+            <input type="date" id="birthDate" name="birthDate" required="Yes" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
         @Html.LabelFor(model => model.ProfileFileName, htmlAttributes: new { @class = "control-label col-md-5 mt-3" })
         <div class="col-md-10">
             <img src="" class="d-none border border-secondary imagePreview my-1" style="height: 150px">
@@ -127,37 +136,37 @@
 }
 
 @section scripts {
-  <script type="text/javascript">
-       
+    <script type="text/javascript">
+
         //confirm password
-        var check = function() {
-          if (document.getElementById('Password').value ==
-            document.getElementById('confirm_password').value) {
-            document.getElementById('message').style.color = 'green';
-            document.getElementById('message').innerHTML = 'passwords matched';
-          } else {
-            document.getElementById('message').style.color = 'red';
-            document.getElementById('message').innerHTML = 'passwords does not match';
-          }
+        var check = function () {
+            if (document.getElementById('Password').value ==
+                document.getElementById('confirm_password').value) {
+                document.getElementById('message').style.color = 'green';
+                document.getElementById('message').innerHTML = 'passwords matched';
+            } else {
+                document.getElementById('message').style.color = 'red';
+                document.getElementById('message').innerHTML = 'passwords does not match';
+            }
         }
-        
+
         //profile previews
         var imageInputsId = ["profile"];
-        for(var i = 0; i < imageInputsId.length; i++){
+        for (var i = 0; i < imageInputsId.length; i++) {
             var id = imageInputsId[i];
             var reportCardFileName = document.getElementById(id);
-            reportCardFileName.onchange = evt =>{
-              var blah = reportCardFileName.parentElement.querySelector('.imagePreview');;
-              console.log(blah);
-              blah.classList.remove("d-none");
-              const [file] = reportCardFileName.files
-              if (file) {
-                blah.src = URL.createObjectURL(file)
-              }
+            reportCardFileName.onchange = evt => {
+                var blah = reportCardFileName.parentElement.querySelector('.imagePreview');;
+                console.log(blah);
+                blah.classList.remove("d-none");
+                const [file] = reportCardFileName.files
+                if (file) {
+                    blah.src = URL.createObjectURL(file)
+                }
             }
-            
+
         }
-            
+
     </script>
 }
 
