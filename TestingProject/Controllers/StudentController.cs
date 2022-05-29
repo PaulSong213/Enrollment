@@ -49,8 +49,8 @@ namespace EnrollmentSystem.Controllers
                 {
                     status = dr["status"].ToString();
                     enrollmentId = (int)dr["id"];
-                    year = (int)dr["year"];
-                    section = (int)dr["section"];
+                    year = dr["year"] != DBNull.Value ? (int)dr["year"] : 0;
+                    section = dr["section"] != DBNull.Value ? (int)dr["section"] : 0;
                     student = new StudentsModel
                     {
                         id = (int)dr["id"],
