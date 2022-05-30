@@ -55,7 +55,7 @@ namespace EnrollmentSystem.Controllers
                     {
                         id = (int)dr["id"],
                         FirstName = dr["studentFirstName"].ToString(),
-                        MiddleName = dr["MiddleName"] != DBNull.Value ? dr["MiddleName"].ToString() : "",
+                        MiddleName = dr["studentMiddleName"] != DBNull.Value ? dr["studentMiddleName"].ToString() : "",
                         LastName = dr["studentLastName"].ToString(),
                     };
                 }
