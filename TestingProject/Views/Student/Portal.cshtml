@@ -299,7 +299,6 @@
     Layout = "~/Views/Shared/Student_Layout.cshtml";    
     var status = @ViewBag.Status;
     var enrollmentId = @ViewBag.EnrollmentId;
-    var student = @ViewBag.Student;
     var studentName = $"{Session["userFirstName"]} {Session["userLastName"]} ";
     var registrationCertificateLinks = "/Enrollments/Confirmation/" + enrollmentId;
     var classScheaduleLink = ViewBag.scheduleLink;

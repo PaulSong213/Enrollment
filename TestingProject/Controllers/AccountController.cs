@@ -329,7 +329,6 @@ namespace EnrollmentSystem.Controllers
                 // Sign In.
                 authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, claimIdenties);
 
-                // save user session registrar
 
                     //save user session
                     con.Open();

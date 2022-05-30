@@ -25,23 +25,23 @@ namespace EnrollmentSystem.Controllers
         SqlDataReader dr;
 
         // GET: Student
-        //[Authorize]
+        [Authorize]
         public ActionResult Portal()
         {
             int year = 1;
             int section = 1;
-            var studentId = 1040;
+            var studentId = 1060;
             if (this.Session["userId"] != null)
             {
                 studentId = (int)this.Session["userId"];
             }
             var status = "empty";
-            var enrollmentId = 0;
+            var enrollmentId = 1;
             StudentsModel student = new StudentsModel();
             con.ConnectionString = new AccountController().getConnectionString();
             con.Open();
             com.Connection = con;
-            com.CommandText = $"SELECT * FROM [dbo].[enrollments] INNER JOIN (select id, firstName as studentFirstName, middleName as studentMiddleName, lastName as studentLastName from students) [students] ON [enrollments].[studentId] = [students].[id] WHERE [enrollments].[studentId] = {studentId};";
+            com.CommandText = $"SELECT * FROM [dbo].[enrollments] WHERE [enrollments].[studentId] = {studentId};";
             dr = com.ExecuteReader();
             if (dr.HasRows)
             {
@@ -49,15 +49,8 @@ namespace EnrollmentSystem.Controllers
                 {
                     status = dr["status"].ToString();
                     enrollmentId = (int)dr["id"];
-                    year = dr["year"] != DBNull.Value ? (int)dr["year"] : 0;
-                    section = dr["section"] != DBNull.Value ? (int)dr["section"] : 0;
-                    student = new StudentsModel
-                    {
-                        id = (int)dr["id"],
-                        FirstName = dr["studentFirstName"].ToString(),
-                        MiddleName = dr["studentMiddleName"] != DBNull.Value ? dr["studentMiddleName"].ToString() : "",
-                        LastName = dr["studentLastName"].ToString(),
-                    };
+                    year = dr["year"] != DBNull.Value ? (int)dr["year"] : 1;
+                    section = dr["section"] != DBNull.Value ? (int)dr["section"] : 1;
                 }
             }
             con.Close();
@@ -84,6 +77,7 @@ namespace EnrollmentSystem.Controllers
             ViewBag.EnrollmentId = enrollmentId;
             return View();
         }
+
 
         // GET: Student
         [HttpGet]
