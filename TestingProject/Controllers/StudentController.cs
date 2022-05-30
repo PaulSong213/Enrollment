@@ -55,7 +55,7 @@ namespace EnrollmentSystem.Controllers
                     {
                         id = (int)dr["id"],
                         FirstName = dr["studentFirstName"].ToString(),
-                        MiddleName = dr["studentMiddleName"].ToString(),
+                        MiddleName = dr["MiddleName"] != DBNull.Value ? dr["MiddleName"].ToString() : "",
                         LastName = dr["studentLastName"].ToString(),
                     };
                 }
@@ -96,7 +96,7 @@ namespace EnrollmentSystem.Controllers
             con.ConnectionString = new AccountController().getConnectionString();
             con.Open();
             com.Connection = con;
-            com.CommandText = $"SELECT * FROM [dbo].[students] INNER JOIN (select id, name as courseName, acronym as courseAcronym from courses) [courses] ON [students].[courseId] = [courses].[id] WHERE isActive = 1";
+            com.CommandText = $"SELECT * FROM [dbo].[students] INNER JOIN (select id, name as courseName, acronym as courseAcronym from courses) [courses] ON [students].[courseId] = [courses].[id]";
             dr = com.ExecuteReader();
             if (dr.HasRows)
             {
@@ -109,37 +109,80 @@ namespace EnrollmentSystem.Controllers
                     StudentsPreviewModel studentPreview = new StudentsPreviewModel
                     {
                         id = (int)dr["id"],
-                        FirstName = $"{dr["FirstName"].ToString()} {dr["MiddleName"].ToString()[0]}. {dr["LastName"].ToString()}",
-                        Age = (int)dr["Age"],
+                        FirstName = $"{dr["FirstName"].ToString()} {dr["LastName"].ToString()}",
+                        Age = 21,
                         Gender = currentGender,
                         Email = dr["Email"].ToString(),
                         Course = dr["CourseAcronym"].ToString(),
                     };
                     studentsPreview.Add(studentPreview);
-
                     //full data of student
                     StudentsModel student = new StudentsModel
                     {
                         id = (int)dr["id"],
                         FirstName = dr["FirstName"].ToString(),
-                        MiddleName = dr["MiddleName"].ToString(),
+                        MiddleName = dr["MiddleName"] != DBNull.Value ? dr["MiddleName"].ToString() : "",
                         LastName = dr["LastName"].ToString(),
-                        Age = (int)dr["Age"],
+                        Age = 21,
                         Gender = currentGender,
                         Address = dr["Address"].ToString(),
                         Email = dr["Email"].ToString(),
                         AccountId = dr["AccountId"].ToString(),
-                        StatusId = (int)dr["StatusId"],
-                        CourseId = (int)dr["Courseid"],
+                        StatusId = dr["StatusId"] != DBNull.Value ? (int)dr["StatusId"] : 1,
+                        CourseId = dr["CourseId"] != DBNull.Value ? (int)dr["CourseId"] : 1,
                         ProfileFileName = dr["ProfileFileName"].ToString(),
                         ContactNumber = dr["ContactNumber"].ToString(),
                     };
                     students.Add(student);
                 }
             }
+            else
+            {
+                con.Close();
+                dr.Close();
+                con.Open();
+                com.CommandText = $"SELECT * FROM [dbo].[students]";
+                dr = com.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        String currentGender = "Male";
+                        if (dr["Gender"].ToString() == "2") currentGender = "Female";
 
+                        //previews of students
+                        StudentsPreviewModel studentPreview = new StudentsPreviewModel
+                        {
+                            id = (int)dr["id"],
+                            FirstName = $"{dr["FirstName"].ToString()} {dr["LastName"].ToString()}",
+                            Age = 21,
+                            Gender = currentGender,
+                            Email = dr["Email"].ToString(),
+                            Course = "None",
+                        };
+                        studentsPreview.Add(studentPreview);
+                        //full data of student
+                        StudentsModel student = new StudentsModel
+                        {
+                            id = (int)dr["id"],
+                            FirstName = dr["FirstName"].ToString(),
+                            MiddleName = dr["MiddleName"] != DBNull.Value ? dr["MiddleName"].ToString() : "",
+                            LastName = dr["LastName"].ToString(),
+                            Age = 21,
+                            Gender = currentGender,
+                            Address = dr["Address"].ToString(),
+                            Email = dr["Email"].ToString(),
+                            AccountId = dr["AccountId"].ToString(),
+                            StatusId = 1,
+                            CourseId = 1,
+                            ProfileFileName = dr["ProfileFileName"].ToString(),
+                            ContactNumber = dr["ContactNumber"].ToString(),
+                        };
+                        students.Add(student);
+                    }
+                }
 
-           
+            }
 
             con.Close();
             ViewBag.Students = JsonConvert.SerializeObject(students);
@@ -161,9 +204,9 @@ namespace EnrollmentSystem.Controllers
                 {
                     model.id = (int)dr["id"];
                     model.FirstName = dr["FirstName"].ToString();
-                    model.MiddleName = dr["MiddleName"].ToString();
+                    model.MiddleName = dr["MiddleName"] != DBNull.Value ? dr["MiddleName"].ToString() : "";
                     model.LastName = dr["LastName"].ToString();
-                    model.Age = (int)dr["Age"];
+                    model.Age = 21;
                     model.Address = dr["Address"].ToString();
                     model.Gender = dr["Address"].ToString();
                     model.Email = dr["Email"].ToString();

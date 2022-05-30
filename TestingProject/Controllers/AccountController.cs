@@ -33,7 +33,7 @@ namespace EnrollmentSystem.Controllers
         public string getConnectionString()
         {
             //deploy conn string
-            //return "Data Source=SQL8003.site4now.net;Initial Catalog=db_a8752f_enrollmentsystem;User Id=db_a8752f_enrollmentsystem_admin;Password=pogiako213";
+           //return "Data Source=SQL8003.site4now.net;Initial Catalog=db_a8752f_enrollmentsystem;User Id=db_a8752f_enrollmentsystem_admin;Password=pogiako213";
             //return "data source=paul;initial catalog=enrollment_system;user id=sa;password=Relente1";
             //return "Data Source=DESKTOP-9R1M64D\\SQLEXPRESS;Initial Catalog=enrollment;Integrated Security=True";
             return DotNetEnv.Env.GetString("CONN_STRING", "Data Source=DESKTOP-9R1M64D\\SQLEXPRESS;Initial Catalog=enrollment)_final;Integrated Security=True");
@@ -160,7 +160,7 @@ namespace EnrollmentSystem.Controllers
 
                         string sqlFormattedBirthDate = model.BirthDate.ToString("yyyy-MM-dd");
 
-                    com.CommandText = $"INSERT INTO [dbo].[students] ([firstName] ,[middleName] ,[lastName] ,[gender] ,[age] ,[address] ,[contactNumber] ,[accountId] ,[email],[profileFileName], [isActive], [birthDate] ) VALUES ('{model.FirstName}' ,'{model.MiddleName}' , '{model.LastName}' , '{model.Gender}' , {model.Age} , '{model.Address}' , '{model.ContactNumber}' ,'' , '{model.Email}','blank.jpg', 1, '{sqlFormattedBirthDate}' )";
+                    com.CommandText = $"INSERT INTO [dbo].[students] ([firstName] ,[middleName] ,[lastName] ,[gender] ,[age] ,[address] ,[contactNumber] ,[accountId] ,[email],[profileFileName], [isActive], [birthDate] ) VALUES ('{model.FirstName}' ,'{model.MiddleName}' , '{model.LastName}' , '{model.Gender}' , 21 , '{model.Address}' , '{model.ContactNumber}' ,'' , '{model.Email}','blank.jpg', 1, '{sqlFormattedBirthDate}' )";
                         dr = com.ExecuteReader();
                         con.Close();
 
