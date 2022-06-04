@@ -34,6 +34,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+    <LegacyPublishPropertiesPageEnabled>true</LegacyPublishPropertiesPageEnabled>
+    <FilesToIncludeForPublish>AllFilesInTheProject</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -271,49 +274,32 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Antlr3.Runtime.dll" />
-    <Content Include="bin\Antlr3.Runtime.pdb" />
     <Content Include="bin\Database.dll" />
     <Content Include="bin\DotNetEnv.dll" />
     <Content Include="bin\EnrollmentSystem.dll" />
     <Content Include="bin\EnrollmentSystem.pdb" />
     <Content Include="bin\EntityFramework.dll" />
     <Content Include="bin\EntityFramework.SqlServer.dll" />
-    <Content Include="bin\EntityFramework.SqlServer.xml" />
-    <Content Include="bin\EntityFramework.xml" />
     <Content Include="bin\Firebase.Auth.dll" />
     <Content Include="bin\Firebase.Storage.dll" />
     <Content Include="bin\FireSharp.dll" />
     <Content Include="bin\Microsoft.AspNet.Identity.Core.dll" />
-    <Content Include="bin\Microsoft.AspNet.Identity.Core.xml" />
     <Content Include="bin\Microsoft.AspNet.Identity.Owin.dll" />
-    <Content Include="bin\Microsoft.AspNet.Identity.Owin.xml" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
-    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
     <Content Include="bin\Microsoft.Owin.dll" />
     <Content Include="bin\Microsoft.Owin.Host.SystemWeb.dll" />
-    <Content Include="bin\Microsoft.Owin.Host.SystemWeb.xml" />
     <Content Include="bin\Microsoft.Owin.Security.Cookies.dll" />
-    <Content Include="bin\Microsoft.Owin.Security.Cookies.xml" />
     <Content Include="bin\Microsoft.Owin.Security.dll" />
     <Content Include="bin\Microsoft.Owin.Security.OAuth.dll" />
-    <Content Include="bin\Microsoft.Owin.Security.OAuth.xml" />
-    <Content Include="bin\Microsoft.Owin.Security.xml" />
-    <Content Include="bin\Microsoft.Owin.xml" />
     <Content Include="bin\Microsoft.Threading.Tasks.dll" />
     <Content Include="bin\Microsoft.Threading.Tasks.Extensions.Desktop.dll" />
-    <Content Include="bin\Microsoft.Threading.Tasks.Extensions.Desktop.xml" />
     <Content Include="bin\Microsoft.Threading.Tasks.Extensions.dll" />
-    <Content Include="bin\Microsoft.Threading.Tasks.Extensions.xml" />
-    <Content Include="bin\Microsoft.Threading.Tasks.xml" />
     <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
     <Content Include="bin\Microsoft.Win32.Primitives.dll" />
     <Content Include="bin\Newtonsoft.Json.dll" />
-    <Content Include="bin\Newtonsoft.Json.xml" />
     <Content Include="bin\Owin.dll" />
     <Content Include="bin\PCLStorage.Abstractions.dll" />
-    <Content Include="bin\PCLStorage.Abstractions.xml" />
     <Content Include="bin\PCLStorage.dll" />
-    <Content Include="bin\PCLStorage.xml" />
     <Content Include="bin\roslyn\csc.exe" />
     <Content Include="bin\roslyn\csi.exe" />
     <Content Include="bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll" />
@@ -351,11 +337,9 @@
     <Content Include="bin\roslyn\vbc.exe" />
     <Content Include="bin\roslyn\VBCSCompiler.exe" />
     <Content Include="bin\Sprache.dll" />
-    <Content Include="bin\Sprache.xml" />
     <Content Include="bin\System.AppContext.dll" />
     <Content Include="bin\System.Console.dll" />
     <Content Include="bin\System.Diagnostics.DiagnosticSource.dll" />
-    <Content Include="bin\System.Diagnostics.DiagnosticSource.xml" />
     <Content Include="bin\System.Globalization.Calendars.dll" />
     <Content Include="bin\System.IO.Compression.dll" />
     <Content Include="bin\System.IO.Compression.ZipFile.dll" />
@@ -363,9 +347,7 @@
     <Content Include="bin\System.IO.FileSystem.Primitives.dll" />
     <Content Include="bin\System.Net.Http.dll" />
     <Content Include="bin\System.Net.Http.Extensions.dll" />
-    <Content Include="bin\System.Net.Http.Extensions.xml" />
     <Content Include="bin\System.Net.Http.Primitives.dll" />
-    <Content Include="bin\System.Net.Http.Primitives.xml" />
     <Content Include="bin\System.Net.Sockets.dll" />
     <Content Include="bin\System.Runtime.InteropServices.RuntimeInformation.dll" />
     <Content Include="bin\System.Security.Cryptography.Algorithms.dll" />
@@ -373,19 +355,12 @@
     <Content Include="bin\System.Security.Cryptography.Primitives.dll" />
     <Content Include="bin\System.Security.Cryptography.X509Certificates.dll" />
     <Content Include="bin\System.Web.Helpers.dll" />
-    <Content Include="bin\System.Web.Helpers.xml" />
     <Content Include="bin\System.Web.Mvc.dll" />
-    <Content Include="bin\System.Web.Mvc.xml" />
     <Content Include="bin\System.Web.Optimization.dll" />
-    <Content Include="bin\System.Web.Optimization.xml" />
     <Content Include="bin\System.Web.Razor.dll" />
-    <Content Include="bin\System.Web.Razor.xml" />
     <Content Include="bin\System.Web.WebPages.Deployment.dll" />
-    <Content Include="bin\System.Web.WebPages.Deployment.xml" />
     <Content Include="bin\System.Web.WebPages.dll" />
     <Content Include="bin\System.Web.WebPages.Razor.dll" />
-    <Content Include="bin\System.Web.WebPages.Razor.xml" />
-    <Content Include="bin\System.Web.WebPages.xml" />
     <Content Include="bin\System.Xml.ReaderWriter.dll" />
     <Content Include="bin\WebGrease.dll" />
     <Content Include="Content\bootstrap-grid.css" />
@@ -410,15 +385,61 @@
     <Content Include="Content\img\1036_goodMoralCertificate.png" />
     <Content Include="Content\img\1036_reportcard.png" />
     <Content Include="Content\img\1042_reportcard.jpg" />
+    <Content Include="Content\img\1044honorableDismissal.jpg" />
+    <Content Include="Content\img\1044_birthcert.jpg" />
+    <Content Include="Content\img\1044_certificateOfTransfer.jpg" />
+    <Content Include="Content\img\1044_reportcard.jpg" />
+    <Content Include="Content\img\1045_reportcard.jpg" />
+    <Content Include="Content\img\1052honorableDismissal.jpg" />
+    <Content Include="Content\img\1052_birthcert.jpg" />
+    <Content Include="Content\img\1052_certificateOfTransfer.jpg" />
+    <Content Include="Content\img\1052_reportcard.jpg" />
+    <Content Include="Content\img\amazon-logo.png" />
+    <Content Include="Content\img\bg-design.png" />
     <Content Include="Content\img\bg.jpeg" />
+    <Content Include="Content\img\bird-logo.png" />
     <Content Include="Content\img\blank.png" />
+    <Content Include="Content\img\building.jpeg" />
     <Content Include="Content\img\Cavite_State_University.png" />
+    <Content Include="Content\img\cvsu-enrollment-stamp.jpg" />
     <Content Include="Content\img\cvsu-header.jpeg" />
     <Content Include="Content\img\E4gwkhRgr7UYrQOi1BR6tk9S1tH2.jpg" />
+    <Content Include="Content\img\email.png" />
+    <Content Include="Content\img\fHYh3zXpKXeFCGJ8ghu1OyUHVsE3.jpg" />
+    <Content Include="Content\img\find_us.svg" />
+    <Content Include="Content\img\form.png" />
     <Content Include="Content\img\goodmoral.png" />
     <Content Include="Content\img\grades.png" />
+    <Content Include="Content\img\HUpgnLlibXYDR7sD9uFGBDAn2By1.jpg" />
+    <Content Include="Content\img\J4Dqov05BNYxYQbczSMfo1c7Y6G2.png" />
+    <Content Include="Content\img\location.svg" />
+    <Content Include="Content\img\logo-pos.jpg" />
+    <Content Include="Content\img\logo-pos.png" />
+    <Content Include="Content\img\logo.png" />
+    <Content Include="Content\img\market.svg" />
+    <Content Include="Content\img\MiNVLGrCSIWr6JMrfEPxnNDnAaV2.jpg" />
+    <Content Include="Content\img\MzjfK7QSwnZVQSrwhH5l0XUPfEI2.jpg" />
+    <Content Include="Content\img\nav-bg.jpg" />
+    <Content Include="Content\img\our_numbers.svg" />
+    <Content Include="Content\img\our_numbers.svg.svg" />
+    <Content Include="Content\img\people.jpg" />
     <Content Include="Content\img\person.jpg" />
     <Content Include="Content\img\person1.jpg" />
+    <Content Include="Content\img\pet.svg" />
+    <Content Include="Content\img\PIqloB5WnTZqbTdSH0sCosXL6Oz1.jpg" />
+    <Content Include="Content\img\r0TjqRMt4wcg1vB72q4tTlFsFYW2.jpg" />
+    <Content Include="Content\img\rDka4v3QYUg4Z1mAYOjtPs1JBtI2.jpg" />
+    <Content Include="Content\img\rocket-logo.jpg" />
+    <Content Include="Content\img\sell.svg" />
+    <Content Include="Content\img\signup.png" />
+    <Content Include="Content\img\Sl3dykBnuAZPgUvGlU5AE6umXP83.jpg" />
+    <Content Include="Content\img\supply.svg" />
+    <Content Include="Content\img\tBYV7Yp0h3g70UYLlcoa5LbFSYt2.jpg" />
+    <Content Include="Content\img\title-design.png" />
+    <Content Include="Content\img\triangle-bg-image.png" />
+    <Content Include="Content\img\UxAf7TX3TcfNtnHaUbqlvAFyjao1.png" />
+    <Content Include="Content\img\wQfyflr6J5Y94KNtQuHEGXCBC563.jpg" />
+    <Content Include="Content\img\y1pFiEh7ZNVlJS6iR4xM0IKCQRO2.jpg" />
     <Content Include="Content\style.css" />
     <Content Include="Content\styleRegForm.css" />
     <Content Include="email.html" />
@@ -443,14 +464,7 @@
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <Content Include="obj\Debug\EnrollmentSystem.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\Debug\EnrollmentSystem.dll" />
-    <Content Include="obj\Debug\EnrollmentSystem.pdb" />
     <Content Include="Properties\launchSettings.json" />
-    <Content Include="obj\Debug\EnrollmentSystem.csproj.App.config" />
-    <Content Include="obj\Debug\EnrollmentSystem.csproj.CopyComplete" />
-    <Content Include="obj\Debug\EnrollmentSystem.csproj.CoreCompileInputs.cache" />
-    <Content Include="obj\Debug\EnrollmentSystem.csprojAssemblyReference.cache" />
     <Content Include="bin\EnrollmentSystem.dll.config" />
     <Content Include="bin\roslyn\csc.exe.config" />
     <Content Include="bin\roslyn\csc.rsp" />
@@ -482,6 +496,7 @@
     <None Include="Properties\PublishProfiles\Default Settings3.pubxml" />
     <None Include="Properties\PublishProfiles\Default Settings4.pubxml" />
     <None Include="Properties\PublishProfiles\Default Settings5.pubxml" />
+    <None Include="Properties\PublishProfiles\Default Settings6.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
@@ -557,7 +572,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="images\" />
-    <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -612,6 +627,10 @@
     <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
     <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent>if exist "$(TargetPath).locked" del "$(TargetPath).locked"
+if exist "$(TargetPath)" if not exist "$(TargetPath).locked" move "$(TargetPath)" "$(TargetPath).locked"</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

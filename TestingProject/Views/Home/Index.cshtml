@@ -1,31 +1,272 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "CvSU Bacoor Enrollment System";
+    Layout = null;
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" href="~/Content/img/logo.png">
+    <style>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+        .home-nav {
+            background: url("/Content/img/nav-bg.jpg"), #ffffff;
+            background-repeat: no-repeat;
+            background-position-x: left;
+            background-position-y: top;
+        }
+
+        .hero {
+            height: 60vh;
+        }
+
+        .hero-image {
+            background-color: rgb(167, 211, 231);
+            background: url("/Content/img/building.jpeg");
+            background-repeat: no-repeat;
+            background-position-y: center;
+        }
+
+        .section-image {
+            background: url("/Content/img/triangle-bg-image.png");
+            background-repeat: no-repeat;
+            background-position-x: left;
+            background-position-y: top;
+            background-size: 50%;
+        }
+
+        .design-title {
+            background: url("~/Content/img/title-design.png");
+            background-repeat: no-repeat;
+            background-position-y: bottom;
+        }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
+<body>
+    <section class="w-full min-w-full mx-auto overflow-hidden max-w-screen-2xl">
+        <nav class="md:mb-10  bg-[#1482c1] xl:bg-transparent home-nav">
+            <div class="grid justify-between grid-cols-2 gap-5 px-2 py-1">
+                <section class="flex flex-row justify-center col-span-2 text-white lg:flex-row-reverse lg:pr-48 sm:col-span-1 sm:justify-start">
+                    <div class="pt-4 sm:py-4 lg:py-2 px-4">
+                        <img class="h-20" src="~/Content/img/logo.png" alt="Logo" />
+                    </div>
+                    <div class="flex flex-col justify-center text-center">
+                        <h1 class="text-xl font-black lg:text-2xl xl:text-3xl">CvSU Bacoor</h1>
+                        <h6 class="text-xs lg:text-sm">Enrollment</h6>
+                    </div>
+                </section>
+
+                <section class="flex justify-center col-span-2 space-x-2 sm:justify-end lg:justify-start lg:pl-24 xl:pl-10 sm:col-span-1">
+                    <a href="/Account/Login"
+                       class="px-4 py-2 my-auto text-sm text-white font-semibold transition-all  h-max bg-[#205E53] text-white uppercase ">
+                        Sign in
+                    </a>
+                    <a href="/Account/Signup"
+                       class="px-4 py-2 my-auto text-sm text-white font-semibold transition-all  h-max bg-[#205E53] text-white uppercase ">
+                        Sign up
+                    </a>
+                    <a href="/Account/ResetPassword"
+                       class="px-4 py-2 my-auto text-sm text-white font-semibold transition-all  h-max bg-[#205E53] text-white uppercase ">
+                        Reset Password
+                    </a>
+                </section>
+            </div>
+        </nav>
+        <div class="hero">
+            <div class="relative grid h-full grid-cols-12 md:px-5">
+                <section class="col-span-12 md:col-span-10 lg:col-span-7 hero-image "></section>
+                <section class="absolute right-0 flex flex-col justify-center col-span-12 pb-10 px-5 space-y-3 bg-white md:col-span-2 lg:col-span-5 lg:justify-end top-1/3 md:top-1/4 lg:pt-0 bg-opacity-90 lg:static lg:top-0"
+                         style="min-height: 50vh; max-width: 80vw;">
+                    <h1 class="text-2xl font-black sm:text-4xl text-green-800 xl:text-5xl">
+                        Join our university today
+                    </h1>
+                    <h4 class="text-xs text-gray-700 sm:text-sm md:text-lg">
+                        We are open for every student
+                    </h4>
+                    <a href="/Account/Login" class="text-lg bg-green-900 py-2 px-6 tracking-wider w-max text-white font-bold ">Enroll Now</a>
+                </section>
+            </div>
+        </div>
+        <main class="px-3 mt-16 mb-16 md:mt-24 lg:my-36 md:px-24">
+            <section id="story">
+                <div class="grid grid-cols-1 lg:grid-cols-2">
+                    <section class>
+                        <h2 class="text-3xl font-bold text-center sm:text-4xl text-green-700">Our Mission</h2>
+                        <div class="mx-auto mt-5 overflow-hidden md:max-w-md">
+                            <p class="text-xs text-justify text-gray-700 sm:text-sm">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                Suscipit eveniet odit assumenda, repellendus tenetur aperiam quia, laboriosam eum consequuntur nobis est
+                                fugiat magnam natus atque quibusdam nemo unde adipisci.
+                                <br />
+                                <br />Dignissimos.Lorem ipsum dolor sit
+                                amet consectetur adipisicing elit. Suscipit eveniet odit assumenda
+                            </p>
+                        </div>
+                        <img class="hidden mt-5 lg:block" src="~/Content/img/bg-design.png" />
+                    </section>
+                    <section class="pt-5 md:px-36 lg:px-16 lg:pt-0">
+                        <div class="p-3 section-image lg:p-5">
+                            <img class src="~/Content/img/people.jpg" alt="people communicating" />
+                        </div>
+                        <img class="block mt-5 lg:hidden"
+                             src="~/Content/img/bg-design.png"
+                             style="margin-top: -150px; margin-left: -100px" />
+                    </section>
+                </div>
+            </section>
+            <section class="max-w-screen-lg px-5 mx-auto" id="offer">
+                <h2 class="mb-5 text-3xl font-bold sm:text-4xl md:text-5xl text-green-700 md:mb-10">3 Steps to Enroll</h2>
+                <section class="flex flex-col justify-center my-5 lg:space-x-10 lg:flex-row lg:justify-start">
+                    <div class="flex flex-shrink-0 p-3 mx-auto overflow-hidden lg:p-5 section-image w-max lg:mx-0">
+                        <div data-aos="fade-up" data-aos-once="true" class="relative w-60 h-60  sm:w-80 md:w-96 sm:h-80 md:h-96">
+                            <img class="absolute object-cover min-w-full min-h-full transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                                 src="~/Content/img/signup.png"
+                                 alt="Sign up page" />
+                        </div>
+                    </div>
+                    <div class="max-w-lg mx-auto lg:mx-0">
+                        <h4 class="my-3 text-lg font-bold sm:text-xl md:text-2xl">CREATE AN ACCOUNT</h4>
+                        <p class="text-xs text-justify text-gray-700 sm:text-sm">
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                            Reprehenderit blanditiis nam cupiditate exercitationem, suscipit obcaecati ad consectetur maiores tempora
+                            atque excepturi culpa facere. Officia optio quaerat sunt ea provident doloremque!
+                        </p>
+                    </div>
+                </section>
+                <section class="flex flex-col justify-center my-10 lg:space-x-10 lg:flex-row-reverse lg:justify-between">
+                    <div class="flex flex-shrink-0 p-3 mx-auto overflow-hidden lg:p-5 section-image w-max lg:mx-0">
+                        <div data-aos="fade-up" data-aos-once="true" class="relative w-60 h-60  sm:w-80 md:w-96 sm:h-80 md:h-96">
+                            <img class="absolute object-cover min-w-full min-h-full transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                                 src="~/Content/img/form.png"
+                                 alt="Fill up Enrollment Form" />
+                        </div>
+                    </div>
+                    <div class="max-w-lg mx-auto lg:mx-0 md:pr-10">
+                        <h4 class="my-3 text-lg font-bold sm:text-xl md:text-2xl uppercase">Fill up Enrollment Form</h4>
+                        <p class="text-xs text-justify text-gray-700 sm:text-sm">
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                            Reprehenderit blanditiis nam cupiditate exercitationem, suscipit obcaecati ad consectetur maiores tempora
+                            atque excepturi culpa facere. Officia optio quaerat sunt ea provident doloremque!
+                            Reprehenderit blanditiis nam cupiditate exercitationem, suscipit obcaecati ad consectetur maiores tempora
+                            atque excepturi culpa facere. Officia optio quaerat sunt ea provident doloremque!
+                        </p>
+                    </div>
+                </section>
+                <section class="flex flex-col justify-center my-5 lg:space-x-10 lg:flex-row lg:justify-start">
+                    <div class="flex flex-shrink-0 p-3 mx-auto overflow-hidden lg:p-5 section-image w-max lg:mx-0">
+                        <div data-aos="fade-up" data-aos-once="true" class="relative w-60 h-60  sm:w-80 md:w-96 sm:h-80 md:h-96">
+                            <img class="absolute object-cover min-w-full min-h-full transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                                 src="~/Content/img/email.png"
+                                 alt="WAIT FOR ENROLLMENT CONFIRMATION EMAIL" />
+                        </div>
+                    </div>
+                    <div class="max-w-lg mx-auto lg:mx-0">
+                        <h4 class="my-3 text-lg font-bold sm:text-xl md:text-2xl">WAIT FOR ENROLLMENT CONFIRMATION EMAIL</h4>
+                        <p class="text-xs text-justify text-gray-700 sm:text-sm">
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                            Reprehenderit blanditiis nam cupiditate exercitationem, suscipit obcaecati ad consectetur maiores tempora
+                            atque excepturi culpa facere. Officia optio quaerat sunt ea provident doloremque!
+                        </p>
+                    </div>
+                </section>
+            </section>
+
+            <section data-aos="fade-down"
+                     class="flex flex-col justify-center px-5 mt-10 mb-10 space-y-2 md:mt-36 sm:px-0">
+                <h1 class="text-3xl font-black text-center sm:text-4xl md:text-5xl">"Cavite State University shall provide excellent, equitable and relevant educational opportunities in the arts, sciences and technology through quality"</h1>
+                <p class="max-w-screen-md mx-auto text-xs text-center text-gray-600 sm:text-sm">
+                    Lorem ipsum dolor sit amet consectetur adipisicing
+                    elit. Molestias eius id sequi ipsa nemo sit quia tempora voluptatum ab. Cupiditate tenetur molestias quas
+                    doloribus aliquid hic, facilis ea repellendus! Repellat! Molestias eius id sequi ipsa nemo sit quia tempora
+                    voluptatum ab. Cupiditate tenetur molestias quas doloribus aliquid hic, facilis ea repellendus! Repellat!
+                </p>
+                <div class="relative flex justify-center mx-auto overflow-hidden">
+                    <img class="w-14"
+                         src="~/Content/img/logo.png"
+                         alt="Logo" />
+                </div>
+                <h5 class="text-lg font-bold text-center">CvSU</h5>
+            </section>
+        </main>
+        <footer id="footer">
+            <div class="grid grid-cols-12">
+                <section class="flex col-span-12 px-5 py-10 text-white bg-sky-700 lg:col-span-4 sm:text-center sm:flex-col"
+                         style="background-color: #0e4037 ">
+                    <img class="w-32 sm:w-48 sm:mx-auto" src="~/Content/img/logo.png" alt="logo" />
+                    <div class="flex flex-col justify-center">
+                        <h1 class="my-2 text-2xl font-bold sm:text-3xl md:text-4xl">CvSU Bacoor</h1>
+                        <h2 class="text-xs sm:text-sm md:text-md">Enrollment System</h2>
+                    </div>
+                </section>
+                <section class="flex flex-col justify-center col-span-12 p-10 space-y-5 text-white lg:col-span-8"
+                         style="background-color: #1A5E53">
+                    <div class="flex flex-col space-y-5 sm:flex-row sm:space-y-0 sm:space-x-5">
+                        <section class="flex space-x-1">
+                            <div>
+                                <ion-icon class="text-4xl sm:text-5xl" name="mail"></ion-icon>
+                            </div>
+                            <div class="flex flex-col justify-center">
+                                <h6 class="text-xs text-gray-200">Email</h6>
+                                <h5>cvsu@gmail.com</h5>
+                            </div>
+                        </section>
+                        <section class="flex space-x-1">
+                            <div>
+                                <ion-icon class="text-4xl sm:text-5xl" name="call"></ion-icon>
+                            </div>
+                            <div class="flex flex-col justify-center">
+                                <h6 class="text-xs text-gray-200">Phone</h6>
+                                <h5>+63912339592</h5>
+                            </div>
+                        </section>
+                        <section class="flex space-x-1">
+                            <div>
+                                <ion-icon class="text-4xl sm:text-5xl" name="location"></ion-icon>
+                            </div>
+                            <div class="flex flex-col justify-center">
+                                <h6 class="text-xs text-gray-200">Location</h6>
+                                <h5>Bacoor, Cavite</h5>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="flex flex-col space-y-10 md:flex-row md:space-y-0 md:space-x-10">
+                        <section class="md:w-max">
+                            <h6 class="mb-2 text-xs text-gray-200">Be on our mailing list</h6>
+                            <div class="flex justify-between border-4 border-white">
+                                <input type="text"
+                                       placeholder="Your Email"
+                                       class="w-full p-3 placeholder-gray-100 bg-transparent outline-none" />
+                                <div class="flex-shrink-0 px-4 py-2 transition-all border-l-4 cursor-pointer hover:bg-green-700">
+                                    <h3 class="text-lg text-white">Be Notified</h3>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="w-max">
+                            <h6 class="mb-2 text-xs text-gray-200">Lets Connect</h6>
+                            <div class="flex space-x-5 h-max">
+                                <a href="https://www.instagram.com/" class="w-max h-max">
+                                    <ion-icon class="table my-auto text-4xl text-white transition-all sm:text-5xl hover:text-sky-800"
+                                              name="logo-facebook"></ion-icon>
+                                </a>
+                                <a href="https://www.instagram.com/" class="w-max h-max">
+                                    <ion-icon class="table my-auto text-4xl text-white transition-all sm:text-5xl hover:text-sky-800"
+                                              name="logo-instagram"></ion-icon>
+                                </a>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </footer>
+    </section>
+</body>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+    AOS.init();
+</script>
+</html>

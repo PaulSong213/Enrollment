@@ -33,10 +33,10 @@ namespace EnrollmentSystem.Controllers
         public string getConnectionString()
         {
             //deploy conn string
-           //return "Data Source=SQL8003.site4now.net;Initial Catalog=db_a8752f_enrollmentsystem;User Id=db_a8752f_enrollmentsystem_admin;Password=pogiako213";
+           return "Data Source=SQL8003.site4now.net;Initial Catalog=db_a8752f_enrollmentsystem;User Id=db_a8752f_enrollmentsystem_admin;Password=pogiako213";
             //return "data source=paul;initial catalog=enrollment_system;user id=sa;password=Relente1";
             //return "Data Source=DESKTOP-9R1M64D\\SQLEXPRESS;Initial Catalog=enrollment;Integrated Security=True";
-            return DotNetEnv.Env.GetString("CONN_STRING", "Data Source=DESKTOP-9R1M64D\\SQLEXPRESS;Initial Catalog=enrollment)_final;Integrated Security=True");
+            //return DotNetEnv.Env.GetString("CONN_STRING", "Data Source=DESKTOP-9R1M64D\\SQLEXPRESS;Initial Catalog=enrollment)_final;Integrated Security=True");
         }
 
         [AllowAnonymous]
